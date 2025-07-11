@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TravelTableViewCell: UITableViewCell {
+class MagazineTableViewCell: UITableViewCell {
 
     @IBOutlet var trabelImage: UIImageView!
     @IBOutlet var bodyLabel: UILabel!

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TravelTableViewController: UITableViewController {
+class MagazineViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
