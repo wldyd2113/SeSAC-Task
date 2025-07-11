@@ -1,13 +1,13 @@
+////
+////  Travel.swift
+////  SeSACTravel
+////
+////  Created by 차지용 on 7/11/25.
+////
 //
-//  Travel.swift
-//  SeSACTravel
 //
-//  Created by 차지용 on 7/11/25.
+//import Foundation
 //
-
-
-import Foundation
-
-struct Travel {
-    
-}
+//struct Travel {
+//    
+//}
