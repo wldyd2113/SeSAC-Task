@@ -32,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="travelCell" rowHeight="331" id="Oth-Ma-AZG" customClass="MagazineTableViewCell" customModule="SeSACTravel" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="magazineCell" rowHeight="331" id="Oth-Ma-AZG" customClass="MagazineTableViewCell" customModule="SeSACTravel" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="331"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Oth-Ma-AZG" id="efL-4s-7K7">
@@ -88,6 +88,12 @@
                                         <constraint firstItem="4yE-vJ-pCj" firstAttribute="leading" secondItem="efL-4s-7K7" secondAttribute="leading" constant="80" id="xpc-6W-8kc"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="emH-hR-iXR" id="Rgc-OC-TM0"/>
+                                    <outlet property="potoImage" destination="JHh-TE-fvD" id="Ft6-kk-eTZ"/>
+                                    <outlet property="subtitleLabel" destination="4yE-vJ-pCj" id="Thc-yN-F9v"/>
+                                    <outlet property="titleLabel" destination="sXc-lb-YCd" id="l6w-t6-z4N"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
