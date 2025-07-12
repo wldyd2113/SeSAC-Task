@@ -11,7 +11,7 @@ import Foundation
 struct Travel {
     let title: String
     let description: String
-    let trabel_image: String
+    let travel_image: String
     let grade: Double
     let save: Int
     let like: Bool

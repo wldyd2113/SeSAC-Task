@@ -9,15 +9,13 @@ import UIKit
 
 class TravelTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var dscriptionLabel: UILabel!
+    @IBOutlet var rationgImage: [UIImageView]!
+    @IBOutlet var gradeLabel: UILabel!
+    @IBOutlet var textsLabel: UILabel!
+    @IBOutlet var saveLabel: UILabel!
+    @IBOutlet var trabelImage: UIImageView!
+    @IBOutlet var likeButton: UIButton!
+    
 }
