@@ -1,13 +1,20 @@
-////
-////  Travel.swift
-////  SeSACTravel
-////
-////  Created by 차지용 on 7/11/25.
-////
 //
+//  Travel.swift
+//  SeSACTravel
 //
-//import Foundation
+//  Created by 차지용 on 7/11/25.
 //
-//struct Travel {
-//    
-//}
+
+
+import Foundation
+
+struct Travel {
+    let title: String
+    let description: String
+    let trabel_image: String
+    let grade: Double
+    let save: Int
+    let like: Bool
+    let ad: Bool
+}
+
