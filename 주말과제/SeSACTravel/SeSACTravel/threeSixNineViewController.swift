@@ -12,8 +12,7 @@ class threeSixNineViewController: UIViewController {
     @IBOutlet var userTextFiled: UITextField!
     
     @IBOutlet var resultText: UITextView!
-    
-    
+    @IBOutlet var countLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()

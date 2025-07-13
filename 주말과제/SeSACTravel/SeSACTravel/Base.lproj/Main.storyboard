@@ -31,6 +31,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gET-f8-1mJ">
+                                <rect key="frame" x="16" y="394" width="361" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Ble-kG-YtE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -41,12 +50,16 @@
                             <constraint firstItem="sUJ-FD-hP4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="AZa-0n-hPf"/>
                             <constraint firstItem="sUJ-FD-hP4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="IOk-wG-p76"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTS-1U-R4i" secondAttribute="bottom" constant="357" id="Lrc-XH-9d5"/>
+                            <constraint firstItem="gET-f8-1mJ" firstAttribute="top" secondItem="WTS-1U-R4i" secondAttribute="bottom" constant="16" id="cyb-bL-tfy"/>
                             <constraint firstItem="WTS-1U-R4i" firstAttribute="top" secondItem="sUJ-FD-hP4" secondAttribute="bottom" constant="80" id="f9A-mT-qq4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gET-f8-1mJ" secondAttribute="trailing" constant="16" id="jvS-Oe-frw"/>
+                            <constraint firstItem="gET-f8-1mJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ohJ-b3-Oao"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="2au-U1-L1U"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="countLabel" destination="gET-f8-1mJ" id="904-vz-EEL"/>
                         <outlet property="resultText" destination="WTS-1U-R4i" id="m4p-sB-jSQ"/>
                         <outlet property="userTextFiled" destination="sUJ-FD-hP4" id="t31-MS-BqP"/>
                     </connections>
