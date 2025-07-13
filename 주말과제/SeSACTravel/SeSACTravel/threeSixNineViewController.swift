@@ -13,6 +13,7 @@ class threeSixNineViewController: UIViewController {
     
     @IBOutlet var resultText: UITextView!
     @IBOutlet var countLabel: UILabel!
+    var resultCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -22,6 +23,10 @@ class threeSixNineViewController: UIViewController {
         resultText.text = " "
         resultText.isEditable = false
         resultText.textAlignment = .center
+        
+        countLabel.textAlignment = .center
+        countLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        countLabel.numberOfLines = 0
     }
     
     func alertMessage() {
@@ -50,5 +55,8 @@ class threeSixNineViewController: UIViewController {
         else {
             alertMessage()
         }
+        resultCount = resultText.text.ranges(of: "👏").count
+            countLabel.text = "숫자 \(userTextFiled)까지 총 박수는\n \(resultCount)번 입니다"
+        
     }
 }
