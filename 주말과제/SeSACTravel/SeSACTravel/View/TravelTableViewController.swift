@@ -119,7 +119,7 @@ class TravelTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureBackground()
         let xib = UINib(nibName: "Travel2TableViewCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: "Travel2TableViewCell")
 //        

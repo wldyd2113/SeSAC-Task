@@ -17,6 +17,7 @@ class threeSixNineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureBackground()
     }
     
     func configureUI() {
@@ -41,11 +42,14 @@ class threeSixNineViewController: UIViewController {
     @IBAction func returnTextField(_ sender: UITextField) {
         
         guard let userTextFiled = userTextFiled.text else { return }
+        guard let resultClap = resultText.text else { return }
         if let intTextFiled = Int(userTextFiled)  {
             resultText.text = ""
-            for i in 1 ... intTextFiled { 
+            
+            for i in 1 ... intTextFiled {
                 if String(i).contains(String("3")) || String(i).contains(String("6")) || String(i).contains(String("9")) {
-                    resultText.text += "👏 "
+                    resultText.text += "\(i) ".replacingOccurrences(of: "3", with: "👏").replacingOccurrences(of: "6", with: "👏").replacingOccurrences(of: "9", with: "👏") //replacingOccurrences사용해서 특정 문자를 내가 바꾸고 싶은 문자고 바꿈
+  
                 }
                 else {
                     resultText.text += "\(i) "

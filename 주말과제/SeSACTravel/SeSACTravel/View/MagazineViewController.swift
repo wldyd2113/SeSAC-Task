@@ -29,6 +29,7 @@ class MagazineViewController: UITableViewController {
         super.viewDidLoad()
 //        let xib = UINib(nibName: "Magazine2TableViewCell", bundle: nil)
 //        tableView.register(xib, forCellReuseIdentifier: "Magazine2TableViewCell")
+        configureBackground()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
