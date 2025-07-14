@@ -132,81 +132,18 @@ class TravelTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "trabelCell", for: indexPath) as! TravelTableViewCell
-        let url = URL(string: travel[indexPath.row].travel_image ?? "person")
+        let trabelIndexPath = travel[indexPath.row]
         
-        cell.titleLabel.text = travel[indexPath.row].title
-        cell.titleLabel.numberOfLines = 0
-        
-        cell.dscriptionLabel.text = travel[indexPath.row].description
-        cell.dscriptionLabel.numberOfLines = 0
-        
-        cell.gradeLabel.text = String(travel[indexPath.row].grade ?? 0)
-        cell.gradeLabel.textColor = .lightGray
-        cell.gradeLabel.font = .systemFont(ofSize: 15)
-        
-        cell.textsLabel.text = "저장"
-        cell.textsLabel.textColor = .lightGray
-        cell.textsLabel.font = .systemFont(ofSize: 15)
-
-        if let grade = travel[indexPath.row].grade {
-            let gradeInt = Int(grade)
-            
-            for (index, imageView) in cell.ratingImage.enumerated() {
-                if index < gradeInt {
-                    imageView.image = UIImage(systemName: "star.fill")
-                }
-                else {
-                    imageView.image = UIImage(systemName: "star")
-                }
-            }
-        } else {
-            for imageView in cell.ratingImage {
-                imageView.image = UIImage(systemName: "star")
-            }
-        }
-
-        
-        if let numberString = travel[indexPath.row].save {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .decimal
-            cell.saveLabel.text = numberFormatter.string(from: NSNumber(value: numberString))
-        } else {
-            cell.saveLabel.text = "0"
-        }
-        
-        cell.saveLabel.textColor = .lightGray
-        cell.saveLabel.font = .systemFont(ofSize: 15)
-        
-        
-        cell.trabelImage.kf.setImage(with: url)
+        cell.configureTravelUI(trabelIndexPath: trabelIndexPath)
         
         cell.likeButton.tag = indexPath.row
-        if travel[indexPath.row].like == true {
+        if trabelIndexPath.like == true {
             cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         } else {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             
         }
         cell.likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
-        
-        if travel[indexPath.row].ad == true  {
-            cell.adUIView.backgroundColor = .systemPink
-            cell.adUIView.layer.cornerRadius = 10
-            
-            cell.adLabel.text = "하와이 여행을 가고 싶다면? \n 수업이 있는데 가실 생각은 아니시죠?"
-            cell.adLabel.numberOfLines = 0
-            cell.adLabel.font = .systemFont(ofSize: 15, weight: .bold)
-            cell.adLabel.textAlignment = .center
-            
-            cell.adButton.setTitle("AD", for: .normal)
-            
-        }
-        else {
-            cell.adUIView.backgroundColor = .clear
-            cell.adLabel.text = ""
-            cell.adLabel.textAlignment = .center
-            cell.adButton.setTitle(" ", for: .normal)
-        }
             
         return cell
     }

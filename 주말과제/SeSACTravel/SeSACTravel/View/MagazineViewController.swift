@@ -24,7 +24,6 @@ class MagazineViewController: UITableViewController {
         Magazine(title: "야시장 천국 '대만 여행' 먹킷리스트", subtitle: "요즘 가장 인기 있는 메뉴는 OO", photo_image: "https://cdn.pixabay.com/photo/2017/06/11/17/03/dumplings-2392893_1280.jpg", date: "250103", link: "https://triple.guide/content/articles/69f887b0-4b87-451f-8859-82c7461858b9"),
         Magazine(title: "핑크빛 바다가 펼쳐지는 환상의 섬, 롬복", subtitle: "잊히지 않는 TV속 그곳!", photo_image: "https://cdn.pixabay.com/photo/2019/08/17/19/13/landscape-4412784_1280.jpg", date: "250101", link: "https://triple.guide/content/articles/8c4cded5-ff1e-4898-b884-c7b9f84fd5d8"),
         Magazine(title: "여행 고수가 알려주는 새벽 비행기 이용 꿀팁", subtitle: "이제 공항에서 시간 때울 걱정 끝!", photo_image: "https://cdn.pixabay.com/photo/2021/09/07/11/53/car-6603726_1280.jpg", date: "250105", link: "https://triple.guide/content/articles/791578f3-95d7-4300-a51f-6dff48db5d55"),
-
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +43,5 @@ class MagazineViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-
-
 
 }
