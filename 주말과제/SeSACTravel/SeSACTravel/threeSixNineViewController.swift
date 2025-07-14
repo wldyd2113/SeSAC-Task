@@ -43,7 +43,7 @@ class threeSixNineViewController: UIViewController {
         guard let userTextFiled = userTextFiled.text else { return }
         if let intTextFiled = Int(userTextFiled)  {
             resultText.text = ""
-            for i in 1 ... intTextFiled {
+            for i in 1 ... intTextFiled { 
                 if String(i).contains(String("3")) || String(i).contains(String("6")) || String(i).contains(String("9")) {
                     resultText.text += "👏 "
                 }

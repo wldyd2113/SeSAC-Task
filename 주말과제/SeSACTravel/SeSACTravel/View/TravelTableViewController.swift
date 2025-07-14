@@ -202,8 +202,7 @@ class TravelTableViewController: UITableViewController {
             
         }
         else {
-            cell.adUIView.backgroundColor = .white
-            
+            cell.adUIView.backgroundColor = .clear
             cell.adLabel.text = ""
             cell.adLabel.textAlignment = .center
             cell.adButton.setTitle(" ", for: .normal)
@@ -213,7 +212,7 @@ class TravelTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return UITableView.automaticDimension
     }
     
     @objc func likeButtonClicked(_ sender: UIButton) {
