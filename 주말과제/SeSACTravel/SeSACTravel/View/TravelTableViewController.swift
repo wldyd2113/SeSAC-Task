@@ -118,6 +118,10 @@ class TravelTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        
+//        let xib = UINib(nibName: "Travel2TableViewCell", bundle: nil)
+//        tableView.register(xib, forCellReuseIdentifier: "Travel2TableViewCell")
+//        
     }
     //
     //    override func numberOfSections(in tableView: UITableView) -> Int {
@@ -131,7 +135,7 @@ class TravelTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "trabelCell", for: indexPath) as! TravelTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "magazineCell", for: indexPath) as! Travel2TableViewCell
         let trabelIndexPath = travel[indexPath.row]
         
         cell.configureTravelUI(trabelIndexPath: trabelIndexPath)
