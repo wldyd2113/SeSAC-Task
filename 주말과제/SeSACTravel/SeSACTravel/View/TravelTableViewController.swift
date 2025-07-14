@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import Toast
 class TravelTableViewController: UITableViewController {
     
     var travel: [Travel] = [Travel(title: "하나우마 베이",
@@ -118,9 +119,9 @@ class TravelTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        
-//        let xib = UINib(nibName: "Travel2TableViewCell", bundle: nil)
-//        tableView.register(xib, forCellReuseIdentifier: "Travel2TableViewCell")
+        
+        let xib = UINib(nibName: "Travel2TableViewCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: "Travel2TableViewCell")
 //        
     }
     //
@@ -135,7 +136,7 @@ class TravelTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "magazineCell", for: indexPath) as! Travel2TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Travel2TableViewCell", for: indexPath) as! Travel2TableViewCell
         let trabelIndexPath = travel[indexPath.row]
         
         cell.configureTravelUI(trabelIndexPath: trabelIndexPath)
@@ -160,6 +161,15 @@ class TravelTableViewController: UITableViewController {
         travel[sender.tag].like?.toggle()
         tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .fade)
     }
-
+    //셀 클릭 이벤트
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let trabelIndexPath = travel[indexPath.row]
+        
+        if trabelIndexPath.ad == true {
+            view.makeToast("광고 셀입니다!", duration: 5, position: .center)
+            tableView.reloadData()
+        }
+        
+    }
     
 }

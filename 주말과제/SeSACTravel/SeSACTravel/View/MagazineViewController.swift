@@ -27,8 +27,8 @@ class MagazineViewController: UITableViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
-        let xib = UINib(nibName: "Magazine2TableViewCell", bundle: nil)
-        tableView.register(xib, forCellReuseIdentifier: "Magazine2TableViewCell")
+//        let xib = UINib(nibName: "Magazine2TableViewCell", bundle: nil)
+//        tableView.register(xib, forCellReuseIdentifier: "Magazine2TableViewCell")
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,7 +36,7 @@ class MagazineViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Magazine2TableViewCell", for: indexPath) as! Magazine2TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "magazineCell", for: indexPath) as! MagazineTableViewCell
         let mazinageRow = magzinageData[indexPath.row]
 
         cell.configureUI(mazinageRow: mazinageRow)
