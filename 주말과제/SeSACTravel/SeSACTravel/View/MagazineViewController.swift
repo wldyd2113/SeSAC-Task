@@ -26,8 +26,6 @@ class MagazineViewController: UITableViewController {
         Magazine(title: "여행 고수가 알려주는 새벽 비행기 이용 꿀팁", subtitle: "이제 공항에서 시간 때울 걱정 끝!", photo_image: "https://cdn.pixabay.com/photo/2021/09/07/11/53/car-6603726_1280.jpg", date: "250105", link: "https://triple.guide/content/articles/791578f3-95d7-4300-a51f-6dff48db5d55"),
 
     ]
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -38,42 +36,9 @@ class MagazineViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "magazineCell", for: indexPath) as! MagazineTableViewCell
-        let url = URL(string: magzinageData[indexPath.row].photo_image)
-       
-        let firstDateformatter = DateFormatter()
-        firstDateformatter.dateFormat = "yyMMdd"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy년 MM월 dd일"
-        
-        let dateString = magzinageData[indexPath.row].date
+        let mazinageRow = magzinageData[indexPath.row]
 
- 
-        
-        cell.titleLabel.text = magzinageData[indexPath.row].title
-        cell.titleLabel.numberOfLines = 0
-        cell.titleLabel.font = .systemFont(ofSize: 15, weight: .bold)
-        
-        cell.subtitleLabel.text = magzinageData[indexPath.row].subtitle
-        cell.subtitleLabel.numberOfLines = 0
-        cell.subtitleLabel.font = .systemFont(ofSize: 10, weight: .light)
-        cell.subtitleLabel.textColor = .lightGray
-        
-        cell.potoImage.kf.setImage(with: url)
-        cell.potoImage.layer.cornerRadius = 10
-        
-        if let date = firstDateformatter.date(from: dateString) {
-            cell.dateLabel.text = dateFormatter.string(for: date)
-            print("변환된 날짜: \(date))")
-        }
-        else {
-            print("날짜 변환 실패")
-        }
-        cell.dateLabel.font = .systemFont(ofSize: 10, weight: .light)
-        cell.dateLabel.textColor = .lightGray
-        cell.dateLabel.textAlignment = .right
-        print(cell.dateLabel.text ?? 0)
-        
+        cell.configureUI(mazinageRow: mazinageRow)
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
