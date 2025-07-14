@@ -9,12 +9,13 @@
 import Foundation
 
 struct Travel {
-    let title: String?
-    let description: String?
-    let travel_image: String?
-    let grade: Double?
-    let save: Int?
+    
+    var title: String?
+    var description: String?
+    var travel_image: String?
+    var grade: Double?
+    var save: Int?
     var like: Bool?
-    let ad: Bool?
+    var ad: Bool?
 }
 

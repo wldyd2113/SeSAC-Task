@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 
-extension DateFormatter {
+extension UITableViewCell {
     
     func getDateString()  {
         let firstDateformatter = DateFormatter()
         firstDateformatter.dateFormat = "yyMMdd"
         
+        let dateFormatter = DateFormatter()
+        return dateFormatter.dateFormat = "yy년 MM월 dd일"
     }
 
 }

@@ -28,18 +28,23 @@ class MagazineTableViewCell: UITableViewCell {
         let url = URL(string: mazinageRow.photo_image)
        
         
-        let firstDateformatter = DateFormatter()
-        firstDateformatter.dateFormat = "yyMMdd"
+//        let firstDateformatter = DateFormatter()
+//        firstDateformatter.dateFormat = "yyMMdd"
+//        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yy년 MM월 dd일"
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy년 MM월 dd일"
         
         let dateString = mazinageRow.date
         titleLabel.text = mazinageRow.title
         subtitleLabel.text = mazinageRow.subtitle
         potoImage.kf.setImage(with: url)
         potoImage.layer.cornerRadius = 10
+        let firstDateformatter = DateFormatter()
+        firstDateformatter.dateFormat = "yyMMdd"
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy년 MM월 dd일"
         if let date = firstDateformatter.date(from: dateString) {
             dateLabel.text = dateFormatter.string(for: date)
             print("변환된 날짜: \(date))")
