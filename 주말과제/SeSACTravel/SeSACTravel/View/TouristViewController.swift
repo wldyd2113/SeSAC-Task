@@ -21,6 +21,10 @@ class TouristViewController: UIViewController {
     var bodyData = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+    }
+    
+    func configureUI() {
         let url = URL(string: travelImageData)
 
         travelImage.kf.setImage(with: url)
@@ -36,6 +40,7 @@ class TouristViewController: UIViewController {
         popButton.layer.cornerRadius = 10
         popButton.setTitleColor(.white, for: .normal)
     }
+    
 
     @IBAction func popButton(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
