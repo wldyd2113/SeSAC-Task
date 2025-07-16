@@ -25,39 +25,36 @@ class CityViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     }
         
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         
+//         if segment.selectedSegmentIndex == 0 {
+//             return cityList.count
+//         }
+//         else if segment.selectedSegmentIndex == 1 {
+//             return cityList.count
+//         }
+//         else if segment.selectedSegmentIndex == 2 {
+//             return cityList.count
+//         }
          return cityList.count
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: "CityTableViewCell", for: indexPath) as! CityTableViewCell
          let cityIndexPath = cityList[indexPath.row]
+         
          if segment.selectedSegmentIndex == 0 {
              cell.configureCityCell(cityIndexPath: cityIndexPath)
-             tableView.reloadData()
              print(cityList)
          }
-         else if segment.selectedSegmentIndex == 1 {
-             if cityIndexPath.domestic_travel == true {
+          else if segment.selectedSegmentIndex == 1 && cityIndexPath.domestic_travel == true {
                  cell.configureCityCell(cityIndexPath: cityIndexPath)
-                 tableView.reloadData()
-
-                 print(cityList)
-
-
-             }
-         }
-         else if segment.selectedSegmentIndex == 2 {
-             if cityIndexPath.domestic_travel == false {
-                 cell.configureCityCell(cityIndexPath: cityIndexPath)
-                 tableView.reloadData()
-
                  print(cityList)
              }
-         }
-//         
+         
+         else if segment.selectedSegmentIndex == 2 && cityIndexPath.domestic_travel == false {
+                 cell.configureCityCell(cityIndexPath: cityIndexPath)
+                 print(cityList)
+             }
          return cell
-
     }
     
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -74,4 +71,8 @@ class CityViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
     }
  
+
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        cityTable.reloadData()
+    }
 }
