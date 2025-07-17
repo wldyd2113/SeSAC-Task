@@ -281,7 +281,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ZL-bm-hQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4302" y="-1095"/>
+            <point key="canvasLocation" x="7644" y="-1535"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="cSi-Ik-VIX">
@@ -309,7 +309,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RY2-HE-8ZT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3680" y="-1201"/>
+            <point key="canvasLocation" x="6138" y="-1445"/>
         </scene>
         <!--Travel Table View Controller-->
         <scene sceneID="jhg-4V-R5l">
@@ -593,15 +593,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="90W-Uk-pdR">
-                                <rect key="frame" x="0.0" y="162" width="393" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="TjF-EH-cHS" id="vHP-3G-FKt"/>
-                                </connections>
-                            </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TEV-dy-Fkd">
-                                <rect key="frame" x="15" y="223" width="363" height="32"/>
+                                <rect key="frame" x="15" y="201" width="363" height="32"/>
                                 <segments>
                                     <segment title="모두"/>
                                     <segment title="국내"/>
@@ -612,30 +605,38 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zKD-KG-Wuw">
-                                <rect key="frame" x="0.0" y="274" width="393" height="461"/>
+                                <rect key="frame" x="0.0" y="252" width="393" height="483"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OOA-yD-8Xu">
+                                <rect key="frame" x="0.0" y="162" width="393" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="serachText:" destination="TjF-EH-cHS" eventType="editingDidEnd" id="IAF-OG-nMT"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="i3c-JW-FBd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="OOA-yD-8Xu" firstAttribute="top" secondItem="i3c-JW-FBd" secondAttribute="top" id="3eZ-7a-cyM"/>
                             <constraint firstItem="zKD-KG-Wuw" firstAttribute="top" secondItem="TEV-dy-Fkd" secondAttribute="bottom" constant="20" id="889-pn-vvk"/>
                             <constraint firstItem="i3c-JW-FBd" firstAttribute="trailing" secondItem="zKD-KG-Wuw" secondAttribute="trailing" id="HJC-T2-VJG"/>
                             <constraint firstItem="TEV-dy-Fkd" firstAttribute="leading" secondItem="i3c-JW-FBd" secondAttribute="leading" constant="15" id="IT6-kt-37L"/>
-                            <constraint firstItem="90W-Uk-pdR" firstAttribute="trailing" secondItem="i3c-JW-FBd" secondAttribute="trailing" id="NFN-kA-tQd"/>
-                            <constraint firstItem="90W-Uk-pdR" firstAttribute="top" secondItem="i3c-JW-FBd" secondAttribute="top" id="dna-bI-pLx"/>
+                            <constraint firstItem="i3c-JW-FBd" firstAttribute="trailing" secondItem="OOA-yD-8Xu" secondAttribute="trailing" id="cNF-Wr-Xkd"/>
                             <constraint firstItem="i3c-JW-FBd" firstAttribute="bottom" secondItem="zKD-KG-Wuw" secondAttribute="bottom" id="g5R-E7-14q"/>
+                            <constraint firstItem="TEV-dy-Fkd" firstAttribute="top" secondItem="OOA-yD-8Xu" secondAttribute="bottom" constant="5" id="nKw-Nz-VKO"/>
                             <constraint firstItem="zKD-KG-Wuw" firstAttribute="leading" secondItem="i3c-JW-FBd" secondAttribute="leading" id="q6D-Uc-WV2"/>
-                            <constraint firstItem="TEV-dy-Fkd" firstAttribute="top" secondItem="90W-Uk-pdR" secondAttribute="bottom" constant="5" id="rV2-mc-Ppx"/>
                             <constraint firstItem="i3c-JW-FBd" firstAttribute="trailing" secondItem="TEV-dy-Fkd" secondAttribute="trailing" constant="15" id="wGb-8x-Onl"/>
-                            <constraint firstItem="90W-Uk-pdR" firstAttribute="leading" secondItem="i3c-JW-FBd" secondAttribute="leading" id="ymm-6s-9oL"/>
+                            <constraint firstItem="OOA-yD-8Xu" firstAttribute="leading" secondItem="i3c-JW-FBd" secondAttribute="leading" id="xG4-0a-6vb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zZs-1a-Rsg"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cityTable" destination="zKD-KG-Wuw" id="ZAN-Fa-v9s"/>
-                        <outlet property="searchTextField" destination="90W-Uk-pdR" id="AYE-k7-lkg"/>
+                        <outlet property="searchTextField" destination="OOA-yD-8Xu" id="cNP-mU-L4J"/>
                         <outlet property="segment" destination="TEV-dy-Fkd" id="eQo-mI-bnA"/>
                     </connections>
                 </viewController>
@@ -716,6 +717,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="csd-ex-4OL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2432.8244274809158" y="-137.32394366197184"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="0UK-W0-oFE">
+            <objects>
+                <viewController id="aYb-Ir-sh1" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="afV-RG-zBI">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K1J-92-o3B">
+                                <rect key="frame" x="148" y="118" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="449-9o-ZGx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NQ6-eQ-V7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3440" y="-143"/>
         </scene>
     </scenes>
     <resources>

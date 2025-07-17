@@ -33,4 +33,5 @@ class CityTableViewCell: UITableViewCell {
         cityImage.contentMode = .scaleAspectFill
         
     }
+
 }
