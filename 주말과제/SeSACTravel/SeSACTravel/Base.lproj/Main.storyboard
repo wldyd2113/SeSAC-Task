@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -475,6 +476,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="cws-pE-lCk"/>
                         <segue destination="i8Q-FM-vpl" kind="relationship" relationship="viewControllers" id="9iH-IC-w6R"/>
                         <segue destination="SbG-Wq-vro" kind="relationship" relationship="viewControllers" id="gZn-xU-QC3"/>
+                        <segue destination="aYb-Ir-sh1" kind="relationship" relationship="viewControllers" id="aLo-P0-S7a"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aag-hz-jBQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -718,24 +720,82 @@
             </objects>
             <point key="canvasLocation" x="2432.8244274809158" y="-137.32394366197184"/>
         </scene>
-        <!--View Controller-->
+        <!--Item-->
         <scene sceneID="0UK-W0-oFE">
             <objects>
-                <viewController id="aYb-Ir-sh1" sceneMemberID="viewController">
+                <viewController id="aYb-Ir-sh1" customClass="City2ViewController" customModule="SeSACTravel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="afV-RG-zBI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K1J-92-o3B">
-                                <rect key="frame" x="148" y="118" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ru7-Td-oN3">
+                                <rect key="frame" x="0.0" y="74" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="인기 도시" id="7Uk-ya-xI1"/>
+                                </items>
+                            </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G2j-IG-7vJ">
+                                <rect key="frame" x="0.0" y="213" width="393" height="522"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bcX-G2-G91">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zRz-of-512">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LDd-XG-GSj">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K1J-92-o3B">
+                                <rect key="frame" x="0.0" y="148" width="393" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qLs-3c-6Gx">
+                                <rect key="frame" x="0.0" y="182" width="393" height="32"/>
+                                <segments>
+                                    <segment title="모두"/>
+                                    <segment title="국내"/>
+                                    <segment title="해외"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChange:" destination="aYb-Ir-sh1" eventType="valueChanged" id="cPi-n4-Ub0"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="449-9o-ZGx"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="K1J-92-o3B" firstAttribute="top" secondItem="Ru7-Td-oN3" secondAttribute="bottom" constant="30" id="2ZI-mt-N5y"/>
+                            <constraint firstItem="Ru7-Td-oN3" firstAttribute="bottom" secondItem="449-9o-ZGx" secondAttribute="top" id="5hx-Wc-2a1"/>
+                            <constraint firstItem="449-9o-ZGx" firstAttribute="bottom" secondItem="G2j-IG-7vJ" secondAttribute="bottom" id="6ZU-Lf-7wp"/>
+                            <constraint firstItem="G2j-IG-7vJ" firstAttribute="top" secondItem="qLs-3c-6Gx" secondAttribute="bottom" id="8lX-56-1sg"/>
+                            <constraint firstItem="qLs-3c-6Gx" firstAttribute="leading" secondItem="449-9o-ZGx" secondAttribute="leading" id="GWG-3W-aRU"/>
+                            <constraint firstItem="449-9o-ZGx" firstAttribute="trailing" secondItem="qLs-3c-6Gx" secondAttribute="trailing" id="Igz-sO-zqN"/>
+                            <constraint firstItem="qLs-3c-6Gx" firstAttribute="top" secondItem="K1J-92-o3B" secondAttribute="bottom" id="JE1-Ox-YDm"/>
+                            <constraint firstItem="K1J-92-o3B" firstAttribute="leading" secondItem="449-9o-ZGx" secondAttribute="leading" id="Nik-2G-Ejn"/>
+                            <constraint firstItem="449-9o-ZGx" firstAttribute="trailing" secondItem="K1J-92-o3B" secondAttribute="trailing" id="Qhh-YZ-zty"/>
+                            <constraint firstItem="449-9o-ZGx" firstAttribute="trailing" secondItem="G2j-IG-7vJ" secondAttribute="trailing" id="YRX-Mq-KhF"/>
+                            <constraint firstItem="G2j-IG-7vJ" firstAttribute="leading" secondItem="449-9o-ZGx" secondAttribute="leading" id="fiT-Y2-NwN"/>
+                            <constraint firstItem="Ru7-Td-oN3" firstAttribute="leading" secondItem="K1J-92-o3B" secondAttribute="leading" id="nkC-Z8-Z2j"/>
+                            <constraint firstItem="Ru7-Td-oN3" firstAttribute="trailing" secondItem="K1J-92-o3B" secondAttribute="trailing" id="ucq-NY-pQd"/>
+                        </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="cpf-5z-dfs"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cityColletionView" destination="G2j-IG-7vJ" id="cfE-O1-N3L"/>
+                        <outlet property="searchTextField" destination="K1J-92-o3B" id="XDz-8X-ToE"/>
+                        <outlet property="segment" destination="qLs-3c-6Gx" id="CjZ-qZ-405"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NQ6-eQ-V7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

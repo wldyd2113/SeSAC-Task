@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,15 +29,86 @@
         <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CityColletoion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CityViewController" customModule="CityColletoion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="45R-dA-MOp">
+                                <rect key="frame" x="0.0" y="123" width="393" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f4I-gz-Tfx">
+                                <rect key="frame" x="0.0" y="48" width="393" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="인기도시" id="9iG-FK-PvY"/>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2p-Ri-psR">
+                                <rect key="frame" x="10.000000000000007" y="162" width="117.66666666666669" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="모두"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXG-h5-yTf">
+                                <rect key="frame" x="137.66666666666666" y="162" width="117.66666666666666" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="국내"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRi-f0-u8t">
+                                <rect key="frame" x="265.33333333333331" y="162" width="117.66666666666669" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="해외"/>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yMa-C9-1aa">
+                                <rect key="frame" x="0.0" y="217" width="393" height="518"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Dip-i7-oJD">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Doe-lw-j8b">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c70-kb-kjL">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yMa-C9-1aa" secondAttribute="bottom" id="8TV-L6-104"/>
+                            <constraint firstItem="l2p-Ri-psR" firstAttribute="top" secondItem="45R-dA-MOp" secondAttribute="bottom" constant="5" id="EVg-Gu-08H"/>
+                            <constraint firstItem="yMa-C9-1aa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MQ3-um-Ygb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yMa-C9-1aa" secondAttribute="trailing" id="OPY-sG-p3G"/>
+                            <constraint firstItem="yMa-C9-1aa" firstAttribute="top" secondItem="l2p-Ri-psR" secondAttribute="bottom" constant="20" id="P6g-Tn-FOl"/>
+                            <constraint firstItem="45R-dA-MOp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="R7c-c0-qGF"/>
+                            <constraint firstItem="l2p-Ri-psR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="WfR-TV-Se6"/>
+                            <constraint firstItem="oRi-f0-u8t" firstAttribute="width" secondItem="l2p-Ri-psR" secondAttribute="width" id="YsB-br-Hno"/>
+                            <constraint firstItem="oRi-f0-u8t" firstAttribute="top" secondItem="45R-dA-MOp" secondAttribute="bottom" constant="5" id="eBx-Ls-YWr"/>
+                            <constraint firstItem="kXG-h5-yTf" firstAttribute="leading" secondItem="l2p-Ri-psR" secondAttribute="trailing" constant="10" id="h9a-Uv-PMb"/>
+                            <constraint firstItem="45R-dA-MOp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hT4-YE-jAy"/>
+                            <constraint firstItem="kXG-h5-yTf" firstAttribute="width" secondItem="l2p-Ri-psR" secondAttribute="width" id="i3F-Lq-kpi"/>
+                            <constraint firstItem="kXG-h5-yTf" firstAttribute="top" secondItem="45R-dA-MOp" secondAttribute="bottom" constant="5" id="iTJ-Ak-4a3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="45R-dA-MOp" secondAttribute="trailing" id="iZ9-8c-ers"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oRi-f0-u8t" secondAttribute="trailing" constant="10" id="oI7-AD-Lw4"/>
+                            <constraint firstItem="oRi-f0-u8t" firstAttribute="leading" secondItem="kXG-h5-yTf" secondAttribute="trailing" constant="10" id="zFP-eM-qMf"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="TwO-9q-TAE"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cityColletionView" destination="yMa-C9-1aa" id="74c-Oe-dSL"/>
+                        <outlet property="searchTextField" destination="45R-dA-MOp" id="K5l-9l-HHu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
