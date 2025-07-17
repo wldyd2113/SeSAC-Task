@@ -98,7 +98,7 @@ class City2ViewController: UIViewController, UICollectionViewDelegate, UICollect
         var  filter3: [City] = []
         let cityResult = CityInfo().city
 
-        for citySeg in city {
+        for citySeg in cityResult {
             if segment.selectedSegmentIndex == 0 {
                 filter1.append(citySeg)
                 city = filter1
