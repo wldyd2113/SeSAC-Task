@@ -47,36 +47,10 @@ class CityViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CityTableViewCell", for: indexPath) as! CityTableViewCell
         let cityIndexPath = cityList[indexPath.row]
-        var cityTrue: [City] = []
-        var cityFalse: [City] = []
-        let selected = segment.selectedSegmentIndex
         
-//        for city in cityList {
-//            if city.domestic_travel == true {
-//                cityTrue.append(city)
-//                print("TrueSSS",cityTrue)
-//            }
-//        }
-        //ex 다낭이 들어왔을때 분기처리
-        if selected == 0 {
-            cell.configureCityCell(cityIndexPath: cityIndexPath)
-        }
-        else if selected == 1  {
-            if cityIndexPath.domestic_travel == true {
-                print("sadasd",cityIndexPath)
-                cell.configureCityCell(cityIndexPath: cityIndexPath)
-                
-            }
-            else {
-                cityFalse = cityList
-            }
-        }
-        else if selected == 2   {
-            if cityIndexPath.domestic_travel == false {
-                cell.configureCityCell(cityIndexPath: cityIndexPath)
-                print(cityTrue)
-            }
-        }
+        
+        cell.configureCityCell(cityIndexPath: cityIndexPath)
+        
         return cell
     }
     
@@ -96,7 +70,38 @@ class CityViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) { //필터된 데이터를 가지고 있게
+        var  filter1: [City] = []
+        var  filter2: [City] = []
+        var  filter3: [City] = []
+        let cityResult = CityInfo().city
+        
+        for citySeg in cityResult {
+            if segment.selectedSegmentIndex == 0 {
+                filter1.append(citySeg)
+                cityList = filter1
+                print("0번", cityList)
+                
+            }
+            else if segment.selectedSegmentIndex == 1 {
+                if citySeg.domestic_travel == true {
+                    filter2.append(citySeg)
+                    cityList = filter2
+                    print("1번", cityList)
+                    
+                }
+                
+            }
+            else if segment.selectedSegmentIndex == 2 {
+                if citySeg.domestic_travel == false {
+                    filter3.append(citySeg)
+                    cityList = filter3
+                    print("2번", cityList)
+                }
+            }
+            
+        }
         cityTable.reloadData()
+        
     }
     
     
