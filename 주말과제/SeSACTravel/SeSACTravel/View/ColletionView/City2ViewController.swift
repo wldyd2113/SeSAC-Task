@@ -27,11 +27,15 @@ class City2ViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         let layout = UICollectionViewFlowLayout()
         let devieWith = UIScreen.main.bounds.width
-        let cellWidth = devieWith - (10 * 2) - (10 * 3)
-        layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth / 2)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        layout.scrollDirection = .horizontal
+        let cellWidth = devieWith - (16 * 2) - (16 * 4)
+
+        layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth)
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        layout.minimumLineSpacing = 16 //
+        layout.minimumInteritemSpacing = 16 //셀사이의 간격
+        layout.scrollDirection = .vertical
+        cityColletionView.collectionViewLayout = layout
+
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -42,55 +46,56 @@ class City2ViewController: UIViewController, UICollectionViewDelegate, UICollect
         let cityList = city[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "City2CollectionViewCell", for: indexPath) as! City2CollectionViewCell
         cell.configureCell(cityIndexPath: cityList)
+
         return cell
     }
     
     
-    @IBAction func everyButtonChecked(_ sender: UIButton) {
-        var filter: [City] = []
-        
-        let cityTotal = CityInfo().city
-        
-        for city in cityTotal {
-            filter.append(city)
-        }
-        city = filter
-        cityColletionView.reloadData()
-        
-    }
-    
-    @IBAction func domesticButtonClicked(_ sender: UIButton) {
-        var filter: [City] = []
-        
-        let cityDomestic = CityInfo().city
-        
-        for city in cityDomestic {
-            if city.domestic_travel == true {
-                filter.append(city)
-            }
-        }
-        city = filter
-        cityColletionView.reloadData()
-        
-    }
-    
-    
-    @IBAction func overseasButtonClicked(_ sender: UIButton) {
-        var filter: [City] = []
-        
-        let cityOverseas = CityInfo().city
-        
-        for city in cityOverseas {
-            if city.domestic_travel == false {
-                filter.append(city)
-            }
-        }
-        
-        city = filter
-        cityColletionView.reloadData()
-        
-    }
-    
+//    @IBAction func everyButtonChecked(_ sender: UIButton) {
+//        var filter: [City] = []
+//        
+//        let cityTotal = CityInfo().city
+//        
+//        for city in cityTotal {
+//            filter.append(city)
+//        }
+//        city = filter
+//        cityColletionView.reloadData()
+//        
+//    }
+//    
+//    @IBAction func domesticButtonClicked(_ sender: UIButton) {
+//        var filter: [City] = []
+//        
+//        let cityDomestic = CityInfo().city
+//        
+//        for city in cityDomestic {
+//            if city.domestic_travel == true {
+//                filter.append(city)
+//            }
+//        }
+//        city = filter
+//        cityColletionView.reloadData()
+//        
+//    }
+//    
+//    
+//    @IBAction func overseasButtonClicked(_ sender: UIButton) {
+//        var filter: [City] = []
+//        
+//        let cityOverseas = CityInfo().city
+//        
+//        for city in cityOverseas {
+//            if city.domestic_travel == false {
+//                filter.append(city)
+//            }
+//        }
+//        
+//        city = filter
+//        cityColletionView.reloadData()
+//        
+//    }
+//    
     
     @IBAction func segmentChange(_ sender: UISegmentedControl) {
         var  filter1: [City] = []
@@ -103,7 +108,6 @@ class City2ViewController: UIViewController, UICollectionViewDelegate, UICollect
                 filter1.append(citySeg)
                 city = filter1
                 print("0번", city)
-
             }
             else if segment.selectedSegmentIndex == 1 {
                 if citySeg.domestic_travel == true {
