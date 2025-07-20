@@ -15,6 +15,7 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
     
     var chatData = ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
     var userRemove = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "\(chatData.chatroomName)"
@@ -29,6 +30,7 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         
         chatRoomTable.delegate = self
         chatRoomTable.dataSource = self
+        
         textFieldUI()
 
     }
@@ -42,22 +44,35 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let chat = chatData.chatList[indexPath.row]
-
-        if chat.user.name == userRemove {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
-            cell.configureUserData(chat)
-            return cell
+        let meName = "김새싹"
+        var meBool: Bool {
+            for chat in chatData.chatList {
+                if chat.user.name == meName {
+                    return true
+                }
+            }
+            return false
+        }
+        if meBool {
+            if chat.user.name == userRemove {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
+                cell.configureData(chat)
+                return cell
+            }
+            else  {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+                cell.configureUserData(chat)
+                return cell
+            }
+            
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
             cell.configureData(chat)
             return cell
-
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

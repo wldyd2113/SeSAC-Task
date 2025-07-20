@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,49 +17,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqv-E5-rib">
-                                <rect key="frame" x="0.0" y="61" width="393" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uqv-E5-rib">
+                                <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                                 <items>
                                     <navigationItem title="TRAVEL TALK" id="e2A-Ci-tOr"/>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eMe-ES-8DP">
-                                <rect key="frame" x="16" y="162" width="361" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="drk-gL-6yA">
+                                <rect key="frame" x="0.0" y="182" width="393" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="r5Q-Mj-RIh">
-                                <rect key="frame" x="0.0" y="212" width="393" height="572"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ugx-D0-dLh">
+                                <rect key="frame" x="0.0" y="226" width="393" height="558"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="N2v-vp-abK">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="44.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N2v-vp-abK" id="jLc-LE-tG8">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="44.666667938232422"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VQv-hF-VDq">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Dud-D0-542" customClass="ChatttingRoomCollectionViewCell" customModule="TravelTalk" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0pG-ZC-kGt">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="r5Q-Mj-RIh" secondAttribute="bottom" id="B5J-c9-Kw4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eMe-ES-8DP" secondAttribute="trailing" constant="16" id="Q13-XX-Hex"/>
-                            <constraint firstItem="r5Q-Mj-RIh" firstAttribute="top" secondItem="eMe-ES-8DP" secondAttribute="bottom" constant="16" id="WwF-p1-lnd"/>
-                            <constraint firstItem="eMe-ES-8DP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="YU5-o4-Umz"/>
-                            <constraint firstItem="eMe-ES-8DP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kTd-R8-z8g"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r5Q-Mj-RIh" secondAttribute="trailing" id="lGQ-2y-333"/>
-                            <constraint firstItem="r5Q-Mj-RIh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xkC-Ew-HyO"/>
+                            <constraint firstItem="uqv-E5-rib" firstAttribute="leading" secondItem="drk-gL-6yA" secondAttribute="leading" id="2kd-22-GUg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="drk-gL-6yA" secondAttribute="trailing" id="Dzm-dz-H8C"/>
+                            <constraint firstItem="drk-gL-6yA" firstAttribute="top" secondItem="uqv-E5-rib" secondAttribute="bottom" constant="20" id="L2G-ih-YQk"/>
+                            <constraint firstItem="Ugx-D0-dLh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="RiK-JZ-pde"/>
+                            <constraint firstItem="Ugx-D0-dLh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="boJ-HU-y99"/>
+                            <constraint firstItem="Ugx-D0-dLh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eYl-cO-LUE"/>
+                            <constraint firstItem="drk-gL-6yA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hFJ-nR-wx7"/>
+                            <constraint firstItem="uqv-E5-rib" firstAttribute="trailing" secondItem="drk-gL-6yA" secondAttribute="trailing" id="kRy-OP-qk2"/>
+                            <constraint firstItem="uqv-E5-rib" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="top" id="pCv-mo-GY3"/>
+                            <constraint firstItem="Ugx-D0-dLh" firstAttribute="top" secondItem="drk-gL-6yA" secondAttribute="bottom" constant="10" id="veG-I4-QJ1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kkO-Z4-rNy"/>
                     <connections>
-                        <outlet property="chatTableView" destination="r5Q-Mj-RIh" id="2o3-bP-O4y"/>
-                        <outlet property="searchTextField" destination="eMe-ES-8DP" id="SVK-yF-gJt"/>
+                        <outlet property="chatColletionView" destination="Ugx-D0-dLh" id="uR3-6e-4yx"/>
+                        <outlet property="searchTextField" destination="drk-gL-6yA" id="Ac9-qH-SjC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
