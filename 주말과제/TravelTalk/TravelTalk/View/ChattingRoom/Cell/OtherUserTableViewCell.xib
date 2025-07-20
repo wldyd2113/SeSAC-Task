@@ -53,6 +53,7 @@
                             <constraint firstItem="QSZ-Xa-8J8" firstAttribute="leading" secondItem="9nb-C2-Atd" secondAttribute="leading" constant="8" id="FbW-IB-nYV"/>
                             <constraint firstAttribute="height" constant="50" id="I8W-WD-xx8"/>
                             <constraint firstItem="QSZ-Xa-8J8" firstAttribute="top" secondItem="9nb-C2-Atd" secondAttribute="top" constant="8" id="UBb-rI-LfK"/>
+                            <constraint firstAttribute="bottom" secondItem="QSZ-Xa-8J8" secondAttribute="bottom" constant="8" id="atk-rt-McU"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTo-2x-ll7">

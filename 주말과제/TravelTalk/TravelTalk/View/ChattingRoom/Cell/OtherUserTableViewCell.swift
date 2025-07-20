@@ -38,6 +38,7 @@ class OtherUserTableViewCell: UITableViewCell {
         
         messageLabel.textColor = .black
         messageLabel.font = .systemFont(ofSize: 10)
+        messageLabel.numberOfLines = 0
         
         dateLabel.font = .systemFont(ofSize: 5)
         dateLabel.textColor = .lightGray
