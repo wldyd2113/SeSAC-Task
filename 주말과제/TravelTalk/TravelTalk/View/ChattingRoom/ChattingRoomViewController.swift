@@ -7,23 +7,53 @@
 
 import UIKit
 
-class ChattingRoomViewController: UIViewController {
+class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
+    
+    @IBOutlet var chatRoomTable: UITableView!
+    
+    var chatData = ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
+    var filterUser:[Chat] = []
+    var userRemove = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "\(chatData.chatroomName)"
+        
+        let xib = UINib(nibName: "OtherUserTableViewCell", bundle: nil)
+        chatRoomTable.register(xib, forCellReuseIdentifier: "OtherUserTableViewCell")
+        
+        chatRoomTable.separatorStyle = .none
+        
+        chatRoomTable.delegate = self
+        chatRoomTable.dataSource = self
+        
+        for i in chatData.chatList {
+            if i.user.name != userRemove {
+                filterUser.append(i)
+            }
+            
+        }
 
-        // Do any additional setup after loading the view.
+
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filterUser.count
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
+        let chat = chatData.chatList[indexPath.row]
+        
+        
+        cell.configureData(chat)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+
 
 }

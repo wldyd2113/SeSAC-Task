@@ -22,6 +22,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         chatTableView.dataSource = self
         chatTableView.delegate = self
+        chatTableView.separatorStyle = .none //선없애기
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,6 +38,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "ChattingRoomViewController") as! ChattingRoomViewController
+        vc.chatData = chatList[indexPath.row]
+        vc.userRemove = chatList[indexPath.row].chatList.last?.user.name ?? ""
+        print(chatList[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
 
     

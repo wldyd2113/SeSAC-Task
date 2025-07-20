@@ -68,13 +68,47 @@
         <!--Chatting Room View Controller-->
         <scene sceneID="HFZ-Fo-byG">
             <objects>
-                <viewController id="3q1-xJ-XX3" customClass="ChattingRoomViewController" customModule="TravelTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChattingRoomViewController" id="3q1-xJ-XX3" customClass="ChattingRoomViewController" customModule="TravelTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WWw-1p-U0X">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GiE-j3-khb">
+                                <rect key="frame" x="0.0" y="74" width="393" height="44"/>
+                                <items>
+                                    <navigationItem id="Rfc-QH-m5P"/>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hrD-ea-C6B">
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="rzF-nm-gcf">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="44.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rzF-nm-gcf" id="2zy-RI-arn">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="44.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="7wN-9x-hDv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hrD-ea-C6B" firstAttribute="top" secondItem="GiE-j3-khb" secondAttribute="bottom" id="4IT-BC-CSq"/>
+                            <constraint firstItem="hrD-ea-C6B" firstAttribute="leading" secondItem="7wN-9x-hDv" secondAttribute="leading" id="9Jn-gO-CpV"/>
+                            <constraint firstItem="GiE-j3-khb" firstAttribute="bottom" secondItem="7wN-9x-hDv" secondAttribute="top" id="JJV-Lq-z4P"/>
+                            <constraint firstItem="7wN-9x-hDv" firstAttribute="bottom" secondItem="hrD-ea-C6B" secondAttribute="bottom" id="TfY-1e-B11"/>
+                            <constraint firstItem="GiE-j3-khb" firstAttribute="trailing" secondItem="hrD-ea-C6B" secondAttribute="trailing" id="XZA-Ql-sHk"/>
+                            <constraint firstItem="GiE-j3-khb" firstAttribute="leading" secondItem="hrD-ea-C6B" secondAttribute="leading" id="eeS-Cp-gc0"/>
+                            <constraint firstItem="7wN-9x-hDv" firstAttribute="trailing" secondItem="hrD-ea-C6B" secondAttribute="trailing" id="pXW-ho-wwD"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chatRoomTable" destination="hrD-ea-C6B" id="BeD-ix-rPe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9x8-dH-I2e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
