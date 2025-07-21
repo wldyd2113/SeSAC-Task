@@ -27,6 +27,9 @@
                                 <rect key="frame" x="0.0" y="182" width="393" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchText:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="XhK-wC-XqZ"/>
+                                </connections>
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ugx-D0-dLh">
                                 <rect key="frame" x="0.0" y="226" width="393" height="558"/>

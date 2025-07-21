@@ -12,7 +12,7 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
     
     
     let chatList = ChatList.list
-     
+    let user = User(name: "", image: "")
     @IBOutlet var searchTextField: UITextField!
     @IBOutlet var chatColletionView: UICollectionView!
     
@@ -55,6 +55,22 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
         vc.userRemove = chatList[indexPath.row].chatList.last?.user.name ?? ""
         print(chatList[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+
+
+    @IBAction func searchText(_ sender: UITextField) {
+        guard let search = searchTextField.text else { return }
+        var searchList: [ChatRoom] = []
+        if search == chatList[sender.tag].chatList.last?.user.name ?? "" {
+            searchList = chatList
+            print(searchList)
+            chatColletionView.reloadData()
+        }
+        else {
+            print("값: \(searchList)")
+        }
+        print("클릭")
     }
     
 }
