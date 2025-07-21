@@ -78,6 +78,7 @@ class LoginViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -111,6 +112,7 @@ class LoginViewController: UIViewController {
         
         viewLayout()
     }
+    
     func viewLayout() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -177,6 +179,11 @@ class LoginViewController: UIViewController {
 
         }
         
+    }
+    
+    @objc func buttonTapped() {
+        let vc = NaverPayViewController()
+        present(vc, animated: true)
     }
     
     
