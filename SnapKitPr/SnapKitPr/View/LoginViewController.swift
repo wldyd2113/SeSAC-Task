@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.textAlignment = .center
         textField.placeholder = "이메일 주소 또는 전화번호"
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .gray
         textField.layer.cornerRadius = 5
         textField.layer.masksToBounds = true
         textField.textColor = .white
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "비밀번호"
         textField.textAlignment = .center
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .gray
         textField.layer.cornerRadius = 5
         textField.layer.masksToBounds = true
         textField.textColor = .white
@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "닉네임"
         textField.textAlignment = .center
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .gray
         textField.layer.cornerRadius = 5
         textField.layer.masksToBounds = true
         textField.textColor = .white
@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "위치"
         textField.textAlignment = .center
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .gray
         textField.layer.cornerRadius = 5
         textField.layer.masksToBounds = true
         textField.textColor = .white
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "추천 코드"
         textField.textAlignment = .center
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .gray
         textField.layer.cornerRadius = 5
         textField.layer.masksToBounds = true
         textField.textColor = .white
@@ -109,6 +109,9 @@ class LoginViewController: UIViewController {
         view.addSubview(infoButton)
         view.addSubview(switchButton)
         
+        viewLayout()
+    }
+    func viewLayout() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.centerX.equalToSuperview()
@@ -116,7 +119,7 @@ class LoginViewController: UIViewController {
         }
         
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(150)
+            make.top.equalTo(titleLabel.snp.bottom).offset(100)
             make.width.equalTo(300)
             make.height.equalTo(40)
             make.leading.equalToSuperview().offset(50)
@@ -174,8 +177,7 @@ class LoginViewController: UIViewController {
 
         }
         
-        
-        
     }
+    
     
 }
