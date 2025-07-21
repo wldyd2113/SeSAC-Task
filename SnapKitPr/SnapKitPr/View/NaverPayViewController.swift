@@ -33,6 +33,7 @@ class NaverPayViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
+        button.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -54,7 +55,7 @@ class NaverPayViewController: UIViewController {
     
     let checkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "checkmark.circle.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
         button.tintColor = .green
         return button
     }()
@@ -63,7 +64,7 @@ class NaverPayViewController: UIViewController {
         let label = UILabel()
         label.text = "바로 결제 사용하기"
         label.textColor = .black
-        label.font = .systemFont(ofSize: 10, weight: .bold)
+        label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
@@ -72,7 +73,7 @@ class NaverPayViewController: UIViewController {
         button.setTitle("환인", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .green
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
         return button
     }()
@@ -135,10 +136,27 @@ class NaverPayViewController: UIViewController {
         }
         
         checkButton.snp.makeConstraints { make in
-            make.top.equalTo(<#T##other: any ConstraintRelatableTarget##any ConstraintRelatableTarget#>)
+            make.top.equalTo(bodyLabel).offset(100)
+            make.leading.equalTo(naverUIView).offset(50)
+//            make.trailing.equalTo(naverUIView).offset(-40)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
         }
-        
-        
+        bottmLabel.snp.makeConstraints { make in
+            make.top.equalTo(bodyLabel).offset(125)
+            make.leading.equalTo(checkButton).offset(100)
+            make.width.equalTo(200)
+            make.height.equalTo(100)
+        }
+        completeButton.snp.makeConstraints { make in
+            make.top.equalTo(bottmLabel).offset(100)
+            make.horizontalEdges.equalTo(naverUIView).inset(20)
+            make.width.equalTo(300)
+            make.height.equalTo(50)
+        }
     }
     
+    @objc func xButtonTapped() {
+        dismiss(animated: true)
+    }
 }

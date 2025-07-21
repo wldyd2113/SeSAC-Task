@@ -81,3 +81,10 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
 
 
 }
+
+/*
+ 1. 값전달 코드 지우고 다시 전달해보기
+ 2. 텍스트 필드 검색 (1. 풀네임검색 2. 부분문자열로 검색) + 키보드 내리기
+ 3. 채팅에서 채팅보내면 tableview 리로드
+ 4. 오토디멘션 사용해서 셀높이 유동적으로 조절되게 해보기
+ */
