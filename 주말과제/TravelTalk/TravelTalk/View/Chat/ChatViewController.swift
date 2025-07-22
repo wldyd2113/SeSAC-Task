@@ -11,13 +11,14 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
 
     
     
-    let chatList = ChatList.list
-    let user = User(name: "", image: "")
+    let chat = ChatList.list
+    var filterChat: [ChatRoom] = []
     @IBOutlet var searchTextField: UITextField!
     @IBOutlet var chatColletionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        filterChat = chat
         
         let xib = UINib(nibName: "ChatttingRoomCollectionViewCell", bundle: nil)
         chatColletionView.register(xib, forCellWithReuseIdentifier: "ChatttingRoomCollectionViewCell")
@@ -38,12 +39,12 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        chatList.count
+        filterChat.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChatttingRoomCollectionViewCell", for: indexPath) as! ChatttingRoomCollectionViewCell
-        cell.configureData(chatList[indexPath.row])
+        cell.configureData(filterChat[indexPath.row])
         return cell
     }
     
@@ -51,26 +52,23 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "ChattingRoomViewController") as! ChattingRoomViewController
-        vc.chatData = chatList[indexPath.row]
-        vc.userRemove = chatList[indexPath.row].chatList.last?.user.name ?? ""
-        print(chatList[indexPath.row])
+        vc.chatData = filterChat[indexPath.row]
+        vc.userRemove = filterChat[indexPath.row].chatList.last?.user.name ?? ""
+        print(filterChat[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
     
 
 
     @IBAction func searchText(_ sender: UITextField) {
-        guard let search = searchTextField.text else { return }
-        var searchList: [ChatRoom] = []
-        if search == chatList[sender.tag].chatList.last?.user.name ?? "" {
-            searchList = chatList
-            print(searchList)
+        guard let search = sender.text, !search.isEmpty else {
+            filterChat = chat
             chatColletionView.reloadData()
+            return
         }
-        else {
-            print("값: \(searchList)")
-        }
-        print("클릭")
+        filterChat = chat.filter { $0.chatList.last?.user.name.contains(search) ?? false}
+        chatColletionView.reloadData()
+        
     }
     
 }

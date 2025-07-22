@@ -38,9 +38,9 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell {
         
         guard let chat = chatData.chatList.last else { return }
         
-        userImage.image = UIImage(named: chat.user.image)
+        userImage.image = UIImage(named: chatData.chatroomImage)
         
-        userName.text = chat.user.name
+        userName.text = chatData.chatroomName
         
         messageLabel.text = chat.message
 
