@@ -23,17 +23,17 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmn-IQ-ySk">
-                        <rect key="frame" x="71" y="4" width="120" height="21"/>
+                        <rect key="frame" x="71" y="4" width="140" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Key-W6-bf9"/>
-                            <constraint firstAttribute="width" constant="120" id="qCI-Cu-ojY"/>
+                            <constraint firstAttribute="width" constant="140" id="qCI-Cu-ojY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oy-EP-lh7">
-                        <rect key="frame" x="261" y="4" width="49" height="21"/>
+                        <rect key="frame" x="241" y="4" width="69" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ZbM-AL-OOP"/>
                         </constraints>
@@ -53,7 +53,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="9oy-EP-lh7" firstAttribute="leading" secondItem="cmn-IQ-ySk" secondAttribute="trailing" constant="70" id="AZd-fd-jEU"/>
+                    <constraint firstItem="9oy-EP-lh7" firstAttribute="leading" secondItem="cmn-IQ-ySk" secondAttribute="trailing" constant="30" id="AZd-fd-jEU"/>
                     <constraint firstItem="9oy-EP-lh7" firstAttribute="baseline" secondItem="cmn-IQ-ySk" secondAttribute="baseline" id="GzO-bf-Lxy"/>
                     <constraint firstItem="ivL-1a-J5s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="MAb-fI-yi9"/>
                     <constraint firstItem="ivL-1a-J5s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="MB6-en-iMl"/>

@@ -25,7 +25,7 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.masksToBounds = true
         
-        userName.font = .boldSystemFont(ofSize: 15)
+        userName.font = .boldSystemFont(ofSize: 12)
         
         messageLabel.font = .systemFont(ofSize: 10)
         messageLabel.textColor = .lightGray
