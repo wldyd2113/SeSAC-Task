@@ -8,7 +8,9 @@
 import UIKit
 
 class UserTableViewCell: UITableViewCell, CellProtocol {
-
+    
+    static let identifier = "UserTableViewCell"
+    
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageView: UIView!
     @IBOutlet var userMessage: UILabel!
@@ -18,7 +20,7 @@ class UserTableViewCell: UITableViewCell, CellProtocol {
         configureUI()
     }
     
-     func configureUI() {
+    func configureUI() {
         messageView.backgroundColor = .white
         messageView.layer.cornerRadius = 10
         messageView.layer.borderWidth = 1
@@ -34,24 +36,18 @@ class UserTableViewCell: UITableViewCell, CellProtocol {
     }
     func configureData(_ chat: Chat) {
         userMessage.text = chat.message
-        let firstDate = DateFormatter()
-        firstDate.dateFormat = "yyyy-MM-dd HH:mm"
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "a.HH.mm"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let dateString = chat.date
         
-            let dateString = chat.date
-            
-            if let date = firstDate.date(from: dateString) {
-                dateLabel.text = dateFormatter.string(for: date)
-                print("형변환 성공")
-            }
-            else {
-                print("형변환 실패")
-            }
-
+        if let date = UserTableViewCell.firstDateExtension.date(from: dateString) {
+            dateLabel.text = UserTableViewCell.dateFormatterExtension.string(for: date)
+            print("형변환 성공")
+        }
+        else {
+            print("형변환 실패")
+        }
+        
     }
-
-
+    
+    
 }

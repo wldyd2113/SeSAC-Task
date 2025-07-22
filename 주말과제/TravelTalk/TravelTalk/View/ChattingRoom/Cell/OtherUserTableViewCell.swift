@@ -9,6 +9,8 @@ import UIKit
 
 class OtherUserTableViewCell: UITableViewCell {
     
+    static let identifier = "OtherUserTableViewCell"
+    
     @IBOutlet var chatroomImage: UIImageView!
     
     @IBOutlet var nameLabel: UILabel!
@@ -51,22 +53,16 @@ class OtherUserTableViewCell: UITableViewCell {
         nameLabel.text = chat.user.name
         print(nameLabel.text)
         messageLabel.text = chat.message
-        let firstDate = DateFormatter()
-        firstDate.dateFormat = "yyyy-MM-dd HH:mm"
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "a.HH.mm"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let dateString = chat.date
         
-            let dateString = chat.date
-            
-            if let date = firstDate.date(from: dateString) {
-                dateLabel.text = dateFormatter.string(for: date)
-                print("형변환 성공")
-            }
-            else {
-                print("형변환 실패")
-            }
+        if let date = UserTableViewCell.firstDateExtension.date(from: dateString) {
+            dateLabel.text = UserTableViewCell.dateFormatterExtension.string(for: date)
+            print("형변환 성공")
+        }
+        else {
+            print("형변환 실패")
+        }
 
     }
 

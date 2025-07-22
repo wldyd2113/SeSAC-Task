@@ -8,6 +8,8 @@
 import UIKit
 
 class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
+    
+    static let identifier: String = "ChatttingRoomCollectionViewCell"
 
     @IBOutlet var userImage: UIImageView!
     @IBOutlet var userName: UILabel!
@@ -20,7 +22,6 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
     }
     
     func configureUI() {
-        
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.masksToBounds = true
         
@@ -31,11 +32,8 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
         
         dateLabel.textColor = .lightGray
         dateLabel.font = .systemFont(ofSize: 10)
-
     }
     func configureData(_ chatData: ChatRoom) {
-
-        
         guard let chat = chatData.chatList.last else { return }
         
         userImage.image = UIImage(named: chatData.chatroomImage)

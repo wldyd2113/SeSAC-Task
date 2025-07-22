@@ -13,6 +13,8 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
     @IBOutlet var chatRoomTable: UITableView!
     @IBOutlet var messageTextField: UITextField!
     
+    let oIdentifier = OtherUserTableViewCell.identifier
+    let uIdentifier = UserTableViewCell.identifier
     var chatData = ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
     var userRemove = ""
     var chatMessage =  ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
@@ -24,11 +26,11 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         
         chatMessage = chatData
         
-        let xib = UINib(nibName: "OtherUserTableViewCell", bundle: nil)
-        chatRoomTable.register(xib, forCellReuseIdentifier: "OtherUserTableViewCell")
+        let xib = UINib(nibName: oIdentifier, bundle: nil)
+        chatRoomTable.register(xib, forCellReuseIdentifier: oIdentifier)
         
-        let xib2 = UINib(nibName: "UserTableViewCell", bundle: nil)
-        chatRoomTable.register(xib2, forCellReuseIdentifier: "UserTableViewCell")
+        let xib2 = UINib(nibName: uIdentifier, bundle: nil)
+        chatRoomTable.register(xib2, forCellReuseIdentifier: uIdentifier)
         
         chatRoomTable.separatorStyle = .none
         
@@ -51,19 +53,19 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         
         let chat = chatMessage.chatList[indexPath.row]
         if chat.user.name != userRemove {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: oIdentifier, for: indexPath) as! OtherUserTableViewCell
             cell.configureData(chat)
             return cell
         }
         else  {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: uIdentifier, for: indexPath) as! UserTableViewCell
             cell.configureData(chat)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100/*UITableView.automaticDimension*/
+        return UITableView.automaticDimension
     }
     
     @IBAction func senderTextFiled(_ sender: UITextField) {

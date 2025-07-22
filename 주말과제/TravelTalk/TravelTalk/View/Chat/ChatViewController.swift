@@ -14,12 +14,14 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
     @IBOutlet var searchTextField: UITextField!
     @IBOutlet var chatColletionView: UICollectionView!
     
+    let cellIdentifier =  ChatttingRoomCollectionViewCell.identifier
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         filterChat = chat
         
-        let xib = UINib(nibName: "ChatttingRoomCollectionViewCell", bundle: nil)
-        chatColletionView.register(xib, forCellWithReuseIdentifier: "ChatttingRoomCollectionViewCell")
+        let xib = UINib(nibName: cellIdentifier, bundle: nil)
+        chatColletionView.register(xib, forCellWithReuseIdentifier: cellIdentifier,)
         
         chatColletionView.delegate = self
         chatColletionView.dataSource = self
@@ -28,7 +30,7 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
         let devieWith = UIScreen.main.bounds.width
         let cellWidth = devieWith
 
-        layout.itemSize = CGSize(width: cellWidth, height: 120) // 또는 적절한 높이 (예: 120)
+        layout.itemSize = CGSize(width: cellWidth, height: 120)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumLineSpacing = 8 //
         layout.minimumInteritemSpacing = 8 //셀사이의 간격
@@ -41,7 +43,7 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChatttingRoomCollectionViewCell", for: indexPath) as! ChatttingRoomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatttingRoomCollectionViewCell.identifier, for: indexPath) as! ChatttingRoomCollectionViewCell
         cell.configureData(filterChat[indexPath.row])
         return cell
     }
@@ -56,17 +58,30 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
         navigationController?.pushViewController(vc, animated: true)
     }
     
-
-
     @IBAction func searchText(_ sender: UITextField) {
         guard let search = sender.text, !search.isEmpty else {
             filterChat = chat
             chatColletionView.reloadData()
             return
         }
-        filterChat = chat.filter { $0.chatList.last?.user.name.contains(search) ?? false}
+        //고차원함수 filter처리
+//        filterChat = chat.filter { $0.chatList.last?.user.name.contains(search) ?? false}
+        //for문 처리
+        for i in chat {
+            if i.chatList.last?.user.name.contains(search) == true {
+                filterChat.append(i)
+            }
+            else {
+                filterChat = chat
+            }
+            
+        }
         chatColletionView.reloadData()
         
     }
     
+    @IBAction func keybordClosed(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+        sender.cancelsTouchesInView = false
+    }
 }
