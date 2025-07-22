@@ -8,7 +8,7 @@
 import UIKit
 
 class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
-
+    
     
     @IBOutlet var chatRoomTable: UITableView!
     @IBOutlet var messageTextField: UITextField!
@@ -16,16 +16,14 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
     var chatData = ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
     var userRemove = ""
     var chatMessage =  ChatRoom(chatroomId: 0, chatroomImage: "", chatroomName: "")
-    var chatFilter: [Chat] = []
-    let meName = "김새싹"
-
-
+    var chatFilter: [Chat] = []    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "\(userRemove)"
         
         chatMessage = chatData
-
+        
         let xib = UINib(nibName: "OtherUserTableViewCell", bundle: nil)
         chatRoomTable.register(xib, forCellReuseIdentifier: "OtherUserTableViewCell")
         
@@ -38,7 +36,7 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         chatRoomTable.dataSource = self
         
         textFieldUI()
-
+        
     }
     
     private func textFieldUI() {
@@ -52,29 +50,13 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let chat = chatMessage.chatList[indexPath.row]
-        var meBool: Bool {
-            for chat in chatMessage.chatList {
-                if chat.user.name == meName {
-                    return true
-                }
-            }
-            return false
-        }
-        if meBool {
-            if chat.user.name == userRemove {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
-                cell.configureData(chat)
-                return cell
-            }
-            else  {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
-                cell.configureUserData(chat)
-                return cell
-            }
-            
-        }
-        else {
+        if chat.user.name != userRemove {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OtherUserTableViewCell", for: indexPath) as! OtherUserTableViewCell
+            cell.configureData(chat)
+            return cell
+        }
+        else  {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
             cell.configureData(chat)
             return cell
         }
@@ -84,8 +66,6 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         return 100/*UITableView.automaticDimension*/
     }
     
-
-
     @IBAction func senderTextFiled(_ sender: UITextField) {
         guard let chat = sender.text, !chat.isEmpty else {
             chatMessage = chatData
@@ -93,21 +73,18 @@ class ChattingRoomViewController: UIViewController,UITableViewDelegate, UITableV
         }
         
         let date = Date()
-//        var dateString = ""
-        
         let firstformatter = DateFormatter()
         firstformatter.dateFormat = "yyyy-MM-dd HH:mm"
         let dateString = firstformatter.string(from: date)
-
+        
         print(date)
         
-
-        
-        let messageAppend: Chat = Chat(user: User(name: meName, image: ""), date: "\(dateString)", message: chat)
+        let messageAppend: Chat = Chat(user: User(name: userRemove, image: ""), date: "\(dateString)", message: chat)
         chatMessage.chatList.append(messageAppend)
         print(chatMessage.chatList)
         chatRoomTable.reloadData()
     }
+    
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }

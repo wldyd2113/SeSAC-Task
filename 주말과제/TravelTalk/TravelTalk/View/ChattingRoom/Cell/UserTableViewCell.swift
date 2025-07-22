@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserTableViewCell: UITableViewCell {
+class UserTableViewCell: UITableViewCell, CellProtocol {
 
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageView: UIView!
@@ -18,7 +18,7 @@ class UserTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    private func configureUI() {
+     func configureUI() {
         messageView.backgroundColor = .white
         messageView.layer.cornerRadius = 10
         messageView.layer.borderWidth = 1
@@ -32,7 +32,7 @@ class UserTableViewCell: UITableViewCell {
         dateLabel.textColor = .lightGray
         
     }
-    func configureUserData(_ chat: Chat) {
+    func configureData(_ chat: Chat) {
         userMessage.text = chat.message
         let firstDate = DateFormatter()
         firstDate.dateFormat = "yyyy-MM-dd HH:mm"

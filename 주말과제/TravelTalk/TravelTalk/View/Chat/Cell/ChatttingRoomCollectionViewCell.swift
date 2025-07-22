@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatttingRoomCollectionViewCell: UICollectionViewCell {
+class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
 
     @IBOutlet var userImage: UIImageView!
     @IBOutlet var userName: UILabel!
@@ -16,10 +16,10 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureUICell()
+        configureUI()
     }
     
-    func configureUICell() {
+    func configureUI() {
         
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.masksToBounds = true

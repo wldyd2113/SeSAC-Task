@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChattingRoomTableViewCell: UITableViewCell {
+class ChattingRoomTableViewCell: UITableViewCell, CellProtocol {
     
 
     @IBOutlet var userImage: UIImageView!
@@ -17,10 +17,10 @@ class ChattingRoomTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureUICell()
+        configureUI()
     }
     
-    func configureUICell() {
+    func configureUI() {
         
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.masksToBounds = true

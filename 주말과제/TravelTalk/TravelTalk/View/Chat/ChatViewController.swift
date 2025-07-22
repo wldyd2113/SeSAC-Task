@@ -8,8 +8,6 @@
 import UIKit
 
 class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource  {
-
-    
     
     let chat = ChatList.list
     var filterChat: [ChatRoom] = []
@@ -53,7 +51,7 @@ class ChatViewController: UIViewController, UICollectionViewDelegate,UICollectio
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "ChattingRoomViewController") as! ChattingRoomViewController
         vc.chatData = filterChat[indexPath.row]
-        vc.userRemove = filterChat[indexPath.row].chatList.last?.user.name ?? ""
+        vc.userRemove = ChatList.me.name
         print(filterChat[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
