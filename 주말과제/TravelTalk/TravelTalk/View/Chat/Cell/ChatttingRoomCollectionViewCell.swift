@@ -34,7 +34,10 @@ class ChatttingRoomCollectionViewCell: UICollectionViewCell, CellProtocol {
         dateLabel.font = .systemFont(ofSize: 10)
     }
     func configureData(_ chatData: ChatRoom) {
-        guard let chat = chatData.chatList.last else { return }
+        guard let chat = chatData.chatList.last else {
+            print("데이터 없음")
+            return
+        }
         
         userImage.image = UIImage(named: chatData.chatroomImage)
         

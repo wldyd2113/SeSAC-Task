@@ -14,8 +14,8 @@
             filePath = "TravelTalk/View/Chat/Cell/ChatttingRoomCollectionViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "ChatttingRoomCollectionViewCell"
             landmarkType = "3">
          </BreakpointContent>

@@ -23,16 +23,4 @@ extension UITableViewCell {
         return dateFormatter
     }()
     
-    
-    
-    func dateString() -> DateFormatter {
-        let firstDate = DateFormatter()
-        firstDate.dateFormat = "yyyy-MM-dd HH:mm"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "a.HH.mm"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        
-        return dateFormatter
-    }
 }
