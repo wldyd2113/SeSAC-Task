@@ -63,6 +63,10 @@ class UpDownViewController: UIViewController {
         view.addSubview(numberTextField)
         view.addSubview(startButton)
         
+        configureLayout()
+    }
+    func configureLayout() {
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(90)
             make.centerX.equalToSuperview()
@@ -93,6 +97,7 @@ class UpDownViewController: UIViewController {
         guard let number = Int(numberTextField.text ?? "0") else { return }
         print(number)
         let vc = StartGameViewController()
+        vc.UpDownNumber = number
         navigationController?.pushViewController(vc, animated: true)
     }
     
