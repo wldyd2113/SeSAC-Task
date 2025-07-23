@@ -48,6 +48,4 @@ class UserTableViewCell: UITableViewCell, CellProtocol {
         }
         
     }
-    
-    
 }

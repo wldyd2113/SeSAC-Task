@@ -47,6 +47,9 @@ class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let nvButton: UIButton = {
         let button = UIButton()
         button.setTitle("Movies", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(nvButtonTappend), for: .touchUpInside)
         return button
     }()
     
@@ -109,9 +112,21 @@ extension LottoViewController: DesignProtocol {
             make.top.equalTo(numberTextField.snp.bottom).offset(60)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(nvButton.snp.top).offset(-20)
+        }
+        nvButton.snp.makeConstraints { make in
+            make.leading.equalTo(view).offset(15)
+            make.trailing.equalTo(view).offset(-15)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.height.equalTo(44)
+            make.width.equalTo(240)
         }
         
+    }
+    
+    @objc func nvButtonTappend() {
+        let vc = MovieViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
