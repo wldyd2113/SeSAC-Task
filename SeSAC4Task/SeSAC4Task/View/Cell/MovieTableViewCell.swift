@@ -45,8 +45,8 @@ class MovieTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func getMovieData(index: Int) {
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=20250723"
+    func getMovieData(index: Int, yearDate: Int) {
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=\(yearDate)"
         AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Movie.self) { response in
             switch response.result {
             case .success(let value):
@@ -57,6 +57,14 @@ class MovieTableViewCell: UITableViewCell {
             case .failure(let value):
                 print("데이터 불러오기 실패: \(value)")
             }
+        }
+    }
+    func movieLayout() {
+        numberLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(15)
+            make.centerX.equalTo(contentView)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
         }
     }
     

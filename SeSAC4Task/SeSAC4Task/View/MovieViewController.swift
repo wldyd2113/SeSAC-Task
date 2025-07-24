@@ -44,9 +44,10 @@ class MovieViewController: UIViewController {
     }
     
     @objc func randomButtonTapped() {
-//        movie = movie.shuffled()
         tableView.reloadData()
     }
+    
+//    func 
 
 }
 
@@ -54,7 +55,7 @@ extension MovieViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print(#function)
         view.endEditing(true)
-//        movie = movie.shuffled()
+        
         tableView.reloadData()
         
         return true
@@ -69,7 +70,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
-        cell.getMovieData(index: indexPath.row)
+        cell.getMovieData(index: indexPath.row, yearDate: 20250723)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
