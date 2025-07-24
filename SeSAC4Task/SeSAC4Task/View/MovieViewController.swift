@@ -11,6 +11,7 @@ import Alamofire
 class MovieViewController: UIViewController {
     
     var movie = Movie.self
+    var yearDateCell: Int = 20250723
     let movieTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "영화를 검색해주세요"
@@ -127,6 +128,7 @@ extension MovieViewController: UITextFieldDelegate {
         print(#function)
         view.endEditing(true)
         guard let yearText = Int(movieTextField.text ?? "0") else { return false }
+        yearDateCell = yearText
         getMovieData(yearDate: yearText)
         print(getMovieData(yearDate: yearText))
 
@@ -145,7 +147,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
-        cell.getMovieData(index: indexPath.row, yearDate: 20250723)
+        cell.getMovieData(index: indexPath.row, yearDate: yearDateCell)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
