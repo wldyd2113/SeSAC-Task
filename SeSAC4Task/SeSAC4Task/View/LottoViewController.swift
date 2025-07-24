@@ -119,16 +119,16 @@ class LottoViewController: UIViewController {
     
     //로또 최신회차 계산
     func updateLotto() -> Int{
-        let now = Date()
-        let calendar = Calendar.current
+        let now = Date() //현재 시간 출력
+        let calendar = Calendar.current //현재 날짜 출력
 
-        var componets = DateComponents()
+        var componets = DateComponents() //DateComponents로 날짜 변경
         componets.year = 2002
         componets.month = 12
         componets.day = 7
         let fristLotto = calendar.date(from: componets)
 
-        componets = calendar.dateComponents([.day], from: fristLotto!, to: now)
+        componets = calendar.dateComponents([.day], from: fristLotto!, to: now) //총 일 계산
         let lotto = componets.day
         let reuslt = lotto! / 7 + 1
         return reuslt
