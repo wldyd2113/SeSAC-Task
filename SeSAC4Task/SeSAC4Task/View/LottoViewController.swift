@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 
-class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+    let pickerData: [Int] = Array(1...1811)
+    let picker: UIPickerView = {
+        let picker = UIPickerView()
+        return picker
+    }()
     
     let numberTextField: UITextField = {
         let textField = UITextField()
@@ -21,6 +25,7 @@ class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         textField.layer.borderColor = UIColor.lightGray.cgColor
         return textField
     }()
+    
     
     let textLabel: UILabel = {
         let label = UILabel()
@@ -59,21 +64,47 @@ class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         configureLayout()
         
     }
-    
+    @objc func nvButtonTappend() {
+        let vc = MovieViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    //MARK: Table메서드
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: LottoTableViewCell.identifier, for: indexPath) as! LottoTableViewCell
-        
+        var round = pickerData[indexPath.row]
+//        cell.configureCell(round: round)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
     
+    //MARK: Picker 메서드
+    //피커 뷰의 열을 의미
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(pickerData[row])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        var round = pickerData[row]
+        numberTextField.text = "\(round)"
+        tabelView.reloadData()
+    }
+    
 }
+//MARK: extension
 extension LottoViewController: DesignProtocol {
     func configure() {
         view.backgroundColor = .white
@@ -83,9 +114,10 @@ extension LottoViewController: DesignProtocol {
         view.addSubview(dateLabel)
         view.addSubview(tabelView)
         view.addSubview(nvButton)
-        
+        numberTextField.inputView = picker
         tabelView.delegate = self
         tabelView.dataSource = self
+        picker.delegate = self
         
         tabelView.register(LottoTableViewCell.self, forCellReuseIdentifier: LottoTableViewCell.identifier)
     }
@@ -112,22 +144,18 @@ extension LottoViewController: DesignProtocol {
             make.top.equalTo(numberTextField.snp.bottom).offset(60)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalTo(nvButton.snp.top).offset(-20)
+            make.bottom.equalTo(nvButton.snp.top).offset(-200)
         }
         nvButton.snp.makeConstraints { make in
             make.leading.equalTo(view).offset(15)
             make.trailing.equalTo(view).offset(-15)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-200)
             make.height.equalTo(44)
             make.width.equalTo(240)
         }
         
     }
     
-    @objc func nvButtonTappend() {
-        let vc = MovieViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
     
     
 }

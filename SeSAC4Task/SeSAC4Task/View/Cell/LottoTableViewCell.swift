@@ -24,7 +24,6 @@ class LottoTableViewCell: UITableViewCell {
         stack.distribution = .fillEqually //각 내부 요소들의 너비를 동일하게 맞춰줌
         return stack
     }()
-    var lottoView: [UIView] = []
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
@@ -40,35 +39,9 @@ class LottoTableViewCell: UITableViewCell {
     func stackRandom() {
         
         print(#function)
-        let color: [UIColor] = [.red, .blue, .green, .yellow, .orange]
-        var number = Int.random(in: 1...100)
-
+        
         for _ in 0..<6 {
-            let view = UIView()
-
-            view.backgroundColor = color.randomElement()
-            view.snp.makeConstraints { make in
-                make.height.equalTo(30)
-            }
-            view.snp.makeConstraints { make in
-                make.width.equalTo(30)
-            }
-            view.layer.cornerRadius = 15
-            view.layer.masksToBounds = true
-            
-            let numberLabel = UILabel()
-            numberLabel.text = "\(number)"
-            numberLabel.textColor = .black
-            numberLabel.textAlignment = .center
-            numberLabel.font = .systemFont(ofSize: 14, weight: .bold)
-            
-            view.addSubview(numberLabel)
-            numberLabel.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-            }
-            
-            stackView.addArrangedSubview(view)
-            lottoView.append(view)
+            stackUI()
         }
         let plusView: UILabel = {
             let label = UILabel()
@@ -78,38 +51,43 @@ class LottoTableViewCell: UITableViewCell {
         }()
         stackView.addArrangedSubview(plusView)
         
-        let view = UIView()
-        view.backgroundColor = color.randomElement()
-        view.snp.makeConstraints { make in
-            make.height.equalTo(30)
-        }
-        view.snp.makeConstraints { make in
-            make.width.equalTo(30)
-        }
-        view.layer.cornerRadius = 15
-        view.layer.masksToBounds = true
-        let numberLabel = UILabel()
-        numberLabel.text = "\(number)"
-        numberLabel.textColor = .black
-        numberLabel.textAlignment = .center
-        numberLabel.font = .systemFont(ofSize: 14, weight: .bold)
-        
-        view.addSubview(numberLabel)
-        numberLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-        }
-        stackView.addArrangedSubview(view)
-        lottoView.append(view)
-        
+        stackUI()
     }
     
+    func stackUI() {
+        let color: [UIColor] = [.red, .blue, .green, .yellow, .orange]
 
+        var number = Int.random(in: 1...100)
+        let label = UILabel()
+        label.text = "\(number)"
+        label.textAlignment = .center
+        label.textColor = .black
+        label.backgroundColor = color.randomElement()
+        label.snp.makeConstraints { make in
+            make.height.equalTo(30)
+        }
+        label.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        label.layer.cornerRadius = 15
+        label.layer.masksToBounds = true
+        
+        stackView.addArrangedSubview(label)
+    }
+    
+//    func configureCell(round: Int) {
+//        titleLabel.text = "\(round)회 당첨 결과 "
+//        print(round)
+//        stackUI()
+//        
+//    }
     
 
     
     
 }
 
+//MARK: extension
 extension LottoTableViewCell: DesignProtocol {
     func configure() {
         contentView.addSubview(titleLabel)
