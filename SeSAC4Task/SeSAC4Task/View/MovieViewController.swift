@@ -88,15 +88,14 @@ class MovieViewController: UIViewController {
         
         configure()
         configureLayout()
-        getMovieData()
+        getMovieData(yearDate: 20250723)
     }
     
     @objc func randomButtonTapped() {
         tableView.reloadData()
     }
     
-    func getMovieData() {
-        let yearDate = 20250723
+    func getMovieData(yearDate: Int) {
         let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=\(yearDate)"
         AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Movie.self) { response in
             switch response.result {
@@ -117,28 +116,7 @@ class MovieViewController: UIViewController {
             }
         }
     }
-    func getMovieTextData(yearDate: Int) {
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=\(yearDate)"
-        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Movie.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.rnak1.text = "\(value.boxOfficeResult.dailyBoxOfficeList[0].rank)"
-                self.movieTitle1.text = "\(value.boxOfficeResult.dailyBoxOfficeList[0].movieNm)"
-                self.movieDate1.text = "\(value.boxOfficeResult.dailyBoxOfficeList[0].openDt)"
 
-                self.rnak2.text = "\(value.boxOfficeResult.dailyBoxOfficeList[1].rank)"
-                self.movieTitle2.text = "\(value.boxOfficeResult.dailyBoxOfficeList[1].movieNm)"
-                self.movieDate2.text = "\(value.boxOfficeResult.dailyBoxOfficeList[1].openDt)"
-                
-                self.rnak3.text = "\(value.boxOfficeResult.dailyBoxOfficeList[2].rank)"
-                self.movieTitle3.text = "\(value.boxOfficeResult.dailyBoxOfficeList[2].movieNm)"
-                self.movieDate3.text = "\(value.boxOfficeResult.dailyBoxOfficeList[2].openDt)"
-
-            case .failure(let value):
-                print("데이터 불러오기 실패: \(value)")
-            }
-        }
-    }
 }
 
 
@@ -149,8 +127,8 @@ extension MovieViewController: UITextFieldDelegate {
         print(#function)
         view.endEditing(true)
         guard let yearText = Int(movieTextField.text ?? "0") else { return false }
-        getMovieTextData(yearDate: yearText)
-        print(getMovieTextData(yearDate: yearText))
+        getMovieData(yearDate: yearText)
+        print(getMovieData(yearDate: yearText))
 
         tableView.reloadData()
         
