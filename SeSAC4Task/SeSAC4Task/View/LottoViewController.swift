@@ -140,6 +140,27 @@ class LottoViewController: UIViewController {
             
         }
     }
+    func getLottomReloadData(numberLotto: Int) {
+        let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(numberLotto)"
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Lotto.self) { response in
+            switch response.result {
+            case .success(let value):
+                self.titleLabel.text = "\(value.drwNo)회 당첨 결과"
+                self.number1.text = "\(value.drwtNo1)"
+                self.number2.text = "\(value.drwtNo2)"
+                self.number3.text = "\(value.drwtNo3)"
+                self.number4.text = "\(value.drwtNo4)"
+                self.number5.text = "\(value.drwtNo5)"
+                self.number6.text = "\(value.drwtNo6)"
+                self.number7.text = "\(value.bnusNo)"
+                self.dateLabel.text = "\(value.drwNoDate)"
+                print(value)
+            case .failure(_):
+                print("실패")
+            }
+            
+        }
+    }
     
 }
 //MARK: Picker Extension
@@ -158,7 +179,7 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         numberTextField.text = "\(pickerList[row])"
-        getLottomData()
+        getLottomReloadData(numberLotto: Int(numberTextField.text!)!)
         print(getLottomData)
     }
 
