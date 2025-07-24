@@ -7,9 +7,10 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
-class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
-    let pickerData: [Int] = Array(1...1811)
+class LottoViewController: UIViewController {
+    let pickerList: [Int] = Array(1...1811)
     let picker: UIPickerView = {
         let picker = UIPickerView()
         return picker
@@ -42,11 +43,59 @@ class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         label.font = .systemFont(ofSize: 10)
         return label
     }()
+    let titleLabel: UILabel =  {
+        let label = UILabel()
+        label.text = "회차"
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    let number1: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .yellow
+
+        return label
+    }()
+    let number2: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .systemBlue
+
+        return label
+    }()
+    let number3: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .systemBlue
+
+        return label
+    }()
+    let number4: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .systemRed
+
+        return label
+    }()
+    let number5: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .systemRed
+
+        return label
+    }()
+    let number6: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .gray
+
+        return label
+    }()
+    let plusView: UILabel = {
+        let label = UILabel()
+        label.text = "+"
+        label.font = .systemFont(ofSize: 20)
+        return label
+    }()
     
-    let tabelView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .red
-        return tableView
+    let number7: UILabel = {
+        let label = LottLabel()
+        label.backgroundColor = .gray
+        return label
     }()
     
     let nvButton: UIButton = {
@@ -57,53 +106,65 @@ class LottoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         button.addTarget(self, action: #selector(nvButtonTappend), for: .touchUpInside)
         return button
     }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         configureLayout()
+        getLottomData()
         
     }
     @objc func nvButtonTappend() {
         let vc = MovieViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-
-    //MARK: Table메서드
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    
+    
+    func getLottomData() {
+        let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=1181"
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Lotto.self) { response in
+            switch response.result {
+            case .success(let value):
+                self.titleLabel.text = "\(value.drwNo)회 당첨 결과"
+                self.number1.text = "\(value.drwtNo1)"
+                self.number2.text = "\(value.drwtNo2)"
+                self.number3.text = "\(value.drwtNo3)"
+                self.number4.text = "\(value.drwtNo4)"
+                self.number5.text = "\(value.drwtNo5)"
+                self.number6.text = "\(value.drwtNo6)"
+                self.number7.text = "\(value.bnusNo)"
+                self.dateLabel.text = "\(value.drwNoDate)"
+                print(value)
+            case .failure(_):
+                print("실패")
+            }
+            
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: LottoTableViewCell.identifier, for: indexPath) as! LottoTableViewCell
-        var round = pickerData[indexPath.row]
-//        cell.configureCell(round: round)
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
-    
-    //MARK: Picker 메서드
+}
+//MARK: Picker Extension
+extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     //피커 뷰의 열을 의미
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return pickerList.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(pickerData[row])
+        return "\(pickerList[row])회차"
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        var round = pickerData[row]
-        numberTextField.text = "\(round)"
-        tabelView.reloadData()
+        numberTextField.text = "\(pickerList[row])"
+        getLottomData()
+        print(getLottomData)
     }
-    
+
 }
+
+
 //MARK: extension
 extension LottoViewController: DesignProtocol {
     func configure() {
@@ -112,14 +173,20 @@ extension LottoViewController: DesignProtocol {
         view.addSubview(numberTextField)
         view.addSubview(textLabel)
         view.addSubview(dateLabel)
-        view.addSubview(tabelView)
+        view.addSubview(titleLabel)
+        view.addSubview(number1)
+        view.addSubview(number2)
+        view.addSubview(number3)
+        view.addSubview(number4)
+        view.addSubview(number5)
+        view.addSubview(number6)
+        view.addSubview(plusView)
+        view.addSubview(number7)
+
         view.addSubview(nvButton)
         numberTextField.inputView = picker
-        tabelView.delegate = self
-        tabelView.dataSource = self
         picker.delegate = self
         
-        tabelView.register(LottoTableViewCell.self, forCellReuseIdentifier: LottoTableViewCell.identifier)
     }
     
     func configureLayout() {
@@ -140,12 +207,7 @@ extension LottoViewController: DesignProtocol {
             make.top.equalTo(numberTextField.snp.bottom).offset(20)
             make.trailing.equalToSuperview().offset(-15)
         }
-        tabelView.snp.makeConstraints { make in
-            make.top.equalTo(numberTextField.snp.bottom).offset(60)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalTo(nvButton.snp.top).offset(-200)
-        }
+
         nvButton.snp.makeConstraints { make in
             make.leading.equalTo(view).offset(15)
             make.trailing.equalTo(view).offset(-15)
@@ -153,6 +215,59 @@ extension LottoViewController: DesignProtocol {
             make.height.equalTo(44)
             make.width.equalTo(240)
         }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(numberTextField.snp.bottom).offset(100)
+            make.centerX.equalTo(view)
+        }
+        number1.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(view).offset(80)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number2.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number1.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number3.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number2.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number4.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number3.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number5.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number4.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number6.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number5.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        plusView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(number6.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+        number7.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(plusView.snp.trailing).offset(5)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+        }
+
         
     }
     
