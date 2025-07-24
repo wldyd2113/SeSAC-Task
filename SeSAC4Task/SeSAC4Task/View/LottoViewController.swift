@@ -110,14 +110,32 @@ class LottoViewController: UIViewController {
         super.viewDidLoad()
         configure()
         configureLayout()
-        getLottomData(numberLotto: 1181)
-        
+        getLottomData(numberLotto: updateLotto())
     }
     @objc func nvButtonTappend() {
         let vc = MovieViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    //로또 최신회차 계산
+    func updateLotto() -> Int{
+        let now = Date()
+        let calendar = Calendar.current
+
+        var componets = DateComponents()
+        componets.year = 2002
+        componets.month = 12
+        componets.day = 7
+        let fristLotto = calendar.date(from: componets)
+
+        componets = calendar.dateComponents([.day], from: fristLotto!, to: now)
+        let lotto = componets.day
+        let reuslt = lotto! / 7 + 1
+        return reuslt
+        
+    }
+    
+
     
     func getLottomData(numberLotto: Int) {
         let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(numberLotto)"

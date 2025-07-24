@@ -18,3 +18,7 @@ struct Lotto: Decodable {
     let bnusNo: Int
     let drwNoDate: String
 }
+
+//struct UpdateLotto: Decodable {
+//    let update:[Lotto]
+//}
