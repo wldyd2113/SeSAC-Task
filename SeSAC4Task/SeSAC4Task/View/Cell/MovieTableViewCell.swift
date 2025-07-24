@@ -46,10 +46,12 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     func getMovieData(index: Int, yearDate: Int) {
+        print("aaaa", yearDate)
         let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=\(yearDate)"
         AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Movie.self) { response in
             switch response.result {
             case .success(let value):
+                print(value)
                 self.titleLable.text = value.boxOfficeResult.dailyBoxOfficeList[index].movieNm
                 self.dateLabel.text = value.boxOfficeResult.dailyBoxOfficeList[index].openDt
                 self.numberLabel.text = value.boxOfficeResult.dailyBoxOfficeList[index].rank

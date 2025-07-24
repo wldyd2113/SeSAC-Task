@@ -11,7 +11,7 @@ import Alamofire
 class MovieViewController: UIViewController {
     
     var movie = Movie.self
-    var yearDateCell: Int = 20250723
+    lazy var yearDateCell: Int = moiveDateCaluate()
     let movieTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "영화를 검색해주세요"
@@ -90,10 +90,24 @@ class MovieViewController: UIViewController {
         configure()
         configureLayout()
         getMovieData(yearDate: 20250723)
+        print("sadsad",yearDateCell)
     }
     
     @objc func randomButtonTapped() {
         tableView.reloadData()
+    }
+    
+    //하루전날 계산해주는 함수
+    func moiveDateCaluate() -> Int {
+        let calendar = Calendar.current
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: Date())! //현재 일에서 하루빼줌
+        
+        let dateForamtter = DateFormatter()
+        dateForamtter.dateFormat = "yyyyMMdd"
+        let yeststring = dateForamtter.string(from: yesterday)
+        let yestInt = Int(yeststring)!
+        print("날짜",yestInt)
+        return yestInt
     }
     
     func getMovieData(yearDate: Int) {
@@ -119,6 +133,7 @@ class MovieViewController: UIViewController {
     }
 
 }
+
 
 
 
