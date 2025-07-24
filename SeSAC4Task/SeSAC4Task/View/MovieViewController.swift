@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class MovieViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MovieViewController: UIViewController {
     
-    var movie = MovieInfo.movies
+    var movie = Movie.self
     let movieTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "영화를 검색해주세요"
@@ -43,21 +43,8 @@ class MovieViewController: UIViewController, UITableViewDelegate, UITableViewDat
         configureLayout()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
-        cell.movieData(movie[indexPath.row], index: indexPath.row)
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
     @objc func randomButtonTapped() {
-        movie = movie.shuffled()
+//        movie = movie.shuffled()
         tableView.reloadData()
     }
 
@@ -67,10 +54,26 @@ extension MovieViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print(#function)
         view.endEditing(true)
-        movie = movie.shuffled()
+//        movie = movie.shuffled()
         tableView.reloadData()
         
         return true
+    }
+}
+
+//MARK: TableView
+extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
+        cell.getMovieData(index: indexPath.row)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 

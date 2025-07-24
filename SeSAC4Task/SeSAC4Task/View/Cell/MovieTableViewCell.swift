@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class MovieTableViewCell: UITableViewCell {
     static let identifier = "MovieTableViewCell"
-    let movie = MovieInfo.movies
+    let movie = Movie.self
     
     let numberLabel: UILabel = {
         let label = UILabel()
@@ -44,22 +45,21 @@ class MovieTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func movieData(_ movie: Movie, index: Int) {
-        titleLable.text = movie.title
-        
-        let dateString = movie.releaseDate
-        
-        if let date = UITableViewCell.firstDateExtension.date(from: dateString) {
-            dateLabel.text = UITableViewCell.dateFormatterExtension.string(for: date)
-            print("형변환 성공")
+    func getMovieData(index: Int) {
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=20250723"
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Movie.self) { response in
+            switch response.result {
+            case .success(let value):
+                self.titleLable.text = value.boxOfficeResult.dailyBoxOfficeList[index].movieNm
+                self.dateLabel.text = value.boxOfficeResult.dailyBoxOfficeList[index].openDt
+                self.numberLabel.text = value.boxOfficeResult.dailyBoxOfficeList[index].rank
+                
+            case .failure(let value):
+                print("데이터 불러오기 실패: \(value)")
+            }
         }
-        else {
-            print("형변환 실패")
-        }
-        numberLabel.text = "\(index + 1)"
-
-        
     }
+    
 }
 extension MovieTableViewCell: DesignProtocol {
     func configure() {
