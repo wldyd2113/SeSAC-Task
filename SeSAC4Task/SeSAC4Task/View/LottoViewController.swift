@@ -135,8 +135,6 @@ class LottoViewController: UIViewController {
         
     }
     
-
-    
     func getLottomData(numberLotto: Int) {
         let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(numberLotto)"
         AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: Lotto.self) { response in
