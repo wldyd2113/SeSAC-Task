@@ -8,11 +8,14 @@
 import UIKit
 
 class SearchDetailViewController: UIViewController {
+    
+    var searchTitle = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
+        print("2", searchTitle)
     }
     
 }
+
+
