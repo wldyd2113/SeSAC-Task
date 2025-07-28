@@ -84,7 +84,10 @@ class SearchDetailViewController: UIViewController {
                 self.shopTotal = value
                 
                 print("start", self.start)
-
+                
+                if self.start >= value.total || self.start >= 1000 {
+                    self.alert()
+                }
                 self.colletion.reloadData()
                 print(value)
             case .failure(let error):
