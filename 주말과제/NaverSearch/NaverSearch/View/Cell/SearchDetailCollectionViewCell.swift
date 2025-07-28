@@ -15,6 +15,7 @@ class SearchDetailCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.layer.cornerRadius = 8
         image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -30,21 +31,22 @@ class SearchDetailCollectionViewCell: UICollectionViewCell {
     
     let shopName: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 10)
+        label.font = .systemFont(ofSize: 8)
         label.textColor = .lightGray
         return label
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 10)
         label.textColor = .white
+        label.numberOfLines = 2
         return label
     }()
     
     let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.font = .systemFont(ofSize: 12, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -59,14 +61,7 @@ class SearchDetailCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func cofigureData(_ shop: Shopdata) {
-        let url = URL(string: "\(shop.image)")
-        shopImage.kf.setImage(with: url)
-        shopName.text = shop.mallName
-        titleLabel.text = shop.title
-        priceLabel.text = shop.lprice
-    }
-    
+
 }
 
 extension SearchDetailCollectionViewCell: DesignProtocol {
@@ -83,11 +78,11 @@ extension SearchDetailCollectionViewCell: DesignProtocol {
             make.top.equalTo(contentView).offset(20)
             make.leading.equalTo(contentView).offset(15)
             make.height.equalTo(100)
-            make.width.equalTo(300)
+            make.width.equalTo(100)
         }
         likeButton.snp.makeConstraints { make in
-            make.bottom.equalTo(shopImage).offset(-20)
-            make.trailing.equalTo(shopImage).offset(-15)
+            make.bottom.equalTo(shopImage)
+            make.trailing.equalTo(shopImage)
             make.height.equalTo(30)
             make.width.equalTo(30)
         }
@@ -99,7 +94,8 @@ extension SearchDetailCollectionViewCell: DesignProtocol {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(shopName.snp.bottom).offset(5)
             make.leading.equalTo(contentView).offset(15)
-            make.height.equalTo(15)
+            make.height.equalTo(30)
+            make.width.equalTo(100)
         }
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(5)

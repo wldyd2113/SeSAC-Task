@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct shopInfo: Decodable {
-    let items: [Shopdata]
+struct ShopInfo: Decodable {
+    let total :Int //총 갯수
+    let lastBuildDate: String //날짜
+    var items: [Shopdata]
 }
 struct Shopdata: Decodable {
-    let mallName: String
-    let title: String
-    let lprice: String
-    let image: String
+    let mallName: String // 제품명
+    let title: String // 제품 설명
+    let lprice: String // 가격
+    let image: String // 제품 이미지
 }

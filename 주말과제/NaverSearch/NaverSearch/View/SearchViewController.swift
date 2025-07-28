@@ -20,6 +20,7 @@ class SearchViewController: UIViewController {
     let bodyImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "person")
+        image.contentMode = .scaleAspectFill
         return image
     }()
     let bodyLabel: UILabel = {
