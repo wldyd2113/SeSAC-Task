@@ -23,6 +23,7 @@ class NetworkManger {
                 print(value)
             case .failure(let error):
                 fail()
+                
                 print("에러 발생", error)
             }
 

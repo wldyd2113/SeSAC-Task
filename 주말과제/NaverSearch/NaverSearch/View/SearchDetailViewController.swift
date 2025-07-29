@@ -82,6 +82,7 @@ class SearchDetailViewController: UIViewController {
             
             self.colletion.reloadData()
         } fail: {
+            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
             print("실패")
         }
         
@@ -156,7 +157,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == (shop.count - 1) {
             if start + 30 > 1000 || start + 30 > shopTotal.total {
-                alert()
+                alert(title: "마지막 페이지", message: "마지막 페이지입니다", okMessage: "확인")
                 return
             }
             start += 30
@@ -167,18 +168,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
         }
     }
     
-    func alert() {
-        //1. 밑바탕
-        let alert = UIAlertController(title: "마지막 페이지입니다", message: "마지막페이지 입니다", preferredStyle: .alert)
-        //2.
-        let ok = UIAlertAction(title: "확인", style: .default)
-        
-        //3. addAction 순서대로 붙음
-        alert.addAction(ok)
-        
-        //4. 화면에 띄워주는 작업
-        present(alert, animated: true)
-    }
+
     
     
 }
