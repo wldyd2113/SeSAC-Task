@@ -76,7 +76,7 @@ class SearchDetailViewController: UIViewController {
         shopMacData()
     }
     //MARK: 데이터 관리
-    func shopData(_ searchTitle: String, sort: String = "sim") {
+    func shopData(_ searchTitle: String, sort: String = NaverURL.sim.rawValue) {
         print(#function)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -95,7 +95,7 @@ class SearchDetailViewController: UIViewController {
         
     }
     
-    func shopMacData(sort: String = "sim") {
+    func shopMacData(sort: String = NaverURL.sim.rawValue) {
         NetworkManger.shared.shopMacData(start: start) { value in
             self.shopMacBook.append(contentsOf: value.items)
             self.collectionHorizontal.reloadData()
@@ -112,21 +112,21 @@ class SearchDetailViewController: UIViewController {
     @objc func accuracyButtonTapped() {
         shop.removeAll()
         start = 1
-        shopData(searchTitle, sort: "sim")
+        shopData(searchTitle, sort: NaverURL.sim.rawValue)
         colletionvertical.reloadData()
     }
     //날짜순
     @objc func dayButtonTapped() {
         shop.removeAll()
         start = 1
-        shopData(searchTitle, sort: "date")
+        shopData(searchTitle, sort: NaverURL.date.rawValue)
         colletionvertical.reloadData()
     }
     //가격 높은순
     @objc func priceUpButtonTapped() {
         shop.removeAll()
         start = 1
-        shopData(searchTitle, sort: "dsc")
+        shopData(searchTitle, sort: NaverURL.dsc.rawValue)
         
         colletionvertical.reloadData()
         
@@ -137,7 +137,7 @@ class SearchDetailViewController: UIViewController {
         shop.removeAll()
         start = 1
         
-        shopData(searchTitle, sort: "asc") //이분은 데이터를 계속 호출해서 데이터를 가져오면서 asc로 값을 찾아오면서 유저가 원하는 값을 가지고 옴
+        shopData(searchTitle, sort: NaverURL.asc.rawValue) //이분은 데이터를 계속 호출해서 데이터를 가져오면서 asc로 값을 찾아오면서 유저가 원하는 값을 가지고 옴
         //        shopList.items.sort (by: { $0.lprice < $1.lprice }) //이부분은 저장된 데이터로 정렬을 해주므로 값이 이 추가되는게 아니여서 정렬을 하면서 명확한 값을 가지고 올 수 없음
         colletionvertical.reloadData()
         

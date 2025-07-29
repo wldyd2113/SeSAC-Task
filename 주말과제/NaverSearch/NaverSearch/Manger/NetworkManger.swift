@@ -15,7 +15,7 @@ class NetworkManger {
     func shopData(_ searchTitle: String, sort: String = "sim", start: Int, success: @escaping (ShopInfo) -> (), fail: @escaping () -> () ) {
         print(#function)
 
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(searchTitle)&display=30&start=\(start)&sort=\(sort)"
+        let url = "\(NaverURL.url.rawValue)v1/search/shop.json?query=\(searchTitle)&display=30&start=\(start)&sort=\(sort)"
         let header: HTTPHeaders = ["X-Naver-Client-Id": "skLvqKWpYQN5oOWjEK9g", "X-Naver-Client-Secret": "o8KK6vOXf6"]
         AF.request(url, method: .get, headers: header).validate(statusCode: 200..<300).responseDecodable(of:ShopInfo.self) { response in
             switch response.result {
@@ -32,7 +32,7 @@ class NetworkManger {
     }
     
     func shopMacData(sort: String = "sim", start: Int, success: @escaping (ShopInfo) -> (), fail: @escaping () -> () ) {
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=macbook&display=30&start=\(start)&sort=\(sort)"
+        let url = "\(NaverURL.url.rawValue)v1/search/shop.json?query=macbook&display=30&start=\(start)&sort=\(sort)"
         let header: HTTPHeaders = ["X-Naver-Client-Id": "skLvqKWpYQN5oOWjEK9g", "X-Naver-Client-Secret": "o8KK6vOXf6"]
         AF.request(url, method: .get, headers: header).validate(statusCode: 200..<300).responseDecodable(of: ShopInfo.self) { response in
             switch response.result {
