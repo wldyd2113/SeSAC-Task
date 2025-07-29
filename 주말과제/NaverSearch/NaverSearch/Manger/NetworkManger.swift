@@ -16,7 +16,7 @@ class NetworkManger {
         print(#function)
 
         let url = "\(NaverURL.url.rawValue)v1/search/shop.json?query=\(searchTitle)&display=30&start=\(start)&sort=\(sort)"
-        let header: HTTPHeaders = ["X-Naver-Client-Id": "skLvqKWpYQN5oOWjEK9g", "X-Naver-Client-Secret": "o8KK6vOXf6"]
+        let header: HTTPHeaders = ["X-Naver-Client-Id": APIKey.naverID, "X-Naver-Client-Secret": APIKey.naverSecret]
         AF.request(url, method: .get, headers: header).validate(statusCode: 200..<300).responseDecodable(of:ShopInfo.self) { response in
             switch response.result {
             case .success(let value):
