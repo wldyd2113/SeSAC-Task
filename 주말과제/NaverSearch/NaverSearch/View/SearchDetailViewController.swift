@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Alamofire
 class SearchDetailViewController: UIViewController {
     // .replaceingOccurrences(of:"<b></b>", with: "")
     var searchTitle = ""
@@ -74,27 +73,17 @@ class SearchDetailViewController: UIViewController {
         print(#function)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(searchTitle)&display=30&start=\(start)&sort=\(sort)"
-        let header: HTTPHeaders = ["X-Naver-Client-Id": "skLvqKWpYQN5oOWjEK9g", "X-Naver-Client-Secret": "o8KK6vOXf6"]
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200..<300).responseDecodable(of:ShopInfo.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.shop.append(contentsOf: value.items)
-                self.totalLabel.text = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
-                self.shopTotal = value
-                
-                print("start", self.start)
-                
-                if self.start >= value.total || self.start >= 1000 {
-                    self.alert()
-                }
-                self.colletion.reloadData()
-                print(value)
-            case .failure(let error):
-                print("에러 발생", error)
-            }
+        NetworkManger.shared.shopData(searchTitle, sort: sort, start: start) { value in
+            self.shop.append(contentsOf: value.items)
+            self.totalLabel.text = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
+            self.shopTotal = value
+            
+            print("start", self.start)
+            
+            self.colletion.reloadData()
+        } fail: {
+            print("실패")
         }
-        
         
     }
     //MARK: 정렬 함수들
@@ -213,8 +202,8 @@ extension SearchDetailViewController: DesignProtocol {
         
         layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth/2)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        layout.minimumLineSpacing = 8 //
-        layout.minimumInteritemSpacing = 8 //셀사이의 간격
+        layout.minimumLineSpacing = 16 //
+        layout.minimumInteritemSpacing = 16 //셀사이의 간격
         layout.scrollDirection = .vertical
         
         colletion.collectionViewLayout = layout

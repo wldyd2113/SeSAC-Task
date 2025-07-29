@@ -31,14 +31,14 @@ class SearchDetailCollectionViewCell: UICollectionViewCell {
     
     let shopName: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 8)
+        label.font = .systemFont(ofSize: 6)
         label.textColor = .lightGray
         return label
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 10)
+        label.font = .systemFont(ofSize: 8)
         label.textColor = .white
         label.numberOfLines = 2
         return label
@@ -46,7 +46,7 @@ class SearchDetailCollectionViewCell: UICollectionViewCell {
     
     let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.font = .systemFont(ofSize: 10, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -77,8 +77,8 @@ extension SearchDetailCollectionViewCell: DesignProtocol {
         shopImage.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(20)
             make.leading.equalTo(contentView).offset(15)
-            make.height.equalTo(100)
-            make.width.equalTo(100)
+            make.height.equalTo(150)
+            make.width.equalTo(150)
         }
         likeButton.snp.makeConstraints { make in
             make.bottom.equalTo(shopImage)
@@ -92,15 +92,13 @@ extension SearchDetailCollectionViewCell: DesignProtocol {
             make.height.equalTo(13)
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(shopName.snp.bottom).offset(5)
+            make.top.equalTo(shopName.snp.bottom)
             make.leading.equalTo(contentView).offset(15)
-            make.height.equalTo(30)
             make.width.equalTo(100)
         }
         priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.leading.equalTo(contentView).offset(15)
-            make.height.equalTo(17)
         }
     }
     
