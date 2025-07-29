@@ -34,7 +34,6 @@ extension SearchViewController: UISearchBarDelegate {
             return
         }
         
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

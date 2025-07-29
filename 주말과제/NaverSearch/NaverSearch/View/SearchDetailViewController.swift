@@ -7,11 +7,13 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 class SearchDetailViewController: UIViewController {
     // .replaceingOccurrences(of:"<b></b>", with: "")
     var searchTitle = ""
     var shopTotal = ShopInfo(total: 0, lastBuildDate: "", items: [])
     var shop: [Shopdata] = []
+    var shopMacBook: [Shopdata] = []
     var start = 1
     var naverPage = false
     
@@ -21,7 +23,14 @@ class SearchDetailViewController: UIViewController {
         label.textColor = .systemGreen
         return label
     }()
-    let colletion: UICollectionView = {
+    
+    let colletionvertical: UICollectionView = {
+        let colletion = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        colletion.backgroundColor = .black
+        return colletion
+    }()
+    
+    let collectionHorizontal: UICollectionView = {
         let colletion = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         colletion.backgroundColor = .black
         return colletion
@@ -64,9 +73,7 @@ class SearchDetailViewController: UIViewController {
         configure()
         configureLayout()
         shopData(searchTitle)
-        
-        
-        
+        shopMacData()
     }
     //MARK: 데이터 관리
     func shopData(_ searchTitle: String, sort: String = "sim") {
@@ -80,13 +87,25 @@ class SearchDetailViewController: UIViewController {
             
             print("start", self.start)
             
-            self.colletion.reloadData()
+            self.colletionvertical.reloadData()
         } fail: {
             self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
             print("실패")
         }
         
     }
+    
+    func shopMacData(sort: String = "sim") {
+        NetworkManger.shared.shopMacData(start: start) { value in
+            self.shopMacBook.append(contentsOf: value.items)
+            self.collectionHorizontal.reloadData()
+        } fail: {
+            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
+            print("실패")
+
+        }
+    }
+    
     //MARK: 정렬 함수들
     ///111111
     //정확도
@@ -94,14 +113,14 @@ class SearchDetailViewController: UIViewController {
         shop.removeAll()
         start = 1
         shopData(searchTitle, sort: "sim")
-        colletion.reloadData()
+        colletionvertical.reloadData()
     }
     //날짜순
     @objc func dayButtonTapped() {
         shop.removeAll()
         start = 1
         shopData(searchTitle, sort: "date")
-        colletion.reloadData()
+        colletionvertical.reloadData()
     }
     //가격 높은순
     @objc func priceUpButtonTapped() {
@@ -109,7 +128,7 @@ class SearchDetailViewController: UIViewController {
         start = 1
         shopData(searchTitle, sort: "dsc")
         
-        colletion.reloadData()
+        colletionvertical.reloadData()
         
     }
     //가격 낮은순
@@ -120,7 +139,7 @@ class SearchDetailViewController: UIViewController {
         
         shopData(searchTitle, sort: "asc") //이분은 데이터를 계속 호출해서 데이터를 가져오면서 asc로 값을 찾아오면서 유저가 원하는 값을 가지고 옴
         //        shopList.items.sort (by: { $0.lprice < $1.lprice }) //이부분은 저장된 데이터로 정렬을 해주므로 값이 이 추가되는게 아니여서 정렬을 하면서 명확한 값을 가지고 올 수 없음
-        colletion.reloadData()
+        colletionvertical.reloadData()
         
         
     }
@@ -130,33 +149,40 @@ class SearchDetailViewController: UIViewController {
 //MARK: Colletion
 extension SearchDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shop.count
+        if collectionView == colletionvertical{
+            return shop.count
+        } else {
+            return shopMacBook.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchDetailCollectionViewCell.identifier, for: indexPath) as! SearchDetailCollectionViewCell
-        let shopList = shop[indexPath.item]
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        
-        let url = URL(string: "\(shopList.image)")
-        cell.shopImage.kf.setImage(with: url)
-        cell.shopName.text = shopList.mallName
-        cell.titleLabel.text = shopList.title.replacingOccurrences(of: "[<b></b>]", with: "", options: .regularExpression)
-        
-        
-        cell.priceLabel.text = numberFormatter.string(from: NSNumber(value: Int(shopList.lprice)!)) ?? "0"
-        print(indexPath.item ,cell.priceLabel.text ?? "값 없음")
-        
-        
-        
-        
-        return cell
+        if collectionView == colletionvertical{
+            let cell = colletionvertical.dequeueReusableCell(withReuseIdentifier: SearchDetailCollectionViewCell.identifier, for: indexPath) as! SearchDetailCollectionViewCell
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let shopList = shop[indexPath.item]
+            let url = URL(string: "\(shopList.image)")
+            cell.shopImage.kf.setImage(with: url)
+            cell.shopName.text = shopList.mallName
+            cell.titleLabel.text = shopList.title.replacingOccurrences(of: "[<b></b>]", with: "", options: .regularExpression)
+            
+            cell.priceLabel.text = numberFormatter.string(from: NSNumber(value: Int(shopList.lprice)!)) ?? "0"
+            print(indexPath.item ,cell.priceLabel.text ?? "값 없음")
+            return cell
+        }
+        else {
+            let cell = collectionHorizontal.dequeueReusableCell(withReuseIdentifier: HorizontalCollectionViewCell.identifier, for: indexPath) as! HorizontalCollectionViewCell
+            let shopList = shopMacBook[indexPath.item]
+            let url = URL(string: "\(shopList.image)")
+            cell.shopImage.kf.setImage(with: url)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == (shop.count - 1) {
-            if start + 30 > 1000 || start + 30 > shopTotal.total {
+            if start + 30 > 1000 || start + 30 > shopTotal.total { // shopTotal.total > 1000
                 alert(title: "마지막 페이지", message: "마지막 페이지입니다", okMessage: "확인")
                 return
             }
@@ -177,9 +203,12 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
 extension SearchDetailViewController: DesignProtocol {
     func configure() {
         view.backgroundColor = .black
+        
         self.navigationItem.title = searchTitle
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        view.addSubview(colletion)
+        
+        view.addSubview(colletionvertical)
+        view.addSubview(collectionHorizontal)
         view.addSubview(totalLabel)
         view.addSubview(accuracyButton)
         view.addSubview(dayButton)
@@ -195,13 +224,28 @@ extension SearchDetailViewController: DesignProtocol {
         layout.minimumLineSpacing = 16 //
         layout.minimumInteritemSpacing = 16 //셀사이의 간격
         layout.scrollDirection = .vertical
+        colletionvertical.collectionViewLayout = layout
+        colletionvertical.delegate = self
+        colletionvertical.dataSource = self
+        colletionvertical.tag = 1
+        colletionvertical.register(SearchDetailCollectionViewCell.self, forCellWithReuseIdentifier: SearchDetailCollectionViewCell.identifier)
         
-        colletion.collectionViewLayout = layout
-        colletion.delegate = self
-        colletion.dataSource = self
-        colletion.register(SearchDetailCollectionViewCell.self, forCellWithReuseIdentifier: SearchDetailCollectionViewCell.identifier)
         
-        
+        let layout2 = UICollectionViewFlowLayout()
+        let devieWith2 = UIScreen.main.bounds.width //??
+
+        let cellWidth2 = devieWith2
+        layout2.itemSize = CGSize(width: cellWidth2/2, height: cellWidth2)
+        layout2.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout2.minimumLineSpacing = 8 //
+        layout2.minimumInteritemSpacing = 8 //셀사이의 간격
+        layout2.scrollDirection = .horizontal
+        collectionHorizontal.collectionViewLayout = layout2
+        collectionHorizontal.delegate = self
+        collectionHorizontal.dataSource = self
+        collectionHorizontal.tag = 2
+        collectionHorizontal.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalCollectionViewCell.identifier)
+
     }
     
     func configureLayout() {
@@ -236,9 +280,17 @@ extension SearchDetailViewController: DesignProtocol {
             make.width.equalTo(100)
         }
         
-        colletion.snp.makeConstraints { make in
-            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        colletionvertical.snp.makeConstraints { make in
             make.top.equalTo(accuracyButton.snp.bottom)
+            make.leading.trailing.equalTo(view)
+            make.bottom.equalTo(view).offset(-200)
+            
+        }
+        collectionHorizontal.snp.makeConstraints { make in
+            make.top.equalTo(colletionvertical.snp.top).offset(500)
+            make.leading.trailing.equalTo(view)
+            make.height.equalTo(350)
+
         }
     }
 }
