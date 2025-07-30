@@ -165,7 +165,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
             let url = URL(string: "\(shopList.image)")
             cell.shopImage.kf.setImage(with: url)
             cell.shopName.text = shopList.mallName
-            cell.titleLabel.text = shopList.title.replacingOccurrences(of: "[<b></b>]", with: "", options: .regularExpression)
+            cell.titleLabel.text = shopList.title/*.replacingOccurrences(of: "[<b></b>]", with: "", options: .regularExpression)*/
             
             cell.priceLabel.text = numberFormatter.string(from: NSNumber(value: Int(shopList.lprice)!)) ?? "0"
             print(indexPath.item ,cell.priceLabel.text ?? "값 없음")
