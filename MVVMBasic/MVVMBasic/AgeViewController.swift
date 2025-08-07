@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum BoxOfficeError: Error {
+    case outOfrange
+    case isInt
+    case isEmptySpace
+}
+
 class AgeViewController: UIViewController {
     let textField: UITextField = {
         let textField = UITextField()
@@ -68,5 +74,41 @@ class AgeViewController: UIViewController {
     
     @objc func resultButtonTapped() {
         view.endEditing(true)
+        guard let textAge = textField.text else { return }
+        do {
+            let _ = try userText(text: textAge)
+            label.text = textAge
+        }
+        catch BoxOfficeError.outOfrange {
+            label.text = "범위에 해당이 안됩니다"
+        }
+        catch BoxOfficeError.isInt {
+            label.text = "숫자를 입력해주세요"
+
+        }
+        catch BoxOfficeError.isEmptySpace {
+            label.text = "1~100 사이의 나이를 입력해주세요"
+        }
+        catch {
+            label.text = "error"
+        }
+    }
+    
+    func userText(text: String) throws -> Bool {
+        guard Int(text) ?? 0 >= 1 && Int(text) ?? 0 <= 100 else {
+            print("범위 초과")
+            throw BoxOfficeError.outOfrange
+        }
+        guard !(text.isEmpty) else {
+            print("빈 문자")
+            throw BoxOfficeError.isEmptySpace
+        }
+
+        guard Int(text) != nil else {
+            print("숫자가 아닙니다")
+            throw BoxOfficeError.isInt
+        }
+        
+        return true
     }
 }
