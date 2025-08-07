@@ -7,7 +7,11 @@
 
 import UIKit
 import SnapKit
-
+enum BirthDayError: Error {
+    case yearOutOfRange
+    case monthOutOfRange
+    case dayOutOfRange
+}
 class BirthDayViewController: UIViewController {
     let yearTextField: UITextField = {
         let textField = UITextField()
@@ -130,5 +134,54 @@ class BirthDayViewController: UIViewController {
     
     @objc func resultButtonTapped() {
         view.endEditing(true)
+        guard let year = yearTextField.text,
+              let month = monthTextField.text,
+              let day = dayTextField.text else { return }
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let dateString = dateFormatter.string(from: date)
+        let today = Calendar.current.startOfDay(for: Date())
+
+        
+        guard let year = yearTextField.text else { return }
+        guard let month = monthTextField.text else { return }
+        guard let day = dayTextField.text else { return }
+        do {
+            let inputDate = try userText(year, month, day)
+            let birthDay = Calendar.current.startOfDay(for: inputDate)
+            let components = Calendar.current.dateComponents([.day], from: birthDay, to: today)
+            let dDay = components.day ?? 0
+
+            resultLabel.text = "\(dateString)기준으로 +\(dDay)일째 입니다"
+        }
+        catch BirthDayError.yearOutOfRange {
+            resultLabel.text = "년도는 2025년 까지 입력할수 있습니다"
+        }
+        catch BirthDayError.monthOutOfRange {
+            resultLabel.text = "월은 12월까지 있습니다"
+        }
+        catch BirthDayError.dayOutOfRange {
+            resultLabel.text = "일은 31일까지 있습니다"
+        }
+        catch {
+            
+        }
+
+    }
+    
+    func userText(_ yearText: String, _ monthText: String, _ dayText: String) throws -> Date {
+        guard let year = Int(yearText), year <= 2025 else { throw BirthDayError.yearOutOfRange }
+        guard let month = Int(monthText),  month <= 12 else { throw BirthDayError.monthOutOfRange }
+        guard let day = Int(dayText), day <= 31 else { throw BirthDayError.dayOutOfRange }
+        
+        let calendar = Calendar.current
+        var inputDate = DateComponents()
+        inputDate.year = year
+        inputDate.month = month
+        inputDate.day = day
+        guard let newDate = calendar.date(from: inputDate) else { return Date() }
+        
+        return newDate
     }
 }
