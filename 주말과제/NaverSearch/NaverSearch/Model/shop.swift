@@ -38,5 +38,21 @@ struct Shopdata: Codable {
      
 }
 
+struct ShopError: Codable {
+    let errorMessage: String
+    let errorCode: String
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.errorMessage = try container.decode(String.self, forKey: .errorMessage)
+        self.errorCode = try container.decode(String.self, forKey: .errorCode)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case errorMessage
+        case errorCode
+    }
+}
+
 
 

@@ -88,7 +88,7 @@ class SearchDetailViewController: UIViewController {
             print("start", self.start)
             
             self.colletionvertical.reloadData()
-        } fail: {
+        } fail: {_ in
             self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
             print("실패")
         }
