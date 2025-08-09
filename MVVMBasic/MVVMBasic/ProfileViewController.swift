@@ -8,14 +8,6 @@
 import UIKit
 import SnapKit
 
-enum NickNameError: Error {
-    case outOfNicknameError
-    case particularError
-    case emptyError
-    case isStringError
-    
-}
-
 class ProfileViewController: UIViewController {
     
     let profileImage: UIImageView = {
@@ -205,6 +197,8 @@ class ProfileViewController: UIViewController {
     }
     
     func configureHierarchy() {
+        nicknameTextField.addTarget(self, action: #selector(nicknameChanged), for: .editingChanged)
+
         view.addSubview(profileImage)
         view.addSubview(nicknameTextField)
         view.addSubview(statusLabel)
@@ -269,35 +263,50 @@ class ProfileViewController: UIViewController {
         
     }
     
-    
-}
-
-extension ProfileViewController: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+   @objc func nicknameChanged() {
         guard let nicknamke = nicknameTextField.text else { return }
-        
         do {
             let _ = try nickError(nicknamke)
-            statusLabel.text = "사용할 수 있는 닉네임 입니다"
-            statusLabel.textColor = ._186_FF_2
+            statusLabel.text = "사용할 수 있는 닉네임입니다"
+            statusLabel.textColor = UIColor.systemGreen
+            statusLabel.isHidden = false
+        }
+        catch NickNameError.emptyError {
+            statusLabel.isHidden = true
+        }
+        catch NickNameError.particularError {
+            statusLabel.text = "@, #, $, % 특수문자 및 숫자 사용 불가"
+            statusLabel.textColor = UIColor.red
+            statusLabel.isHidden = false
+        }
+        catch NickNameError.isStringError {
+            statusLabel.text = "닉네임에 숫자는 포함할 수 없습니다"
+            statusLabel.textColor = UIColor.red
+            statusLabel.isHidden = false
+        }
+        catch NickNameError.outOfNicknameError {
+            statusLabel.text = "2글자 이상 10글자 미만으로 입력해주세요"
+            statusLabel.textColor = UIColor.red
+            statusLabel.isHidden = false
         }
         catch {
-            
-        }
-        
-        if nicknamke.count >= 2 && nicknamke.count < 10 {
-            statusLabel.text = "2글자 이상 10글자 미만으로 입력해주세요"
-        }
-        else if  nicknamke.contains("@") || nicknamke.contains("#") || nicknamke.contains("$") || nicknamke.contains("%") {
-            statusLabel.text = "@, #, $, % 4개의 특수문자 및 숫자 사용 불가합니다"
+            statusLabel.isHidden = true
         }
     }
-    
     func nickError(_ text: String) throws -> Bool {
-        guard text.isEmpty else { throw NickNameError.emptyError}
-        guard text.count >= 2 && text.count < 10 else { throw NickNameError.outOfNicknameError }
-        guard text.contains("@") || text.contains("#") || text.contains("$") || text.contains("%") else { throw NickNameError.particularError}
-        guard text.rangeOfCharacter(from: .decimalDigits) != nil else { throw NickNameError.isStringError }
+        if text.isEmpty {
+            throw NickNameError.emptyError
+        }
+        if text.contains("@") || text.contains("#") || text.contains("$") || text.contains("%") {
+            throw NickNameError.particularError
+        }
+        if text.rangeOfCharacter(from: .decimalDigits) != nil {
+            throw NickNameError.isStringError
+        }
+        if text.count < 2 || text.count >= 10 {
+            throw NickNameError.outOfNicknameError
+        }
         return true
     }
+    
 }
