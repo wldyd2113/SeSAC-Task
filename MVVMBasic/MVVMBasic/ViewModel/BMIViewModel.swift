@@ -1,4 +1,4 @@
-//
+
 //  BMIViewModel.swift
 //  MVVMBasic
 //

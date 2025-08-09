@@ -18,14 +18,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         let tabBarController = UITabBarController()
+        
         let ageVC = AgeViewController()
         ageVC.tabBarItem = UITabBarItem(title: "나이", image: UIImage(systemName: "person.fill"), tag: 0)
+        
         let bmiVC = BMIViewController()
         bmiVC.tabBarItem = UITabBarItem(title: "BMI", image: UIImage(systemName: "waveform.path.ecg"), tag: 1)
+        
         let birthDayVC = BirthDayViewController()
         birthDayVC.tabBarItem = UITabBarItem(title: "생년월일", image: UIImage(systemName: "calendar"), tag: 2)
         
-        tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC]
+        let wordVC = WordCounterViewController()
+        wordVC.tabBarItem = UITabBarItem(title: "단어", image: UIImage(systemName: "text.page"), tag: 3)
+        
+        let cuttencyVC = CurrencyViewController()
+        cuttencyVC.tabBarItem = UITabBarItem(title: "환율", image: UIImage(systemName: "apple.logo"), tag: 4)
+        
+        let profieVC = ProfileViewController()
+        profieVC.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 5)
+        
+        tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC, wordVC, cuttencyVC, profieVC]
         tabBarController.tabBar.tintColor = .systemBlue
         tabBarController.tabBar.unselectedItemTintColor = .systemGray
         
