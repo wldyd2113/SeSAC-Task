@@ -56,12 +56,6 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("E", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     
@@ -69,12 +63,6 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("S", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     
@@ -82,11 +70,6 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("T", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     
@@ -94,12 +77,6 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("J", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     
@@ -107,12 +84,6 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("I", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     
@@ -120,36 +91,18 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("N", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     let fbutton: UIButton = {
         let button = UIButton()
         button.setTitle("F", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.layer.masksToBounds = true
         return button
     }()
     let pbutton: UIButton = {
         let button = UIButton()
         button.setTitle("P", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
         return button
     }()
     
@@ -304,7 +257,7 @@ class ProfileViewController: UIViewController {
     //완료
     @objc func completeButtonClicked() {
         print(#function)
-
+        alert()
     }
     
     func completeStatus() {
@@ -342,6 +295,16 @@ class ProfileViewController: UIViewController {
         view.addSubview(tfStackView)
         view.addSubview(jpStackView)
         view.addSubview(completeButton)
+        
+        
+        ebutton.setButton()
+        ibutton.setButton()
+        sbutton.setButton()
+        nbutton.setButton()
+        tbutton.setButton()
+        fbutton.setButton()
+        jbutton.setButton()
+        pbutton.setButton()
         
         eiStackView.addArrangedSubview(ebutton)
         eiStackView.addArrangedSubview(ibutton)
@@ -424,6 +387,18 @@ class ProfileViewController: UIViewController {
             
             button.layer.masksToBounds = true
         }
+    }
+    
+    func alert() {
+        //1. 밑바탕
+        let alert = UIAlertController(title: "완료", message: "성공 하셨습니다!!", preferredStyle: .alert)
+        //2.
+        let ok = UIAlertAction(title: "확인", style: .default)
+        //3. addAction 순서대로 붙음
+        alert.addAction(ok)
+
+        //4. 화면에 띄워주는 작업
+        present(alert, animated: true)
     }
     
 
