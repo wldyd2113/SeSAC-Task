@@ -33,13 +33,11 @@ class ProfileViewController: UIViewController {
     let viewModel = ProfileViewModel()
 
     
-    let profileImage: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 10
-        image.layer.masksToBounds = true
-        image.image = UIImage(systemName: "person.circle")
-        return image
+    let profileImage: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        return button
     }()
     
     let nicknameTextField: UITextField = {
@@ -209,7 +207,7 @@ class ProfileViewController: UIViewController {
         configureLayout()
         
         if let randomImage = profile.randomElement() {
-            profileImage.image = randomImage
+            profileImage.setImage(randomImage, for: .normal)
         }
         
         viewModel.statusClosures = { check, text, color, isHidden  in
@@ -323,6 +321,10 @@ class ProfileViewController: UIViewController {
 
         viewModel.nickNameText = nicknamke
     }
+    
+    @objc func profileImageChange() {
+        
+    }
 
     func configure() {
         navigationItem.title = "PROFILE SETTING"
@@ -351,6 +353,9 @@ class ProfileViewController: UIViewController {
         jpStackView.addArrangedSubview(pbutton)
         
         nicknameTextField.addTarget(self, action: #selector(nicknameChanged), for: .editingChanged)
+        
+        profileImage.addTarget(self, action: #selector(profileImageChange), for: .touchUpInside)
+        
         ebutton.addTarget(self, action: #selector(eiButtonClicked(_:)), for: .touchUpInside)
         ibutton.addTarget(self, action: #selector(eiButtonClicked(_:)), for: .touchUpInside)
         

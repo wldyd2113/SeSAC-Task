@@ -18,8 +18,6 @@ class ProfileViewModel {
     // statusLabel.text를 전달하기 위한 클로저
     var statusClosures : ((Bool, String, UIColor, Bool) -> ())? 
     
-    
-    
     private func nicknameChanged() {
         do {
             let _ = try nickError(nickNameText)
@@ -28,17 +26,10 @@ class ProfileViewModel {
         }
         catch NickNameError.emptyError {
             statusClosures?(false, "", .white, true)
-
-//            statusLabel.isHidden = true
-//            nickNameCheck = false
         }
         catch NickNameError.particularError {
             statusClosures?(false, "@, #, $, % 특수문자 및 숫자 사용 불가", .red, false)
 
-//            statsText = "@, #, $, % 특수문자 및 숫자 사용 불가"
-//            statusLabel.textColor = UIColor.red
-//            statusLabel.isHidden = false
-//            nickNameCheck = false
 
         }
         catch NickNameError.isStringError {

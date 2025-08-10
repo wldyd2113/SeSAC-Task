@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let cuttencyVC = CurrencyViewController()
         cuttencyVC.tabBarItem = UITabBarItem(title: "환율", image: UIImage(systemName: "apple.logo"), tag: 4)
         
-        let profieVC = ProfileViewController()
+        let profieVC = OnBoardingViewController()
         profieVC.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 5)
         
         tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC, wordVC, cuttencyVC, profieVC]
