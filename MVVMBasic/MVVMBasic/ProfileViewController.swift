@@ -9,6 +9,29 @@ import UIKit
 import SnapKit
 
 class ProfileViewController: UIViewController {
+    let profile: [UIImage] = [
+        UIImage(named: "image1")!,
+        UIImage(named: "image2")!,
+        UIImage(named: "image3")!,
+        UIImage(named: "image4")!,
+        UIImage(named: "image5")!,
+        UIImage(named: "image6")!,
+        UIImage(named: "image7")!,
+        UIImage(named: "image8")!,
+        UIImage(named: "image9")!,
+        UIImage(named: "image10")!,
+        UIImage(named: "image11")!,
+        UIImage(named: "image12")!
+    ]
+    
+    var selectedEI: String?
+    var selectedSN: String?
+    var selectedTF: String?
+    var selectedJP: String?
+    var nickNameCheck =  false
+    
+    let viewModel = ProfileViewModel()
+
     
     let profileImage: UIImageView = {
         let image = UIImageView()
@@ -27,7 +50,6 @@ class ProfileViewController: UIViewController {
     
     let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = "사용할 수 있는 닉네임이에요"
         label.font = .systemFont(ofSize: 10)
         return label
     }()
@@ -37,7 +59,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("E", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.width / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -49,7 +72,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("S", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.width / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -61,7 +85,7 @@ class ProfileViewController: UIViewController {
         button.setTitle("T", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -73,7 +97,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("J", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -85,7 +110,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("I", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -97,7 +123,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("N", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -108,7 +135,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("F", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.masksToBounds = true
@@ -119,7 +147,8 @@ class ProfileViewController: UIViewController {
         button.setTitle("P", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.backgroundColor = .white
-        button.layer.cornerRadius = button.frame.size.height / 2
+        button.layer.cornerRadius = 20
+        
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
@@ -168,7 +197,8 @@ class ProfileViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .lightGray
+        button.isEnabled = false
         return button
     }()
     
@@ -177,6 +207,19 @@ class ProfileViewController: UIViewController {
         configure()
         configureHierarchy()
         configureLayout()
+        
+        if let randomImage = profile.randomElement() {
+            profileImage.image = randomImage
+        }
+        
+        viewModel.statusClosures = { check, text, color, isHidden  in
+            self.nickNameCheck = check
+            self.statusLabel.text = text
+            self.statusLabel.textColor = color
+            self.statusLabel.isHidden = isHidden
+            self.completeStatus()
+            
+        }
     }
     
     
@@ -190,6 +233,97 @@ class ProfileViewController: UIViewController {
         textField.layer.addSublayer(border)
     }
     
+    //선택
+    @objc func eiButtonClicked(_ sender: UIButton) {
+        if sender == ebutton {
+            selectedEI = "E"
+            ebutton.backgroundColor = .systemBlue
+            ebutton.setTitleColor(.white, for: .normal)
+            ibutton.backgroundColor = .white
+            ibutton.setTitleColor(.lightGray, for: .normal)
+        }
+        else if sender == ibutton {
+            selectedEI = "I"
+            ibutton.backgroundColor = .systemBlue
+            ibutton.setTitleColor(.white, for: .normal)
+            ebutton.backgroundColor = .white
+            ebutton.setTitleColor(.lightGray, for: .normal)
+        }
+        completeStatus()
+    }
+    
+    @objc func snButtonClicked(_ sender: UIButton) {
+        if sender == sbutton {
+            selectedSN = "S"
+            sbutton.backgroundColor = .systemBlue
+            sbutton.setTitleColor(.white, for: .normal)
+            nbutton.backgroundColor = .white
+            nbutton.setTitleColor(.lightGray, for: .normal)
+        } else if sender == nbutton {
+            selectedSN = "N"
+            nbutton.backgroundColor = .systemBlue
+            nbutton.setTitleColor(.white, for: .normal)
+            sbutton.backgroundColor = .white
+            sbutton.setTitleColor(.lightGray, for: .normal)
+        }
+        completeStatus()
+    }
+
+    @objc func tfButtonClicked(_ sender: UIButton) {
+        if sender == tbutton {
+            selectedTF = "T"
+            tbutton.backgroundColor = .systemBlue
+            tbutton.setTitleColor(.white, for: .normal)
+            fbutton.backgroundColor = .white
+            fbutton.setTitleColor(.lightGray, for: .normal)
+        } else if sender == fbutton {
+            selectedTF = "F"
+            fbutton.backgroundColor = .systemBlue
+            fbutton.setTitleColor(.white, for: .normal)
+            tbutton.backgroundColor = .white
+            tbutton.setTitleColor(.lightGray, for: .normal)
+        }
+        completeStatus()
+    }
+
+    @objc func jpButtonClicked(_ sender: UIButton) {
+        if sender == jbutton {
+            selectedJP = "J"
+            jbutton.backgroundColor = .systemBlue
+            jbutton.setTitleColor(.white, for: .normal)
+            pbutton.backgroundColor = .white
+            pbutton.setTitleColor(.lightGray, for: .normal)
+        } else if sender == pbutton {
+            selectedJP = "P"
+            pbutton.backgroundColor = .systemBlue
+            pbutton.setTitleColor(.white, for: .normal)
+            jbutton.backgroundColor = .white
+            jbutton.setTitleColor(.lightGray, for: .normal)
+        }
+        completeStatus()
+    }
+    
+    //완료
+    @objc func completeButtonClicked() {
+        print(#function)
+
+    }
+    
+    func completeStatus() {
+        if selectedEI != nil && selectedSN != nil && selectedTF != nil && selectedJP != nil && nickNameCheck == true {
+            completeButton.backgroundColor = .systemBlue
+            completeButton.isEnabled = true
+        } else {
+            completeButton.isEnabled = false
+            completeButton.backgroundColor = .lightGray
+        }
+    }
+    @objc func nicknameChanged() {
+        guard let nicknamke = nicknameTextField.text else { return }
+
+        viewModel.nickNameText = nicknamke
+    }
+
     func configure() {
         navigationItem.title = "PROFILE SETTING"
         view.backgroundColor = .white
@@ -197,8 +331,6 @@ class ProfileViewController: UIViewController {
     }
     
     func configureHierarchy() {
-        nicknameTextField.addTarget(self, action: #selector(nicknameChanged), for: .editingChanged)
-
         view.addSubview(profileImage)
         view.addSubview(nicknameTextField)
         view.addSubview(statusLabel)
@@ -217,9 +349,25 @@ class ProfileViewController: UIViewController {
         tfStackView.addArrangedSubview(fbutton)
         jpStackView.addArrangedSubview(jbutton)
         jpStackView.addArrangedSubview(pbutton)
+        
+        nicknameTextField.addTarget(self, action: #selector(nicknameChanged), for: .editingChanged)
+        ebutton.addTarget(self, action: #selector(eiButtonClicked(_:)), for: .touchUpInside)
+        ibutton.addTarget(self, action: #selector(eiButtonClicked(_:)), for: .touchUpInside)
+        
+        sbutton.addTarget(self, action: #selector(snButtonClicked(_:)), for: .touchUpInside)
+        nbutton.addTarget(self, action: #selector(snButtonClicked(_:)), for: .touchUpInside)
+        
+        tbutton.addTarget(self, action: #selector(tfButtonClicked(_:)), for: .touchUpInside)
+        fbutton.addTarget(self, action: #selector(tfButtonClicked(_:)), for: .touchUpInside)
+        
+        jbutton.addTarget(self, action: #selector(jpButtonClicked(_:)), for: .touchUpInside)
+        pbutton.addTarget(self, action: #selector(jpButtonClicked(_:)), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonClicked), for: UIControl.Event.touchUpInside)
     }
     
     func configureLayout() {
+        let buttons = [ebutton, ibutton, sbutton, nbutton, tbutton, fbutton, jbutton, pbutton]
+        
         profileImage.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
@@ -244,7 +392,7 @@ class ProfileViewController: UIViewController {
         snStackView.snp.makeConstraints { make in
             make.top.equalTo(statusLabel.snp.bottom).offset(24)
             make.leading.equalTo(eiStackView.snp.trailing).offset(8)
-
+            
         }
         tfStackView.snp.makeConstraints { make in
             make.top.equalTo(statusLabel.snp.bottom).offset(24)
@@ -260,53 +408,19 @@ class ProfileViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
         }
-        
+        for button in buttons {
+            button.snp.makeConstraints { make in
+                make.width.height.equalTo(40)
+                
+            }
+        }
+        for button in buttons {
+            button.layer.cornerRadius = 20
+            
+            button.layer.masksToBounds = true
+        }
     }
     
-   @objc func nicknameChanged() {
-        guard let nicknamke = nicknameTextField.text else { return }
-        do {
-            let _ = try nickError(nicknamke)
-            statusLabel.text = "사용할 수 있는 닉네임입니다"
-            statusLabel.textColor = UIColor.systemGreen
-            statusLabel.isHidden = false
-        }
-        catch NickNameError.emptyError {
-            statusLabel.isHidden = true
-        }
-        catch NickNameError.particularError {
-            statusLabel.text = "@, #, $, % 특수문자 및 숫자 사용 불가"
-            statusLabel.textColor = UIColor.red
-            statusLabel.isHidden = false
-        }
-        catch NickNameError.isStringError {
-            statusLabel.text = "닉네임에 숫자는 포함할 수 없습니다"
-            statusLabel.textColor = UIColor.red
-            statusLabel.isHidden = false
-        }
-        catch NickNameError.outOfNicknameError {
-            statusLabel.text = "2글자 이상 10글자 미만으로 입력해주세요"
-            statusLabel.textColor = UIColor.red
-            statusLabel.isHidden = false
-        }
-        catch {
-            statusLabel.isHidden = true
-        }
-    }
-    func nickError(_ text: String) throws -> Bool {
-        if text.isEmpty {
-            throw NickNameError.emptyError
-        }
-        if text.contains("@") || text.contains("#") || text.contains("$") || text.contains("%") {
-            throw NickNameError.particularError
-        }
-        if text.rangeOfCharacter(from: .decimalDigits) != nil {
-            throw NickNameError.isStringError
-        }
-        if text.count < 2 || text.count >= 10 {
-            throw NickNameError.outOfNicknameError
-        }
-        return true
-    }
+
     
 }
