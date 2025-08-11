@@ -8,28 +8,18 @@
 import Foundation
 
 class WordCountViewModel {
-    var text = "" {
-        didSet {
-            print("text")
-            print(oldValue)
-            print(text)
-            updateCharacterCount()
+    var text = Obserable("")
+    
+    var outputText = Obserable("")
+    
+    init() {
+        text.outAction {_ in
+            self.updateCharacterCount()
         }
     }
-    
-    var outputText = "" {
-        didSet {
-            print("outputText")
-            print(oldValue)
-            print(outputText)
-            senderData?()
-        }
-    }
-    
-    var senderData: (() ->())?
     
     private func updateCharacterCount() {
-        let count = text.count
-        outputText = "현재까지 \(count)글자 작성중"
+        let count = text.value.count
+        outputText.value = "현재까지 \(count)글자 작성중"
     }
 }
