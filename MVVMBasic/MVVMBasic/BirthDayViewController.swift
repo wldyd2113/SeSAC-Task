@@ -68,8 +68,8 @@ class BirthDayViewController: UIViewController {
         configureLayout()
         setLabel(label: resultLabel)
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
-        viewModel.senderData = {
-            self.resultLabel.text = self.viewModel.outputText
+        viewModel.outputText.outAction{ text in
+            self.resultLabel.text = text
         }
     }
     
@@ -143,9 +143,9 @@ class BirthDayViewController: UIViewController {
         guard let month = monthTextField.text else { return }
         guard let day = dayTextField.text else { return }
         
-        viewModel.yearText = year
-        viewModel.monthText = month
-        viewModel.dayText = day
+        viewModel.yearText.value = year
+        viewModel.monthText.value = month
+        viewModel.dayText.value = day
 
     }
     

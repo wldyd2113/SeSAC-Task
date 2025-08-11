@@ -8,41 +8,27 @@
 import Foundation
 
 class BirthViewModel {
-    var yearText = "" {
-        didSet {
-            print("yearText")
-            print(oldValue)
-            print(yearText)
-        }
-    }
+    var yearText = Obserable("")
     
-    var monthText = "" {
-        didSet {
-            print("monthText")
-            print(oldValue)
-            print(monthText)
-        }
-    }
+    var monthText = Obserable("")
     
-    var dayText = "" {
-        didSet {
-            print("dayText")
-            print(oldValue)
-            print(dayText)
-            resultButtonTapped()
-        }
-    }
+    var dayText =  Obserable("")
     
-    var outputText = "" {
-        didSet {
-            print("outputText")
-            print(oldValue)
-            print(outputText)
-            senderData?()
-        }
-    }
+    var outputText = Obserable("")
     
     var senderData: (() -> ())?
+    
+    init() {
+        yearText.outAction  { _ in
+            self.resultButtonTapped()
+        }
+        monthText.outAction  { _ in
+            self.resultButtonTapped()
+        }
+        monthText.outAction  { _ in
+            self.resultButtonTapped()
+        }
+    }
     
     private func resultButtonTapped() {
         let date = Date()
@@ -53,24 +39,24 @@ class BirthViewModel {
 
   
         do {
-            let inputDate = try userText(yearText, monthText, dayText)
+            let inputDate = try userText(yearText.value, monthText.value, dayText.value)
             let birthDay = Calendar.current.startOfDay(for: inputDate)
             let components = Calendar.current.dateComponents([.day], from: birthDay, to: today)
             let dDay = components.day ?? 0
 
-            outputText = "\(dateString) 기준으로 +\(dDay)일째 입니다"
+            outputText.value = "\(dateString) 기준으로 +\(dDay)일째 입니다"
         }
         catch BirthDayError.yearOutOfRange {
-            outputText = "년도는 2025년 까지 입력할수 있습니다"
+            outputText.value = "년도는 2025년 까지 입력할수 있습니다"
         }
         catch BirthDayError.monthOutOfRange {
-            outputText = "월은 12월까지 있습니다"
+            outputText.value = "월은 12월까지 있습니다"
         }
         catch BirthDayError.dayOutOfRange {
-            outputText = "일은 31일까지 있습니다"
+            outputText.value = "일은 31일까지 있습니다"
         }
         catch {
-            outputText = "404"
+            outputText.value = "404"
         }
     }
     
