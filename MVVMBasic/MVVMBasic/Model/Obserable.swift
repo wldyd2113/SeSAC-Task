@@ -25,3 +25,23 @@ class Obserable<T> {
         
     }
 }
+
+//class Obserable {
+//    
+//    private var action: ((Any) -> ())?
+//    
+//    var value: Any  {
+//        didSet {
+//            action?(value)
+//        }
+//    }
+//    init(_ value: Any) {
+//        self.value = value
+//    }
+//    
+//    func outAction(action: @escaping (Any) -> ()) {
+//        action(value)
+//        self.action = action
+//        
+//    }
+//}

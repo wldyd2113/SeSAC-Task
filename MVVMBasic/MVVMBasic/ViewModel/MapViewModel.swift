@@ -11,6 +11,7 @@ import MapKit
 class MapViewModel {
     var anotations = Obserable<[MKAnnotation]>([])
     
+    
     func showRestaurants(category: String) {
         let restaurants: [Restaurant]
         

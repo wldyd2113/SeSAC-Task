@@ -272,7 +272,7 @@ class ProfileViewController: UIViewController {
     @objc func nicknameChanged() {
         guard let nicknamke = nicknameTextField.text else { return }
 
-        viewModel.nickNameText = nicknamke
+        viewModel.nickNameText.value = nicknamke
     }
     
     @objc func profileImageChange() {
