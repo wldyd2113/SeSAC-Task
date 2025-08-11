@@ -37,7 +37,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let profieVC = OnBoardingViewController()
         profieVC.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 5)
         
-        tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC, wordVC, cuttencyVC, profieVC]
+        let mapVC = MapViewController()
+        mapVC.tabBarItem = UITabBarItem(title: "지도", image: UIImage(systemName: "map.fill"), tag: 6)
+
+        
+        tabBarController.viewControllers = [ageVC, bmiVC, birthDayVC, wordVC, cuttencyVC, profieVC, mapVC]
         tabBarController.tabBar.tintColor = .systemBlue
         tabBarController.tabBar.unselectedItemTintColor = .systemGray
         
