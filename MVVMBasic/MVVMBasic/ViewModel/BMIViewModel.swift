@@ -9,49 +9,39 @@ import Foundation
 import UIKit
 class BMIViewModel {
     
-    var heightText = "" {
-        didSet {
-            print("heightText")
-            print(oldValue)
-            print(heightText)
-            resultBMI()
-        }
-    }
+    var heightText = Obserable("")
     
-    var weightText = "" {
-        didSet {
-            print("weightText")
-            print(oldValue)
-            print(weightText)
-        }
-    }
     
-    var outputText = "" {
-        didSet {
-            print("outputText")
-            print(oldValue)
-            print(outputText)
-            colsureText?()
-        }
-    }
+    var weightText = Obserable("")
+    
+    var outputText = Obserable("")
 
     var showAlert: ((String) -> ())?
-    var colsureText: (() -> ())?
+    
+    init() {
+        heightText.outAction { _ in
+            self.resultBMI()
+        }
+        
+        weightText.outAction { _ in
+            self.resultBMI()
+        }
+    }
     
     func resultBMI() {
         
         do {
-            let _ = try bmiError(heightText: heightText, weightText: weightText)
-            outputText = heightText + "," + weightText
+            let _ = try bmiError(heightText: heightText.value, weightText: weightText.value)
+            outputText.value = heightText.value + "," + weightText.value
         }
         catch {
             switch error {
             case .heightOutOfRange:
                 showAlert?("키 범위는 200까지 입니다")
-                outputText = "키 범위는 200까지 입니다"
+                outputText.value = "키 범위는 200까지 입니다"
             case .weightOutOfRange:
                 showAlert?("몸무게 범위는 210까지 입니다")
-                outputText = "몸무게 범위는 210까지 입니다"
+                outputText.value = "몸무게 범위는 210까지 입니다"
             }
         }
         

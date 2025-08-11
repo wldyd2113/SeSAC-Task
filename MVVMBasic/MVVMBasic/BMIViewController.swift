@@ -47,8 +47,8 @@ class BMIViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
-        viewModel.colsureText = {
-            self.resultLabel.text = self.viewModel.outputText
+        viewModel.outputText.outAction { text in
+            self.resultLabel.text = text
         }
         viewModel.showAlert = { value in
             let alert = UIAlertController(title: "범위 초과", message: value, preferredStyle: .alert)
@@ -101,8 +101,8 @@ class BMIViewController: UIViewController {
         guard let height = heightTextField.text else { return }
         guard let weight = weightTextField.text else { return }
 
-        viewModel.heightText = height
-        viewModel.weightText = weight
+        viewModel.heightText.value = height
+        viewModel.weightText.value = weight
     }
 
 }
