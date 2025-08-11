@@ -43,8 +43,8 @@ class AgeViewController: UIViewController {
         configureLayout()
         setButton(resultButton)
         resultButton.addTarget(self, action: #selector(resultButtonTapped), for: .touchUpInside)
-        viewModel.colsuerText = {
-            self.label.text = self.viewModel.outputText
+        viewModel.outputText.outAction { text in
+            self.label.text = text
         }
         
 
@@ -83,8 +83,8 @@ class AgeViewController: UIViewController {
     
     @objc func resultButtonTapped() {
         view.endEditing(true)
-        viewModel.ageText = textField.text
-
+        guard let text = textField.text else { return }
+        viewModel.ageText.value = text
 
     }
     

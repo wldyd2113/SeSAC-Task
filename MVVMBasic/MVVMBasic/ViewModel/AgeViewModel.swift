@@ -9,42 +9,35 @@ import Foundation
 
 class AgeViewModel {
     
-    var ageText: String? = "" {
-        didSet {
-            print(ageText)
-            print(oldValue)
-            resultText()
-            
-        }
-    }
-    var outputText = "" {
-        didSet {
-            print("outputText")
-            print(oldValue)
-            print(outputText)
-            colsuerText?()
+    var ageText = Obserable("")
+    
+    var outputText = Obserable("")
+    
+    init()  {
+        ageText.outAction { _ in
+            self.resultText()
         }
     }
     
     var colsuerText: (()->())?
     
     private func resultText() {
-        guard let textAge = ageText else { return }
+//        guard let textAge = ageText else { return }
         do {
-            let _ = try userText(text: textAge)
-            outputText = textAge
+            let _ = try userText(text: ageText.value)
+            outputText.value = ageText.value
         }
         catch BoxOfficeError.isEmptySpace {
-            outputText = "1~100 사이의 나이를 입력해주세요"
+            outputText.value = "1~100 사이의 나이를 입력해주세요"
         }
         catch BoxOfficeError.isInt {
-            outputText = "숫자를 입력해주세요"
+            outputText.value = "숫자를 입력해주세요"
         }
         catch BoxOfficeError.outOfrange {
-            outputText = "범위에 해당이 안됩니다"
+            outputText.value = "범위에 해당이 안됩니다"
         }
         catch {
-            outputText = "error"
+            outputText.value = "error"
         }
 
     }
