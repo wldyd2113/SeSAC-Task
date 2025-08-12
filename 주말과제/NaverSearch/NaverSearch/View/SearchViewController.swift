@@ -12,6 +12,7 @@ class SearchViewController: UIViewController {
     
     let searchView = SearchView()
     
+    
     override  func loadView() {
         super.view = searchView
     }
@@ -37,14 +38,14 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, text.count > 2 else {
+        guard let text = searchBar.text, text.count >= 2 else {
             print("빈값을 입력하세요")
             return
         }
         
         let vc = SearchDetailViewController()
-        vc.searchTitle = text
-        print(vc.searchTitle)
+        vc.viewModel.inputSearchText.value = text
+        print(vc.viewModel.inputSearchText.value)
         navigationController?.pushViewController(vc, animated: true)
     }
     

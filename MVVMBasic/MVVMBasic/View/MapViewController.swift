@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
         setupUI()
         setupMapView()
         addSeoulStationAnnotation()
+        viewModel.showRestaurants(category: "전체")
         viewModel.anotations.outAction { annotations in
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.mapView.addAnnotations(annotations)

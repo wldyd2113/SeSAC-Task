@@ -9,6 +9,8 @@ import Foundation
 import MapKit
 
 class MapViewModel {
+    //Mapkit을 import안하고 데이터 전달받는 방식
+    //Mapkit문서 보기
     var anotations = Obserable<[MKAnnotation]>([])
     
     
@@ -31,5 +33,7 @@ class MapViewModel {
             newAnnotations.append(annotation)
         }
         anotations.value = newAnnotations
+        print("카테고리:", category)
+
     }
 }

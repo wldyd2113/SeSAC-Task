@@ -10,12 +10,11 @@ import SnapKit
 import Kingfisher
 class SearchDetailViewController: UIViewController {
     // .replaceingOccurrences(of:"<b></b>", with: "")
-    var searchTitle = ""
-    var shopTotal = ShopInfo(total: 0, lastBuildDate: "", items: [])
-    var shop: [Shopdata] = []
-    var shopMacBook: [Shopdata] = []
-    var start = 1
-    var naverPage = false
+//    var shopTotal = ShopInfo(total: 0, lastBuildDate: "", items: [])
+//    var start = 1
+//    var naverPage = false
+    
+    let viewModel = SearchDetailViewModel()
     
     let totalLabel: UILabel = {
         let label = UILabel()
@@ -69,79 +68,45 @@ class SearchDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("2", searchTitle)
+        print("2", viewModel.inputSearchText.value)
         configure()
         configureLayout()
-        shopData(searchTitle)
-        shopMacData()
-    }
-    //MARK: 데이터 관리
-    func shopData(_ searchTitle: String, sort: String = NaverURL.sim.rawValue) {
-        print(#function)
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        NetworkManger.shared.shopData(searchTitle, sort: sort, start: start) { value in
-            self.shop.append(contentsOf: value.items)
-            self.totalLabel.text = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
-            self.shopTotal = value
-            
-            print("start", self.start)
+        
+        viewModel.inputSearchData.value = ()
+        viewModel.outputTotal.bind {
+            self.totalLabel.text = self.viewModel.outputTotal.value
+        }
+        viewModel.outputSearchData.bind {
             
             self.colletionvertical.reloadData()
-        } fail: {_ in
-            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
-            print("실패")
         }
-        
-    }
-    
-    func shopMacData(sort: String = NaverURL.sim.rawValue) {
-        NetworkManger.shared.shopMacData(start: start) { value in
-            self.shopMacBook.append(contentsOf: value.items)
+        viewModel.outputMacData.bind {
             self.collectionHorizontal.reloadData()
-        } fail: {
-            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
-            print("실패")
-
         }
     }
+
     
     //MARK: 정렬 함수들
-    ///111111
     //정확도
     @objc func accuracyButtonTapped() {
-        shop.removeAll()
-        start = 1
-        shopData(searchTitle, sort: NaverURL.sim.rawValue)
+        viewModel.sortAccuracy()
         colletionvertical.reloadData()
     }
     //날짜순
     @objc func dayButtonTapped() {
-        shop.removeAll()
-        start = 1
-        shopData(searchTitle, sort: NaverURL.date.rawValue)
+        viewModel.sortDay()
         colletionvertical.reloadData()
     }
     //가격 높은순
     @objc func priceUpButtonTapped() {
-        shop.removeAll()
-        start = 1
-        shopData(searchTitle, sort: NaverURL.dsc.rawValue)
-        
+        viewModel.sortPriceUp()
         colletionvertical.reloadData()
         
     }
     //가격 낮은순
     @objc func priceDownButtonTapped() {
-        //        var shopList = ShopInfo(total: 0, lastBuildDate: "", items: [])
-        shop.removeAll()
-        start = 1
-        
-        shopData(searchTitle, sort: NaverURL.asc.rawValue) //이분은 데이터를 계속 호출해서 데이터를 가져오면서 asc로 값을 찾아오면서 유저가 원하는 값을 가지고 옴
-        //        shopList.items.sort (by: { $0.lprice < $1.lprice }) //이부분은 저장된 데이터로 정렬을 해주므로 값이 이 추가되는게 아니여서 정렬을 하면서 명확한 값을 가지고 올 수 없음
+        viewModel.sortPriceDown()
         colletionvertical.reloadData()
-        
-        
     }
     
 }
@@ -150,9 +115,9 @@ class SearchDetailViewController: UIViewController {
 extension SearchDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == colletionvertical{
-            return shop.count
+            return viewModel.ouptputShopData.value.count
         } else {
-            return shopMacBook.count
+            return viewModel.ouptputMac.value.count
         }
     }
     
@@ -161,7 +126,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
             let cell = colletionvertical.dequeueReusableCell(withReuseIdentifier: SearchDetailCollectionViewCell.identifier, for: indexPath) as! SearchDetailCollectionViewCell
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
-            let shopList = shop[indexPath.item]
+            let shopList = viewModel.ouptputShopData.value[indexPath.item]
             let url = URL(string: "\(shopList.image)")
             cell.shopImage.kf.setImage(with: url)
             cell.shopName.text = shopList.mallName
@@ -173,29 +138,26 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
         }
         else {
             let cell = collectionHorizontal.dequeueReusableCell(withReuseIdentifier: HorizontalCollectionViewCell.identifier, for: indexPath) as! HorizontalCollectionViewCell
-            let shopList = shopMacBook[indexPath.item]
+            let shopList = viewModel.ouptputMac.value[indexPath.item]
             let url = URL(string: "\(shopList.image)")
             cell.shopImage.kf.setImage(with: url)
             return cell
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == (shop.count - 1) {
-            if start + 30 > 1000 || start + 30 > shopTotal.total { // shopTotal.total > 1000
-                alert(title: "마지막 페이지", message: "마지막 페이지입니다", okMessage: "확인")
-                return
-            }
-            start += 30
-            shopData(searchTitle)
-            
-            print(indexPath,"페이지")
-            
-        }
-    }
-    
-
-    
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if indexPath.item == (viewModel.ouptputShopData.value.count - 1) {
+//            if start + 30 > 1000 || start + 30 > shopTotal.total { // shopTotal.total > 1000
+//                alert(title: "마지막 페이지", message: "마지막 페이지입니다", okMessage: "확인")
+//                return
+//            }
+//            start += 30
+//            //            shopData(viewModel.inputSearchText.value)
+//            
+//            print(indexPath,"페이지")
+//            
+//        }
+//    }
     
 }
 
@@ -204,7 +166,7 @@ extension SearchDetailViewController: DesignProtocol {
     func configure() {
         view.backgroundColor = .black
         
-        self.navigationItem.title = searchTitle
+        self.navigationItem.title = viewModel.inputSearchText.value
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         view.addSubview(colletionvertical)
@@ -233,7 +195,7 @@ extension SearchDetailViewController: DesignProtocol {
         
         let layout2 = UICollectionViewFlowLayout()
         let devieWith2 = UIScreen.main.bounds.width //??
-
+        
         let cellWidth2 = devieWith2
         layout2.itemSize = CGSize(width: cellWidth2/2, height: cellWidth2)
         layout2.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -245,7 +207,7 @@ extension SearchDetailViewController: DesignProtocol {
         collectionHorizontal.dataSource = self
         collectionHorizontal.tag = 2
         collectionHorizontal.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalCollectionViewCell.identifier)
-
+        
     }
     
     func configureLayout() {
@@ -290,7 +252,7 @@ extension SearchDetailViewController: DesignProtocol {
             make.top.equalTo(colletionvertical.snp.top).offset(500)
             make.leading.trailing.equalTo(view)
             make.height.equalTo(350)
-
+            
         }
     }
 }

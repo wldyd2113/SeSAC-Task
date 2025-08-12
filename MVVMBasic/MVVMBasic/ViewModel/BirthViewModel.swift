@@ -16,7 +16,6 @@ class BirthViewModel {
     
     var outputText = Obserable("")
     
-    var senderData: (() -> ())?
     
     init() {
         yearText.outAction  { _ in
@@ -25,7 +24,7 @@ class BirthViewModel {
         monthText.outAction  { _ in
             self.resultButtonTapped()
         }
-        monthText.outAction  { _ in
+        dayText.outAction  { _ in
             self.resultButtonTapped()
         }
     }

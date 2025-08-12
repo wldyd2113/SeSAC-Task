@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 class BMIViewModel {
     
-    var heightText = Obserable("")
+    var heightText = Obserable("") //lazyBind로 
     
     
     var weightText = Obserable("")
     
     var outputText = Obserable("")
 
-    var showAlert: ((String) -> ())?
+    var showAlert: ((String) -> ())? //inputout으로 개선해보기
     
     init() {
         heightText.outAction { _ in

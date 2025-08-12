@@ -7,7 +7,9 @@
 
 import UIKit
 
+//Error파일 관리해서 private나 fileprivate로 관리하기
 enum BoxOfficeError: Error {
+    //원시 값을 지정해서 값을 이거를 쓰는 곳에서 사용
     case outOfrange
     case isInt
     case isEmptySpace
