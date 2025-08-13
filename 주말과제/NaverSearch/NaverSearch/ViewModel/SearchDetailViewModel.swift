@@ -62,14 +62,13 @@ final class SearchDetailViewModel {
        start = 1
        sortData(sort:  NaverURL.asc.rawValue)
    }
-    
     private func sortData(sort: String) {
-        NetworkManger.shared.shopData(self.input.searchText.value, sort: sort, start: start) { value in
+        NetworkManger.shared.shopCallRequest(api: .shop(searchTitle: self.input.searchText.value, sort: sort, start: start), type: ShopInfo.self , success: { value in
             self.output.shopData.value.append(contentsOf: value.items)
             self.output.searchData.value = [value]
-        } fail: { _ in
+        }, fail: { _ in
             print("실패")
-        }
+        })
 
     }
     
@@ -77,8 +76,8 @@ final class SearchDetailViewModel {
         print(#function)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        
-       NetworkManger.shared.shopData(self.input.searchText.value, sort: NaverURL.sim.rawValue, start: start) { value in
+
+       NetworkManger.shared.shopCallRequest(api: .shop(searchTitle: self.input.searchText.value, sort: NaverURL.sim.rawValue, start: start), type: ShopInfo.self, success: { value in
            self.output.searchData.value = [value]
            self.output.shopData.value.append(contentsOf: value.items)
            self.output.total.value = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
@@ -86,19 +85,19 @@ final class SearchDetailViewModel {
             
             print("start", self.start)
             
-        } fail: {_ in
-            print("실패")
-        }
+       }, fail: { _ in
+           print("실패")
+       })
         
     }
     
     private func shopMacData(sort: String = NaverURL.sim.rawValue) {
-        NetworkManger.shared.shopMacData(start: start) { value in
+        NetworkManger.shared.shopCallRequest(api: .mac(sort: sort, start: start), type: ShopInfo.self, success: { value in
             self.output.mac.value.append(contentsOf: value.items)
             self.output.macData.value = [value]
-        } fail: {
+        }, fail: { _ in
             print("실패")
-            
-        }
+        })
+        
     }
 }

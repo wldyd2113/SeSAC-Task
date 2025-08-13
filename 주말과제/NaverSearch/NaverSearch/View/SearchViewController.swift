@@ -44,8 +44,8 @@ extension SearchViewController: UISearchBarDelegate {
         }
         
         let vc = SearchDetailViewController()
-        vc.viewModel.inputSearchText.value = text
-        print(vc.viewModel.inputSearchText.value)
+        vc.viewModel.input.searchText.value = text
+        print(vc.viewModel.input.searchText.value)
         navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -10,9 +10,6 @@ import SnapKit
 import Kingfisher
 class SearchDetailViewController: UIViewController {
     // .replaceingOccurrences(of:"<b></b>", with: "")
-//    var shopTotal = ShopInfo(total: 0, lastBuildDate: "", items: [])
-//    var start = 1
-//    var naverPage = false
     
     let viewModel = SearchDetailViewModel()
     
