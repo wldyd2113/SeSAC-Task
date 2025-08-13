@@ -68,23 +68,26 @@ class SearchDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("2", viewModel.inputSearchText.value)
+        print("2", viewModel.input.searchText.value)
         configure()
         configureLayout()
-        
-        viewModel.inputSearchData.value = ()
-        viewModel.outputTotal.bind {
-            self.totalLabel.text = self.viewModel.outputTotal.value
+        viewModelbind()
+
+    }
+    
+    func viewModelbind() {
+        viewModel.input.searchData.value = ()
+        viewModel.output.total.bind {
+            self.totalLabel.text = self.viewModel.output.total.value
         }
-        viewModel.outputSearchData.bind {
+        viewModel.output.searchData.bind {
             
             self.colletionvertical.reloadData()
         }
-        viewModel.outputMacData.bind {
+        viewModel.output.macData.bind {
             self.collectionHorizontal.reloadData()
         }
     }
-
     
     //MARK: 정렬 함수들
     //정확도
@@ -115,9 +118,9 @@ class SearchDetailViewController: UIViewController {
 extension SearchDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == colletionvertical{
-            return viewModel.ouptputShopData.value.count
+            return viewModel.output.shopData.value.count
         } else {
-            return viewModel.ouptputMac.value.count
+            return viewModel.output.mac.value.count
         }
     }
     
@@ -126,7 +129,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
             let cell = colletionvertical.dequeueReusableCell(withReuseIdentifier: SearchDetailCollectionViewCell.identifier, for: indexPath) as! SearchDetailCollectionViewCell
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
-            let shopList = viewModel.ouptputShopData.value[indexPath.item]
+            let shopList = viewModel.output.shopData.value[indexPath.item]
             let url = URL(string: "\(shopList.image)")
             cell.shopImage.kf.setImage(with: url)
             cell.shopName.text = shopList.mallName
@@ -138,7 +141,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
         }
         else {
             let cell = collectionHorizontal.dequeueReusableCell(withReuseIdentifier: HorizontalCollectionViewCell.identifier, for: indexPath) as! HorizontalCollectionViewCell
-            let shopList = viewModel.ouptputMac.value[indexPath.item]
+            let shopList = viewModel.output.mac.value[indexPath.item]
             let url = URL(string: "\(shopList.image)")
             cell.shopImage.kf.setImage(with: url)
             return cell
@@ -166,7 +169,7 @@ extension SearchDetailViewController: DesignProtocol {
     func configure() {
         view.backgroundColor = .black
         
-        self.navigationItem.title = viewModel.inputSearchText.value
+        self.navigationItem.title = viewModel.input.searchText.value
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         view.addSubview(colletionvertical)

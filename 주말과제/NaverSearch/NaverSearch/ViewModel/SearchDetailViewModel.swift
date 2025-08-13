@@ -8,58 +8,65 @@
 import Foundation
 
 final class SearchDetailViewModel {
-    var inputSearchText: Obserable<String> = Obserable("") //검색값
-    var inputSearchData: Obserable<Void> = Obserable(())
-    var start = 1
-    var outputSearchData: Obserable<[ShopInfo]> = Obserable([])
-    var outputMacData: Obserable<[ShopInfo]> = Obserable([])
-    var ouptputShopData: Obserable<[Shopdata]> = Obserable([]) // Shopdata를 저장할 프로퍼티
-    var ouptputMac: Obserable<[Shopdata]> = Obserable([]) // Shopdata를 저장할 프로퍼티
-
-    var outputTotal: Obserable<String> = Obserable("")
-    var outputShopTotal: Obserable<ShopInfo?> = Obserable(nil)
-
-
-
     
+    var input: Input
+    var output: Output
+    
+    struct Input {
+        var searchText: Obserable<String> = Obserable("") //검색값
+        var searchData: Obserable<Void> = Obserable(())
+    }
+    
+    struct Output {
+        var searchData: Obserable<[ShopInfo]> = Obserable([])
+        var macData: Obserable<[ShopInfo]> = Obserable([])
+        var shopData: Obserable<[Shopdata]> = Obserable([]) // Shopdata를 저장할 프로퍼티
+        var mac: Obserable<[Shopdata]> = Obserable([]) // Shopdata를 저장할 프로퍼티
+
+        var total: Obserable<String> = Obserable("")
+        var shopTotal: Obserable<ShopInfo?> = Obserable(nil)
+    }
+
+    var start = 1
+
+
     init() {
-        inputSearchData.lazyBind {
-            self.shopData(self.inputSearchText.value)
+        input = Input()
+        output = Output()
+        input.searchData.bind {
+            self.shopData(self.input.searchText.value)
             self.shopMacData()
         }
     }
     
-
-    
-    
     func  sortAccuracy() {
-        ouptputShopData.value.removeAll()
+        output.shopData.value.removeAll()
         start = 1
         sortData(sort: NaverURL.sim.rawValue)
     }
     
     func sortDay() {
-        ouptputShopData.value.removeAll()
+        output.shopData.value.removeAll()
         start = 1
         sortData(sort: NaverURL.date.rawValue)
     }
     
     func sortPriceUp() {
-       ouptputShopData.value.removeAll()
+        output.shopData.value.removeAll()
        start = 1
        sortData(sort: NaverURL.dsc.rawValue)
    }
     
     func sortPriceDown() {
-       ouptputShopData.value.removeAll()
+        output.shopData.value.removeAll()
        start = 1
        sortData(sort:  NaverURL.asc.rawValue)
    }
     
     private func sortData(sort: String) {
-        NetworkManger.shared.shopData(self.inputSearchText.value, sort: sort, start: start) { value in
-            self.ouptputShopData.value.append(contentsOf: value.items)
-            self.outputSearchData.value = [value]
+        NetworkManger.shared.shopData(self.input.searchText.value, sort: sort, start: start) { value in
+            self.output.shopData.value.append(contentsOf: value.items)
+            self.output.searchData.value = [value]
         } fail: { _ in
             print("실패")
         }
@@ -71,16 +78,15 @@ final class SearchDetailViewModel {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         
-        NetworkManger.shared.shopData(self.inputSearchText.value, sort: NaverURL.sim.rawValue, start: start) { value in
-            self.outputSearchData.value = [value]
-            self.ouptputShopData.value.append(contentsOf: value.items)
-            self.outputTotal.value = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
-            self.outputShopTotal.value = value
+       NetworkManger.shared.shopData(self.input.searchText.value, sort: NaverURL.sim.rawValue, start: start) { value in
+           self.output.searchData.value = [value]
+           self.output.shopData.value.append(contentsOf: value.items)
+           self.output.total.value = "\(numberFormatter.string(for: value.total)!) 개의 검색 결과"
+           self.output.shopTotal.value = value
             
             print("start", self.start)
             
         } fail: {_ in
-//            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
             print("실패")
         }
         
@@ -88,10 +94,9 @@ final class SearchDetailViewModel {
     
     private func shopMacData(sort: String = NaverURL.sim.rawValue) {
         NetworkManger.shared.shopMacData(start: start) { value in
-            self.ouptputMac.value.append(contentsOf: value.items)
-            self.outputMacData.value = [value]
+            self.output.mac.value.append(contentsOf: value.items)
+            self.output.macData.value = [value]
         } fail: {
-//            self.alert(title: "통신 오류", message: "통신 오류가 발생했습니다", okMessage: "확인")
             print("실패")
             
         }
