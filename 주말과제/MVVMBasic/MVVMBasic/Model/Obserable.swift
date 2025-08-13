@@ -19,6 +19,10 @@ class Obserable<T> {
         self.value = value
     }
     
+    func lazyOutAction (action: @escaping (T) -> ()) {
+        self.action = action
+    }
+    
     func outAction(action: @escaping (T) -> ()) {
         action(value)
         self.action = action

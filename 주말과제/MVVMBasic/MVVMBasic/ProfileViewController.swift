@@ -174,7 +174,6 @@ class ProfileViewController: UIViewController {
     }
     
     
-    
     //테두리 없애기
     func textFieldUI(_ textField: UITextField) {
         textField.borderStyle = .line
@@ -256,6 +255,24 @@ class ProfileViewController: UIViewController {
     
     //완료
     @objc func completeButtonClicked() {
+        guard let nicknameText = nicknameTextField.text ,
+              let ei = selectedEI,
+              let sn = selectedSN,
+              let tf = selectedTF,
+              let jp = selectedJP,
+              let image = profileImage.imageView?.image,
+              let imageSave = image.pngData()
+        else { return }
+        UserDefaults.standard.set(nickNameCheck, forKey: "nickname")
+        UserDefaults.standard.set("\(ei), \(sn), \(tf), \(jp)", forKey: "mbti")
+        
+        UserDefaults.standard.set(imageSave, forKey: "userImage")
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+        
+        let mainVC = AgeViewController()
+        sceneDelegate.window?.rootViewController = mainVC
+        sceneDelegate.window?.makeKeyAndVisible()
+
         print(#function)
         alert()
     }
@@ -272,11 +289,13 @@ class ProfileViewController: UIViewController {
     @objc func nicknameChanged() {
         guard let nicknamke = nicknameTextField.text else { return }
 
-        viewModel.nickNameText.value = nicknamke
+        viewModel.input.nickNameText.value = nicknamke
     }
     
     @objc func profileImageChange() {
-        
+        let vc = ProfileImageSettingViewController()
+        vc.viewModel.input.userImage.value = profileImage.imageView?.image
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func configure() {

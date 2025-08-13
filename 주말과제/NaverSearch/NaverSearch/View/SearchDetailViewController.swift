@@ -194,7 +194,7 @@ extension SearchDetailViewController: DesignProtocol {
         
         
         let layout2 = UICollectionViewFlowLayout()
-        let devieWith2 = UIScreen.main.bounds.width //??
+        let devieWith2 = UIScreen.main.bounds.width 
         
         let cellWidth2 = devieWith2
         layout2.itemSize = CGSize(width: cellWidth2/2, height: cellWidth2)

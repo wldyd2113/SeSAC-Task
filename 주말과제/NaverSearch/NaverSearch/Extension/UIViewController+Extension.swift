@@ -22,4 +22,5 @@ extension UIViewController {
         //4. 화면에 띄워주는 작업
         present(alert, animated: true)
     }
+    
 }

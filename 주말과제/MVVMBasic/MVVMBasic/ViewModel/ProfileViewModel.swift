@@ -7,22 +7,28 @@
 
 import Foundation
 import UIKit
-class ProfileViewModel {
+final class ProfileViewModel {
     
-    var nickNameText = Obserable("")
+    
+    struct Input {
+        var nickNameText = Obserable("")
+    }
+    var input: Input
     
     // statusLabel를 전달하기 위한 클로저
     var statusClosures : ((Bool, String, UIColor, Bool) -> ())?
     
     init() {
-        nickNameText.outAction { _ in
+        input = Input()
+        
+        input.nickNameText.outAction { _ in
             self.nicknameChanged()
         }
     }
     
     private func nicknameChanged() {
         do {
-            let _ = try nickError(nickNameText.value)
+            let _ = try nickError(input.nickNameText.value)
             statusClosures?(true, "사용할 수 있는 닉네임입니다", .systemGreen, false)
         }
         catch NickNameError.emptyError {
