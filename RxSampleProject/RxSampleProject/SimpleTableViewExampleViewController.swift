@@ -31,7 +31,11 @@ class SimpleTableViewExampleViewController: UIViewController, UITableViewDelegat
             (row, elemt, cell) in
             cell.bodyLabel.text = "\(elemt) @ row \(row)"
             cell.button.setTitle(">", for: .normal)
-
+            
+            cell.buttonEvent = {
+                self.alert(row.description)
+            }
+            
         }
         .disposed(by: disposeBag)
         
@@ -39,13 +43,6 @@ class SimpleTableViewExampleViewController: UIViewController, UITableViewDelegat
             .subscribe(with: self) { onwer, value in
                 onwer.alert(value)
                 print("modelSelected")
-            }
-            .disposed(by: disposeBag)
-        
-        tableView.rx.itemAccessoryButtonTapped
-            .subscribe(with: self) { onwer, indexPath in
-                print("itemAccessoryButtonTapped")
-                onwer.alert(indexPath.description)
             }
             .disposed(by: disposeBag)
         
