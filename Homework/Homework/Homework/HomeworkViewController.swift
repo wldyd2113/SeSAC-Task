@@ -78,6 +78,7 @@ class HomeworkViewController: UIViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     let searchBar = UISearchBar()
     let user = BehaviorSubject<[Person]>(value: [])
+    let selectedName = BehaviorSubject<[String]>(value: [])
     let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,33 @@ class HomeworkViewController: UIViewController {
                 cell.profileImageView.kf.setImage(with: url)
             }
             .disposed(by: disposeBag)
-
+        
+        tableView.rx.modelSelected(Person.self).withLatestFrom(selectedName) { selectedPerson, currentName in
+            var update = currentName
+            if !update.contains(selectedPerson.name) {
+                update.append(selectedPerson.name)
+            }
+            return update
+        }
+        .bind(to: selectedName)
+        .disposed(by: disposeBag)
+        selectedName.bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier, cellType: UserCollectionViewCell.self)) { row, name, cell in
+            cell.label.text = name
+        }
+        .disposed(by: disposeBag)
+        
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .filter { !$0.isEmpty }
+            .withLatestFrom(user) { searchText, currentNames in
+                print("추가됨")
+                var update = currentNames
+                let newPerson = Person(name: searchText, email: "ji@naver.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/25.jpg")
+                update.insert(newPerson, at: 0)
+                return update
+            }
+            .bind(to: user)
+            .disposed(by: disposeBag)
     }
     
     private func configure() {
@@ -110,8 +137,14 @@ class HomeworkViewController: UIViewController {
          
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: UserCollectionViewCell.identifier)
         collectionView.backgroundColor = .lightGray
-        collectionView.snp.makeConstraints { make in
+        
+        searchBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(50)
         }
@@ -120,7 +153,7 @@ class HomeworkViewController: UIViewController {
         tableView.backgroundColor = .systemGreen
         tableView.rowHeight = 100
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview()
         }
