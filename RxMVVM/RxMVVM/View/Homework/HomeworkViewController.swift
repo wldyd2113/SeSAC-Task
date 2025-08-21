@@ -96,6 +96,14 @@ class HomeworkViewController: UIViewController {
                 cell.usernameLabel.text = person.name
                 let url = URL(string: person.profileImage)
                 cell.profileImageView.kf.setImage(with: url)
+                cell.detailButton.rx.tap.bind(with: self) { owner, _ in
+                    print("클릭")
+                    let vc = HomeworkDetailViewController()
+                    vc.nv = person.name
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
+                .disposed(by: cell.disposeBag)
+                
             }
             .disposed(by: disposeBag)
         
@@ -137,14 +145,9 @@ class HomeworkViewController: UIViewController {
          
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: UserCollectionViewCell.identifier)
         collectionView.backgroundColor = .lightGray
-        
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(50)
-        }
+
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(50)
         }
