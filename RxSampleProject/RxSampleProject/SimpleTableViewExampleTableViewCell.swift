@@ -24,7 +24,6 @@ class SimpleTableViewExampleTableViewCell: UITableViewCell {
         contentView.addSubview(button)
         button.setTitleColor(.black, for: .normal)
         
-
         button.rx.tap.subscribe(with: self, onNext: { onwer, _ in
             onwer.buttonEvent?()
         }, onError: { _, error in
