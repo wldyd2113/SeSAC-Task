@@ -35,8 +35,7 @@ class NumbersViewController: UIViewController {
         configure()
         configureUI()
         configureLayout()
-        
-        Observable.combineLatest(number1.rx.text.orEmpty, number2.rx.text.orEmpty, number3.rx.text.orEmpty) {
+       Observable.combineLatest(number1.rx.text.orEmpty, number2.rx.text.orEmpty, number3.rx.text.orEmpty) {
             text1, text2, text3 -> Int in
             return (Int(text1) ?? 0) +  (Int(text2) ?? 0) +  (Int(text3) ?? 0)
         }

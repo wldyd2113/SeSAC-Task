@@ -8,8 +8,11 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class NumbersViewController: UIViewController {
+    
+    let viewModel = NumbersViewModel()
     
     let diposeBag = DisposeBag()
     
@@ -26,6 +29,7 @@ class NumbersViewController: UIViewController {
     
     let resultLabel = UILabel()
     
+    
     let dispose = DisposeBag()
 
     override func viewDidLoad() {
@@ -34,15 +38,16 @@ class NumbersViewController: UIViewController {
         configure()
         configureUI()
         configureLayout()
+        bind()
+    }
+    
+    func bind() {
+        let input = NumbersViewModel.Input(number1Text: number1.rx.text.orEmpty, number2Text: number2.rx.text.orEmpty, number3Text: number3.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
         
-        Observable.combineLatest(number1.rx.text.orEmpty, number2.rx.text.orEmpty, number3.rx.text.orEmpty) {
-            text1, text2, text3 -> Int in
-            return (Int(text1) ?? 0) +  (Int(text2) ?? 0) +  (Int(text3) ?? 0)
-        }
-        .map { $0.description }
-        .bind(to: resultLabel.rx.text)
-        .disposed(by: diposeBag)
-
+        output.resultText
+            .bind(to: resultLabel.rx.text)
+            .disposed(by: diposeBag)
     }
     
     
@@ -57,17 +62,17 @@ class NumbersViewController: UIViewController {
     }
     func configureUI() {
         number1.placeholder = "1"
-        number1.backgroundColor = .blue
+        number1.backgroundColor = .systemBlue
 
         number2.placeholder = "2"
-        number2.backgroundColor = .blue
+        number2.backgroundColor = .systemBlue
 
         number3.placeholder = "3"
-        number3.backgroundColor = .blue
+        number3.backgroundColor = .systemBlue
         
         resultLabel.textColor = .black
         resultLabel.text = "-1"
-        resultLabel.backgroundColor = .blue
+        resultLabel.backgroundColor = .systemBlue
 
 
     }
