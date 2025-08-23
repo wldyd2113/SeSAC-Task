@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  RxMVVM
+//  Tamagochi
 //
-//  Created by 차지용 on 8/21/25.
+//  Created by 차지용 on 8/23/25.
 //
 
 import UIKit
@@ -13,12 +13,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        
-        let rootViewController = UINavigationController(rootViewController: SimpleValidationViewController())
-         
-        window?.rootViewController = rootViewController
+        window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
     }
 
