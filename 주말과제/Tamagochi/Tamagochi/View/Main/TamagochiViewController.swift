@@ -164,7 +164,8 @@ class TamagochiViewController: UIViewController {
     }
     
     @objc func settingTapped() {
-        
+        let vc = SettingViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     @objc func dismissKeyboard() {
         view.endEditing(true)
