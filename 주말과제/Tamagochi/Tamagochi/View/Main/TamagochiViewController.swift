@@ -12,6 +12,10 @@ import RxCocoa
 
 class TamagochiViewController: UIViewController {
     
+    let disposeBag = DisposeBag()
+    
+    let viewModel = TamagochiViewModel()
+    
     private let statusList = ["좋은 하루에요!", "밥 주세요!!!", "조금 더 성장 시켜주세요!", "집중하세요!", "이 주신 간식 최고였어요!", "RxSwift에 대해 알아봐요!"]
     private let speechBubbleImage: UIImageView = {
         let image = UIImageView()
@@ -61,12 +65,14 @@ class TamagochiViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "밥주세용"
         textField.backgroundColor = .background
+        textField.keyboardType = .numberPad
         return textField
     }()
     
     private let waterTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "물주세용"
+        textField.keyboardType = .numberPad
         textField.backgroundColor = .background
         return textField
     }()
@@ -100,9 +106,13 @@ class TamagochiViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         configureHirarchy()
         configureUI()
         configureLayout()
+        bind()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -111,9 +121,78 @@ class TamagochiViewController: UIViewController {
     }
     
     private func bind() {
+        let input = TamagochiViewModel.Input(
+            riceText: riceTextField.rx.text.orEmpty,
+            waterText: waterTextField.rx.text.orEmpty,
+            riceButtonTap: riceButton.rx.tap,
+            waaterBttonTap: waterButton.rx.tap
+        )
+        
+        let output = viewModel.transform(input: input)
+    
+        output.result.bind(to: resultLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.tamagochiImage.bind(with: self) { owner, value in
+            owner.tamagochiImage.image = UIImage(named: value)
+        }
+        .disposed(by: disposeBag)
+
+        output.showRiceAlert.bind(with: self) { owner, _ in
+            owner.alertRiceView()
+        }
+        .disposed(by: disposeBag)
+        
+        output.showWaterAlert.bind(with: self) { owner, _ in
+            owner.alertWaterView()
+        }
+        .disposed(by: disposeBag)
+        
+        riceButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.riceTextField.text = ""
+            }
+            .disposed(by: disposeBag)
+        
+        waterButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.waterTextField.text = ""
+            }
+            .disposed(by: disposeBag)
+
         
     }
     
+    @objc func settingTapped() {
+        
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func alertRiceView() {
+        let alert = UIAlertController(title: "밥양", message: "밥양은 99까지 입니다", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
+    
+    func alertWaterView() {
+        let alert = UIAlertController(title: "물양", message: "물양은 49까지 입니다", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
+    
+    
+    
+}
+
+extension TamagochiViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 extension TamagochiViewController: DesginProtocol {
     func configureHirarchy() {
@@ -126,10 +205,16 @@ extension TamagochiViewController: DesginProtocol {
         view.addSubview(waterTextField)
         view.addSubview(riceButton)
         view.addSubview(waterButton)
+        riceTextField.delegate = self
+        waterTextField.delegate = self
+
     }
     
     func configureUI() {
         view.backgroundColor = .background
+        navigationItem.title = "대장님의 다마고치"
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.text]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingTapped))
     }
     
     func configureLayout() {
@@ -157,7 +242,7 @@ extension TamagochiViewController: DesginProtocol {
         resultLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
-            make.width.equalTo(150)
+            make.width.equalTo(200)
 
         }
         
@@ -195,3 +280,5 @@ extension TamagochiViewController: DesginProtocol {
     
     
 }
+
+
