@@ -12,4 +12,5 @@ enum UserTamagochi: String {
     case water = "water"
     case nickName = "nickName"
     case level = "level"
+    case selectedTamagochi = "selectedTamagochi"
 }

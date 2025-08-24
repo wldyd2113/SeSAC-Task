@@ -14,9 +14,13 @@ class TamagochiViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    let viewModel = TamagochiViewModel()
+    var viewModel = TamagochiViewModel()
     
-    private let statusList = ["좋은 하루에요!", "밥 주세요!!!", "조금 더 성장 시켜주세요!", "집중하세요!", "이 주신 간식 최고였어요!", "RxSwift에 대해 알아봐요!"]
+    let nickname = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue) ?? "다마고치 이야기"
+    
+    var tamagochi: Tamagochi?
+
+
     private let speechBubbleImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -38,13 +42,13 @@ class TamagochiViewController: UIViewController {
         let label = UILabel()
         label.textColor = .text
         label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 12)
         return label
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
-        label.text = "방실방실 다마고치"
         label.textColor = .text
         label.textAlignment = .center
         label.layer.borderWidth = 1
@@ -117,7 +121,10 @@ class TamagochiViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let statusList = ["좋은 하루에요 \(nickname)님!", "밥 주세요!!! \(nickname)님!", "조금 더 성장 시켜주세요! \(nickname)님!", "\(nickname)님! 집중하세요!", "\(nickname)님!이 주신 간식 최고였어요!", "\(nickname)님! RxSwift에 대해 알아봐요!"]
         statusLabel.text = statusList.randomElement()
+        nameLabel.text = nickname
+
     }
     
     private func bind() {
@@ -213,7 +220,7 @@ extension TamagochiViewController: DesginProtocol {
     
     func configureUI() {
         view.backgroundColor = .background
-        navigationItem.title = "대장님의 다마고치"
+        navigationItem.title = nickname
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.text]
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingTapped))
     }
@@ -278,6 +285,7 @@ extension TamagochiViewController: DesginProtocol {
         
         
     }
+    
     
     
 }

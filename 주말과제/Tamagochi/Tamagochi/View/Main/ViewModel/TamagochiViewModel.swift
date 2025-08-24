@@ -12,6 +12,14 @@ import RxCocoa
 final class TamagochiViewModel {
     
     let disposeBag = DisposeBag()
+    var snederImage: String  {
+        get {
+            UserDefaults.standard.string(forKey: UserTamagochi.selectedTamagochi.rawValue) ?? "1" 
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserTamagochi.selectedTamagochi.rawValue)
+        }
+    }
     
     struct Input {
         let riceText: ControlProperty<String>
@@ -32,19 +40,20 @@ final class TamagochiViewModel {
 
     }
     
-    init() { }
-    
+
     func transform(input: Input) -> Output {
-        let riceCount = BehaviorSubject(value: 0)
-        let waterCount = BehaviorSubject(value: 0)
-        let level = BehaviorSubject(value: 1)
-        
-        let showRiceAlert = PublishSubject<Void>()
-        let showWaterAlert = PublishSubject<Void>()
         
         let savedRice = UserDefaults.standard.integer(forKey: UserTamagochi.rice.rawValue)
         let savedWater = UserDefaults.standard.integer(forKey: UserTamagochi.water.rawValue)
         let savedLevel = UserDefaults.standard.integer(forKey: UserTamagochi.level.rawValue)
+        
+        let riceCount = BehaviorSubject(value: savedRice)
+        let waterCount = BehaviorSubject(value: savedWater)
+        let level = BehaviorSubject(value: savedLevel == 0 ? 1 : savedLevel)
+        
+        let showRiceAlert = PublishSubject<Void>()
+        let showWaterAlert = PublishSubject<Void>()
+
         
         input.riceButtonTap
             .withLatestFrom(Observable.combineLatest(input.riceText, riceCount))
@@ -89,21 +98,8 @@ final class TamagochiViewModel {
             .map { lv, rice, water in
                 return "LV\(lv) 밥알 \(rice)개 물방울 \(water)개"
             }
-        
-        let tamagochiImage = level.map { lv  in
-            switch lv {
-            case 1: return "1-1"
-            case 2: return "1-2"
-            case 3: return "1-3"
-            case 4: return "1-4"
-            case 5: return "1-5"
-            case 6: return "1-6"
-            case 7: return "1-7"
-            case 8: return "1-8"
-            case 9: return "1-9"
-            case 10: return "1-9"
-            default: return "1-9"
-            }
+        let tamagochiImage = level.map { lv -> String in
+            return "\(self.snederImage)-\(min(lv, 9))"
         }
         
         return Output(riceCount: riceCount, waterCount: waterCount, level: level, result: result, showRiceAlert: showRiceAlert, showWaterAlert: showWaterAlert, tamagochiImage: tamagochiImage)

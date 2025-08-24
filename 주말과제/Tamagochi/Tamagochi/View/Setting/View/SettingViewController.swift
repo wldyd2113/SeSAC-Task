@@ -30,7 +30,7 @@ class SettingViewController: UIViewController {
                 if row == 0 {
                     cell.icon.image = UIImage(systemName: "pencil")
                     cell.titleLabel.text = data
-                    cell.nickName.text = "다마고치"
+                    cell.nickName.text = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue)
                 }
                 else if row == 1 {
                     cell.icon.image = UIImage(systemName: "moon.fill")
@@ -69,10 +69,16 @@ class SettingViewController: UIViewController {
         
         let cancel = UIAlertAction(title: "아냐!", style: .cancel, handler: nil)
         let reset = UIAlertAction(title: "웅!", style: .default) { _ in
-            for key in UserDefaults.standard.dictionaryRepresentation().keys {
-                UserDefaults.standard.removeObject(forKey: key.description)
-            }
-            print("데이터 초기화 완료")
+            UserDefaults.standard.removeObject(forKey: UserTamagochi.nickName.rawValue)
+            UserDefaults.standard.removeObject(forKey: UserTamagochi.rice.rawValue)
+            UserDefaults.standard.removeObject(forKey: UserTamagochi.water.rawValue)
+            UserDefaults.standard.removeObject(forKey: UserTamagochi.level.rawValue)
+            UserDefaults.standard.removeObject(forKey: UserTamagochi.selectedTamagochi.rawValue)
+
+            
+            let vc = TamagochiChangeViewController()
+            vc.navigationItem.hidesBackButton = true
+            self.navigationController?.pushViewController(vc, animated: true)
         }
 
         alert.addAction(cancel)

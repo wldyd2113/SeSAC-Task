@@ -14,10 +14,11 @@ class TamagochiChangeViewController: UIViewController {
     lazy var colletion =  UICollectionView(frame: .zero, collectionViewLayout: layout())
     let disposeBag = DisposeBag()
     let tamagochiList: BehaviorSubject<[Tamagochi]> = {
+        let name = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue)
         var list: [Tamagochi] = []
-        list.append(Tamagochi(name: "따금따금 다마고치", image: "1-6"))
-        list.append(Tamagochi(name: "방실방실 다마고치", image: "2-6"))
-        list.append(Tamagochi(name: "따금따금 다마고치", image: "3-6"))
+        list.append(Tamagochi(name: name ?? "따금따금 다마고", image: "1-6"))
+        list.append(Tamagochi(name: name ?? "방실방실 다마고치", image: "2-6"))
+        list.append(Tamagochi(name: name ?? "따금따금 다마고치", image: "3-6"))
         
         for _  in 4...20 {
             list.append(Tamagochi(name: "준비중", image: "noImage"))
@@ -49,7 +50,18 @@ class TamagochiChangeViewController: UIViewController {
             cell.nameLabel.text = tamagochi.name
         }
         .disposed(by: disposeBag)
+        
+        colletion.rx.modelSelected(Tamagochi.self)
+            .bind(with: self) { owner, tamagochi in
+                let detailVC = TamagochiDetailViewController(tamagochi: tamagochi)
+                owner.present(detailVC, animated: true)
+                
+            }
+            .disposed(by: disposeBag)
+        
     }
+    
+    
     
 }
 

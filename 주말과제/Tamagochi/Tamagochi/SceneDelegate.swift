@@ -15,9 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let scene = (scene as? UIWindowScene) else { return }
+        let selected = UserDefaults.standard.string(forKey: "SelectedTamagochi")
+
+        let rootVC: UIViewController
+        if selected == nil {
+            rootVC = TamagochiChangeViewController()
+        } else {
+            rootVC = TamagochiViewController()
+        }
         window = UIWindow(windowScene: scene)
-        let vc = TamagochiViewController()
-        let nav = UINavigationController(rootViewController: vc)
+        let nav = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
