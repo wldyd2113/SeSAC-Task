@@ -22,13 +22,32 @@ final class CustomObserable {
                 case .success(let value):
                     observer.onNext(value)
                     observer.onCompleted()
-                case .failure(let Error):
-                    print("error", Error)
+                case .failure(let error):
+                    print("error", error)
                 }
                 
             }
             return Disposables.create()
         }
     }
+    
+    static func getMovie(year: String) -> Observable<[DailyBoxOfficeList]> {
+        return Observable<[DailyBoxOfficeList]>.create{ observer in
+            let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e4585261643a6792f70ec61f206790a7&targetDt=\(year)"
+            
+            AF.request(url).responseDecodable(of: Movie.self) { response in
+                switch response.result {
+                case .success(let value):
+                    observer.onNext(value.boxOfficeResult.dailyBoxOfficeList)
+                    observer.onCompleted()
+                case .failure(let error):
+                    print("error", error)
+                }
+            }
+            return Disposables.create()
+        }
+
+    }
+
     
 }
