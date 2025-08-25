@@ -78,18 +78,20 @@ class TamagochiDetailViewController: UIViewController {
         
         confirmButton.rx.tap
             .bind(with: self) { owner, _ in
-                if let presentingVC = self.presentingViewController as? UINavigationController {
+                if let tabBarController = owner.presentingViewController as? UITabBarController,
+                   let nav = tabBarController.selectedViewController as? UINavigationController {
                     owner.dismiss(animated: true) {
                         let vc = TamagochiViewController()
-                        let sender = self.tamagochi.image.split(separator: "-").first ?? "1"
+                        let sender = owner.tamagochi.image.split(separator: "-").first ?? "1"
                         let vm = TamagochiViewModel()
                         vm.snederImage = String(sender)
                         vc.viewModel = vm
-                        presentingVC.pushViewController(vc, animated: true)
+                        nav.pushViewController(vc, animated: true)
                     }
                 }
             }
             .disposed(by: disposeBag)
+
     
     }
 

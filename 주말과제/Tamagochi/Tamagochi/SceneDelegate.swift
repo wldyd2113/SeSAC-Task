@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let scene = (scene as? UIWindowScene) else { return }
+        let tabBarContoller = UITabBarController()
         let selected = UserDefaults.standard.string(forKey: "SelectedTamagochi")
 
         let rootVC: UIViewController
@@ -23,10 +24,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             rootVC = TamagochiViewController()
         }
-        window = UIWindow(windowScene: scene)
+        
+        let lottoVC = UINavigationController(rootViewController: LottoViewController())
+        let boxOfficeVC = UINavigationController(rootViewController: BoxOfficeViewController())
         let nav = UINavigationController(rootViewController: rootVC)
-        window?.rootViewController = nav
+        
+        tabBarContoller.setViewControllers([nav, lottoVC, boxOfficeVC], animated: true)
+        
+        if let item = tabBarContoller.tabBar.items {
+            item[0].image = UIImage(systemName: "house")
+            item[1].image = UIImage(systemName: "person")
+            item[2].image = UIImage(systemName: "book")
+        }
+        
+        window = UIWindow(windowScene: scene)
+
+        window?.rootViewController = tabBarContoller
         window?.makeKeyAndVisible()
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
