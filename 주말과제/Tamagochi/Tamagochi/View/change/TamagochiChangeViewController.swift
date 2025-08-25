@@ -14,7 +14,7 @@ class TamagochiChangeViewController: UIViewController {
     lazy var colletion =  UICollectionView(frame: .zero, collectionViewLayout: layout())
     let disposeBag = DisposeBag()
     let tamagochiList: BehaviorSubject<[Tamagochi]> = {
-        let name = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue)
+        let name = UserSave.nickName
         var list: [Tamagochi] = []
         list.append(Tamagochi(name: name ?? "따금따금 다마고", image: "1-6"))
         list.append(Tamagochi(name: name ?? "방실방실 다마고치", image: "2-6"))

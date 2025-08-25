@@ -16,8 +16,7 @@ class TamagochiViewController: UIViewController {
     
     var viewModel = TamagochiViewModel()
     
-    let nickname = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue) ?? "다마고치 이야기"
-    
+    let nickname = UserSave.nickName
     var tamagochi: Tamagochi?
 
 

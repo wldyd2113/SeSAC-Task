@@ -18,6 +18,7 @@ class BoxOfficeTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(titleLabel)
+        contentView.backgroundColor = .background
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

@@ -91,8 +91,6 @@ class TamagochiDetailViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
-
-    
     }
 
 }

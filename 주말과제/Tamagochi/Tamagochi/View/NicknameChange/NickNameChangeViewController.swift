@@ -29,7 +29,8 @@ class NickNameChangeViewController: UIViewController {
             alertNickName()
         }
         else {
-            UserDefaults.standard.set(nickNameTextField.text ?? "", forKey: UserTamagochi.nickName.rawValue)
+            
+            UserSave.nickName = nickNameTextField.text ?? ""
             let vc = TamagochiViewController()
             vc.navigationItem.hidesBackButton = true
             navigationController?.pushViewController(vc, animated: true)

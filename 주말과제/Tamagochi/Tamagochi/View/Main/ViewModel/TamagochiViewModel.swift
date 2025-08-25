@@ -13,12 +13,8 @@ final class TamagochiViewModel {
     
     let disposeBag = DisposeBag()
     var snederImage: String  {
-        get {
-            UserDefaults.standard.string(forKey: UserTamagochi.selectedTamagochi.rawValue) ?? "1" 
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserTamagochi.selectedTamagochi.rawValue)
-        }
+        get { UserSave.selectedTamagochi }
+        set { UserSave.selectedTamagochi = newValue }
     }
     
     struct Input {
@@ -43,9 +39,9 @@ final class TamagochiViewModel {
 
     func transform(input: Input) -> Output {
         
-        let savedRice = UserDefaults.standard.integer(forKey: UserTamagochi.rice.rawValue)
-        let savedWater = UserDefaults.standard.integer(forKey: UserTamagochi.water.rawValue)
-        let savedLevel = UserDefaults.standard.integer(forKey: UserTamagochi.level.rawValue)
+        let savedRice = UserSave.rice
+        let savedWater = UserSave.warter
+        let savedLevel = UserSave.level
         
         let riceCount = BehaviorSubject(value: savedRice)
         let waterCount = BehaviorSubject(value: savedWater)
@@ -64,7 +60,7 @@ final class TamagochiViewModel {
                 } else {
                     let plusRiceCount = currentRice + amount
                     riceCount.onNext(plusRiceCount)
-                    UserDefaults.standard.set(plusRiceCount, forKey: UserTamagochi.rice.rawValue)
+                    UserSave.rice = plusRiceCount
                 }
             }
             .disposed(by: disposeBag)
@@ -78,7 +74,7 @@ final class TamagochiViewModel {
                 } else {
                     let plusWaterCount = currentWater + amount
                     waterCount.onNext(plusWaterCount)
-                    UserDefaults.standard.set(plusWaterCount, forKey: UserTamagochi.water.rawValue)
+                    UserSave.warter = plusWaterCount
                 }
             }
             .disposed(by: disposeBag)
@@ -90,7 +86,7 @@ final class TamagochiViewModel {
                 }
                 .bind { value in
                     level.onNext(value)
-                    UserDefaults.standard.set(value, forKey: UserTamagochi.level.rawValue)
+                    UserSave.level = value
                 }
                 .disposed(by: disposeBag)
         

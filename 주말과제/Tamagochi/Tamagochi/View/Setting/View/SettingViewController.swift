@@ -30,7 +30,7 @@ class SettingViewController: UIViewController {
                 if row == 0 {
                     cell.icon.image = UIImage(systemName: "pencil")
                     cell.titleLabel.text = data
-                    cell.nickName.text = UserDefaults.standard.string(forKey: UserTamagochi.nickName.rawValue)
+                    cell.nickName.text = UserSave.nickName
                 }
                 else if row == 1 {
                     cell.icon.image = UIImage(systemName: "moon.fill")

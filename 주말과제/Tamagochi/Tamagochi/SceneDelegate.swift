@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let scene = (scene as? UIWindowScene) else { return }
         let tabBarContoller = UITabBarController()
-        let selected = UserDefaults.standard.string(forKey: "SelectedTamagochi")
+        let selected = UserSave.selectedTamagochi
 
         let rootVC: UIViewController
         if selected == nil {
