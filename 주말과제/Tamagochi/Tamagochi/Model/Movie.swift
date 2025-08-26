@@ -20,6 +20,5 @@ struct BoxOfficeResult: Decodable {
 struct DailyBoxOfficeList: Decodable {
     let rank: String
     let movieNm: String
-    let openDt: String
     
 }

@@ -11,13 +11,14 @@ import RxSwift
 import RxCocoa
 
 class BoxOfficeViewController: UIViewController {
-    
-    let searchBar = UISearchBar()
-    let tableView = UITableView()
+    private let viewModel = BoxOfficeViewModel()
     
     let movie: BehaviorRelay<[DailyBoxOfficeList]> = BehaviorRelay(value: [])
     
     let disposeBag = DisposeBag()
+    
+    let searchBar = UISearchBar()
+    let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,28 +29,47 @@ class BoxOfficeViewController: UIViewController {
     }
     
     func bind() {
-        movie.bind(to: tableView.rx.items(cellIdentifier: BoxOfficeTableViewCell.identifier, cellType: BoxOfficeTableViewCell.self)) { row, element, cell  in
+        
+        let input = BoxOfficeViewModel.Input(searText: searchBar.rx.text.orEmpty, searTap: searchBar.rx.searchButtonClicked)
+        let output = viewModel.transform(input: input)
+        
+        output.resultText.bind(to: tableView.rx.items(cellIdentifier: BoxOfficeTableViewCell.identifier, cellType: BoxOfficeTableViewCell.self)) { row, element, cell  in
             cell.titleLabel.text = "\(element.rank)위 - \(element.movieNm)"
             
         }
         .disposed(by: disposeBag)
+        output.tostMessage.bind(with: self) { owner, _ in
+            owner.tostMessage()
+        }
+        .disposed(by: disposeBag)
         
-        searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchBar.rx.text.orEmpty)
-            .flatMap { text in
-                CustomObserable.getMovie(year: text)
-            }
-            .subscribe(with: self) { owner, value in
-                owner.movie.accept(value)
-            } onError: { owner, error in
-                
-            } onCompleted: { owner in
-                
-            } onDisposed: { owner in
-                
-            }
-            .disposed(by: disposeBag)
-
+        output.showAlert.bind(with: self) { owner, _ in
+            owner.showAlert()
+        }
+        .disposed(by: disposeBag)
+    }
+    func tostMessage() {
+        let toastLabel = UILabel(frame: CGRect(x: 20, y: self.view.frame.size.height-100, width: view.frame.size.width-2*20, height: 50))
+        toastLabel.backgroundColor = UIColor.text.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.black
+        toastLabel.textAlignment = .center
+        toastLabel.text = "검색을 잘못 하셨습니다 년,월,일을 입력해주세요!!"
+        toastLabel.numberOfLines = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.layer.masksToBounds = true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut) {
+            toastLabel.alpha = 0
+        } completion: { (isCompleted) in
+            toastLabel.removeFromSuperview()
+        }
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "통신문제발생!!", message: "데이터를 확인해주세요,와이파이를 연결해주세요", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true)
     }
 }
 
