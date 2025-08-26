@@ -36,7 +36,6 @@ class TamagochiChangeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureHirarchy()
-        configureUI()
         configureLayout()
     }
     
@@ -48,13 +47,10 @@ class TamagochiChangeCollectionViewCell: UICollectionViewCell {
 }
 
 extension TamagochiChangeCollectionViewCell: DesginProtocol {
+    
     func configureHirarchy() {
         contentView.addSubview(image)
         contentView.addSubview(nameLabel)
-    }
-    
-    func configureUI() {
-        
     }
     
     func configureLayout() {
