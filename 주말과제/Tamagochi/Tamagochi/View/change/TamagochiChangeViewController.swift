@@ -10,23 +10,10 @@ import SnapKit
 import RxSwift
 import RxCocoa
 class TamagochiChangeViewController: UIViewController {
-    
+    let viewModel = ChangeViewMdoel()
     lazy var colletion =  UICollectionView(frame: .zero, collectionViewLayout: layout())
     let disposeBag = DisposeBag()
-    let tamagochiList: BehaviorSubject<[Tamagochi]> = {
-        let name = UserSave.nickName
-        var list: [Tamagochi] = []
-        list.append(Tamagochi(name: name ?? "따금따금 다마고", image: "1-6"))
-        list.append(Tamagochi(name: name ?? "방실방실 다마고치", image: "2-6"))
-        list.append(Tamagochi(name: name ?? "따금따금 다마고치", image: "3-6"))
-        
-        for _  in 4...20 {
-            list.append(Tamagochi(name: "준비중", image: "noImage"))
-        }
-        
-        return BehaviorSubject(value: list)
-        
-    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +32,17 @@ class TamagochiChangeViewController: UIViewController {
         return layout
     }
     func bind() {
-        tamagochiList.bind(to: colletion.rx.items(cellIdentifier: TamagochiChangeCollectionViewCell.identifier, cellType: TamagochiChangeCollectionViewCell.self)) { row, tamagochi, cell in
+        let input = ChangeViewMdoel.Input(selectCell: colletion.rx.modelSelected(Tamagochi.self))
+        let output = viewModel.transform(input: input)
+        
+        output.tamagochiList.bind(to: colletion.rx.items(cellIdentifier: TamagochiChangeCollectionViewCell.identifier, cellType: TamagochiChangeCollectionViewCell.self)) { row, tamagochi, cell in
             cell.image.image = UIImage(named: tamagochi.image)
             cell.nameLabel.text = tamagochi.name
         }
         .disposed(by: disposeBag)
         
-        colletion.rx.modelSelected(Tamagochi.self)
+        
+        output.selectedTamagochi
             .bind(with: self) { owner, tamagochi in
                 let detailVC = TamagochiDetailViewController(tamagochi: tamagochi)
                 owner.present(detailVC, animated: true)

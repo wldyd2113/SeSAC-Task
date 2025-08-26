@@ -15,7 +15,8 @@ class SettingViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     let tabeleView = UITableView()
-    let titleList = ["내 이름 설정하기", "다마고치 변경하기", "데이터 초기화하기"]
+    let titleList: BehaviorSubject<[String]> = BehaviorSubject(value: ["내 이름 설정하기", "다마고치 변경하기", "데이터 초기화하기"])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHirarchy()
@@ -25,7 +26,7 @@ class SettingViewController: UIViewController {
     }
     
     private func bind() {
-        Observable.just(titleList)
+        titleList
             .bind(to: tabeleView.rx.items(cellIdentifier: SettingTableViewCell.identifier, cellType: SettingTableViewCell.self)) { row, data, cell in
                 if row == 0 {
                     cell.icon.image = UIImage(systemName: "pencil")
