@@ -36,9 +36,9 @@ class BoxOfficeViewModel: BaseViewModelProtocol {
                         return Observable.never()
                     }
             }
-            .subscribe(with: self) { owner, value in
+            .subscribe(with: self) { owner, boxOffice in
                 
-                switch value {
+                switch boxOffice {
                 case .success(let value):
                     resultText.accept(value)
                     print(value)
@@ -47,8 +47,7 @@ class BoxOfficeViewModel: BaseViewModelProtocol {
                     case .sessionTaskFailed(error: _):
                         print(error)
                         showAlert.accept(true)
-                        
-                    case .responseSerializationFailed(reason: _): 
+                    case .responseSerializationFailed(reason: _):
                         tostMessage.accept(true)
                     default: break
                     }

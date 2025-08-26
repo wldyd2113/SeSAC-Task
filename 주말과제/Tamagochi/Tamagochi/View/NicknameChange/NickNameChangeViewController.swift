@@ -12,31 +12,40 @@ import RxCocoa
 
 class NickNameChangeViewController: UIViewController {
     
+    let viewModel = NickNameViewModel()
+    
     let nickNameTextField = UITextField()
     let lineView = UIView()
-
+    let rightbarButton = UIBarButtonItem(title: "저장", style: .plain, target: nil, action: nil)
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHirarchy()
         configureUI()
         configureLayout()
+        bind()
 
     }
-    
-    @objc func saveNickname() {
-        if nickNameTextField.text!.count > 6 || nickNameTextField.text!.count < 2{
-            alertNickName()
+    func bind() {
+        let input = NickNameViewModel.Input(nickNameText: nickNameTextField.rx.text.orEmpty, saveBtuttonTap: rightbarButton.rx.tap)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.alertNickName.bind(with: self) { owner, value in
+            owner.alertNickName()
         }
-        else {
-            
-            UserSave.nickName = nickNameTextField.text ?? ""
+        .disposed(by: disposeBag)
+        
+        output.nextView.bind(with: self) { owner, _ in
             let vc = TamagochiViewController()
             vc.navigationItem.hidesBackButton = true
-            navigationController?.pushViewController(vc, animated: true)
-            print("저장")
+            owner.navigationController?.pushViewController(vc, animated: true)
         }
+        .disposed(by: disposeBag)
     }
+    
+
     
     func alertNickName() {
         let alert = UIAlertController(title: "닉네임 글자제한", message: "닉네임은 2글자 이상 6글자 이하로 입력해주세요", preferredStyle: .alert)
@@ -56,7 +65,8 @@ extension NickNameChangeViewController: DesginProtocol {
         view.backgroundColor = .background
         navigationItem.title = "닉네임 변경"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.text.cgColor]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveNickname))
+        
+        navigationItem.rightBarButtonItem = rightbarButton
         
         nickNameTextField.placeholder = "닉네임을 입력하세요"
         lineView.backgroundColor = .text

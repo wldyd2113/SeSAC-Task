@@ -54,7 +54,7 @@ class LottoViewController: UIViewController {
     }
     
     func tostMessage() {
-        let toastLabel = UILabel(frame: CGRect(x: 20, y: self.view.frame.size.height-100, width: view.frame.size.width-2*20, height: 50)) 
+        let toastLabel = UILabel(frame: CGRect(x: 20, y: self.view.frame.size.height-100, width: view.frame.size.width-2*20, height: 50))
         toastLabel.backgroundColor = UIColor.text.withAlphaComponent(0.6)
         toastLabel.textColor = UIColor.black
         toastLabel.textAlignment = .center
@@ -91,7 +91,7 @@ extension LottoViewController: DesginProtocol {
         button.backgroundColor = .systemBlue
         button.setTitle("클릭", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        resultLabel.text = "dsadsadsadsadsa"
+        resultLabel.text = "로또번호를 입력해주세요"
         resultLabel.numberOfLines = 0
     }
     

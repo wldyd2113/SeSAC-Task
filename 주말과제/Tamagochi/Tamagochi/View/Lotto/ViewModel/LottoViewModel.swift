@@ -18,7 +18,7 @@ final class LottoViewModel: BaseViewModelProtocol {
     }
     
     struct Output {
-        let resutlText: BehaviorRelay<[Lotto]>
+        let resutlText: PublishRelay<[Lotto]>
         let showAlert: PublishRelay<Bool>
         let tostMessage: PublishRelay<Bool>
         
@@ -26,7 +26,7 @@ final class LottoViewModel: BaseViewModelProtocol {
     
     func transform(input: Input) -> Output {
         
-        var resutlText = BehaviorRelay(value: [Lotto(drwtNo1: 1, drwtNo2: 2, drwtNo3: 3, drwtNo4: 4, drwtNo5: 5, drwtNo6: 6, bnusNo: 8)])
+        let resutlText = PublishRelay<[Lotto]>()
         let showAlert = PublishRelay<Bool>()
         let tostMessage = PublishRelay<Bool>()
         
@@ -44,7 +44,7 @@ final class LottoViewModel: BaseViewModelProtocol {
                     resutlText.accept([value])
                 case .failure(let error):
                     switch error {
-                    case .sessionTaskFailed(error: _): //URL요청실패
+                    case .sessionTaskFailed(error: _): 
                         print(error)
                         showAlert.accept(true)
                         
