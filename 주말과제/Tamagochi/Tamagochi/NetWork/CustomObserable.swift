@@ -18,7 +18,6 @@ final class CustomObserable {
 
             AF.request(url).responseDecodable(of: Lotto.self) { response in
                 switch response.result {
-                    
                 case .success(let value):
                     observer.onNext(.success(value))
                     observer.onCompleted()

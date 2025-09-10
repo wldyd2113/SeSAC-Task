@@ -21,7 +21,6 @@ final class LottoViewModel: BaseViewModelProtocol {
         let resutlText: PublishRelay<[Lotto]>
         let showAlert: PublishRelay<Bool>
         let tostMessage: PublishRelay<Bool>
-        
     }
     
     func transform(input: Input) -> Output {
@@ -47,7 +46,6 @@ final class LottoViewModel: BaseViewModelProtocol {
                     case .sessionTaskFailed(error: _): 
                         print(error)
                         showAlert.accept(true)
-                        
                     case .responseSerializationFailed(reason: _):
                         tostMessage.accept(true)
                     default: break
